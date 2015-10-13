@@ -2,7 +2,6 @@ library(PlayerRatings)
 library(tidyr)
 library(dplyr)
 
-library(EloRating)
 
 
 # Setando pasta
@@ -41,6 +40,31 @@ banco$dia <- as.Date(banco$dia, format="%d/%m/%Y")
 banco <- mutate(banco, ponto=ifelse(gols_casa > gols_fora, 1, ifelse(gols_casa < gols_fora, 0, .5)))
 
 
+# Ajusta rodadas
+banco <- arrange(banco,Date )
+banco <- mutate(banco, ano=format(Date, "%Y"))
+banco$rodada <- NA
+for (i in 2003:2014) { # Código mal escrito, mas é o que temos
+  print(i)
+  jogos_no_ano <- banco[banco$ano==i,]
+  times <- unique(banco[banco$ano==i,]$time_casa)
+  n_times <- length(times)
+  n_jogos <- nrow(jogos_no_ano)
+  jogos_por_rodada <- n_times/2
+  control <- 1
+  rodada <- 1
+  for (j in which(banco$ano==i)) {
+    if ( control > jogos_por_rodada ) {
+      control <-  1
+      rodada <- rodada + 1
+    }
+    else { 
+      control <- control + 1
+    }
+      banco[j,]$rodada <- rodada
+    
+  }
+}
 
 # Cria winner, loser and draw
 banco <- banco %>%
@@ -74,3 +98,15 @@ presenca <- select(presenca, -ano)
 presenca$Date <- as.Date(presenca$Date, format="%Y-%m-%d")
 
 banco$Date <- as.Date(banco$Date, format="%Y-%m-%d")
+
+# Hora de Usar PlayerRatings
+
+# It's easy. We just want to define ratings for every date in a table.
+# So It's okay to define a ratings Table and then fill in it.
+
+ratings <- expand.grid(unique(banco$time_casa), banco$dia )
+ratings <- data.frame(team=ratings$Var1, Date=ratings$Var2)
+ratings$team <- as.character(presenca$team)
+ratings$valor <- NA
+ratings <- ratings[!duplicated(ratings), ]
+
