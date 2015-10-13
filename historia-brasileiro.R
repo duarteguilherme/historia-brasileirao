@@ -13,11 +13,11 @@ banco <- read.csv('brasileiros.csv', stringsAsFactors=FALSE)
 
 b2015 <- read.csv('banco2015.csv', stringsAsFactors=FALSE)
 b2015$ano <- 2015
-b2015 <- select(b2015, ano, data, time_casa, gols_casa, time_fora, gols_fora)
+b2015 <- select(b2015, ano, dia, time_casa, gols_casa, time_fora, gols_fora)
 
 transforma_banco <- function(db) { #Função para juntar banco de 2015
   
-  db <- select(db, ano, data, time_casa, gols_casa, time_fora,gols_fora)
+  db <- select(db, ano, dia, time_casa, gols_casa, time_fora,gols_fora)
   db$time_casa <- tolower(db$time_casa)
   db$time_fora <- tolower(db$time_fora)
   db$time_casa <- iconv(db$time_casa, to="ascii//translit")
@@ -29,7 +29,7 @@ transforma_banco <- function(db) { #Função para juntar banco de 2015
 }
 
 banco <- transforma_banco(rbind(banco, b2015)) # Junta os dados para 2015
-banco <- banco[1:6352,]
+banco <- na.omit(banco)
 
 # Transforma data e dano para data( formato padrão)
 banco <- unite(banco, dia, data,ano, sep="/")
