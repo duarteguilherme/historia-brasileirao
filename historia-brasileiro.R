@@ -94,31 +94,54 @@ banco$ano <- as.numeric(banco$ano)
 banco <- mutate(banco, rodada=ano*100+rodada)
 
 
+# Cria parte inicial de banco com times e rodada 0.
+times <- unique(banco$time_casa)
+init_banco <- data.frame(time_casa=times[1:(length(times)/2)], 
+                         time_fora=times[(1+length(times)/2):length(times)],
+                         stringsAsFactors=FALSE)
+init_banco$ano <- 2003
+init_banco$dia <- "03-03-2003"
+init_banco$dia <- as.Date(init_banco$dia, format="%d-%m-%Y")
+init_banco$gols_casa <- NA
+init_banco$gols_fora <- NA
+init_banco$ponto <- .5
+init_banco$rodada <- 0
+
+banco <- rbind(init_banco, banco)
+
+
 # Carregando as rodadas em ratings
 rod <- select(banco, Date=dia, rodada) %>%
   arrange(rodada)
 ratings <- left_join(ratings, rod)
+
+
+ratings <- ratings[!duplicated(ratings),]
+
+# Cria parte de ratings com times e rodada 0
+initial_part <- data.frame(team=unique(banco$time_casa), stringsAsFactors=FALSE)
+initial_part$Date <- "03-03-2003"
+initial_part$Date <- as.Date(initial_part$Date, format="%d-%m-%Y")
+initial_part$valor <- 0
+initial_part$rodada <- 0
+ratings <- rbind(initial_part, ratings)
+
 
 # Poe os primeiros ELOs
 ratings$elo <- NA
 
 rodadas_iter <- sort(unique(rod$rodada))# Definindo rodadas unicas e ordenadas para iterar
 
-
-ratings <- ratings[!duplicated(ratings),]
-
-
-
-for (i in rod$rodada[1:length(rod$rodada)]) { # Pula o primeiro
+for (i in rodadas_iter) { 
   print(i)
     provisorio <- filter(banco, rodada <= i)
   x <- data.frame(provisorio$rodada, provisorio$time_casa, provisorio$time_fora, provisorio$ponto,  stringsAsFactors=FALSE)
-  ranking <- elo(x,init=1200)
+  ranking <- elo(x,init=1200, gamma=2)
   for (j in ranking$ratings$Player) {
     ratings[ratings$team==j & ratings$rodada==i,]$elo <- ranking$ratings$Rating[ranking$ratings$Player==j]
   }
 }
 
+  
 
-
-x <- data.frame(banco$rodada, banco$time_casa, banco$time_fora, banco$ponto, stringsAsFactors=FALSE)
+# MUdou o ano, perde a pontuação
