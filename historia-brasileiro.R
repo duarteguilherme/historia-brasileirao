@@ -6,7 +6,7 @@ library(dplyr)
 
 # Setando pasta
 
-setwd('~/historia_brasileirao/')
+setwd('~/Documentos/R/historia-brasileirao/')
 
 
 banco <- read.csv('brasileiros.csv', stringsAsFactors=FALSE)
@@ -29,20 +29,17 @@ transforma_banco <- function(db) { #Função para juntar banco de 2015
 }
 
 banco <- transforma_banco(rbind(banco, b2015)) # Junta os dados para 2015
-banco <- na.omit(banco)
 
-# Transforma data e dano para data( formato padrão)
-banco <- unite(banco, dia, data,ano, sep="/")
-banco$dia <- as.Date(banco$dia, format="%d/%m/%Y") 
-
+banco$dia <- as.Date(banco$dia, format="%Y-%m-%d")
 
 # Cria coluna 'ponto' correspondente a 1 se o time da casa ganhou, 0 se perdeu, e 0.5 , se empate.
 banco <- mutate(banco, ponto=ifelse(gols_casa > gols_fora, 1, ifelse(gols_casa < gols_fora, 0, .5)))
 
+banco <- na.omit(banco)
 
 # Ajusta rodadas
-banco <- arrange(banco,Date )
-banco <- mutate(banco, ano=format(Date, "%Y"))
+banco <- arrange(banco,dia  )
+banco <- mutate(banco, ano=format(dia, "%Y"))
 banco$rodada <- NA
 for (i in 2003:2014) { # Código mal escrito, mas é o que temos
   print(i)
@@ -54,14 +51,14 @@ for (i in 2003:2014) { # Código mal escrito, mas é o que temos
   control <- 1
   rodada <- 1
   for (j in which(banco$ano==i)) {
-    if ( control > jogos_por_rodada ) {
+    banco[j,]$rodada <- rodada
+    if ( control >= jogos_por_rodada ) {
       control <-  1
       rodada <- rodada + 1
     }
     else { 
       control <- control + 1
     }
-      banco[j,]$rodada <- rodada
     
   }
 }
@@ -75,29 +72,6 @@ banco <- banco %>%
 
 
 # Cria presence para banco
-presenca <- expand.grid(unique(banco$time_casa), banco$dia )
-presenca <- data.frame(team=presenca$Var1, Date=presenca$Var2)
-presenca$team <- as.character(presenca$team)
-presenca$valor <- 0
-presenca <- presenca[!duplicated(presenca), ]
-presenca <- spread(presenca, team, valor )
-
-presenca <- mutate(presenca, ano=format(Date, "%Y"))
-# ADiciona 1 se o time está presente e 0 se não
-
-for (i in 1:nrow(banco)) {
-  time_casa <- banco[i,]$time_casa
-  time_fora <- banco[i,]$time_fora
-  ano <- format(banco[i,]$Date, "%Y")
-  presenca[presenca$ano==ano,][[time_casa]] <- 1 
-}
-
-
-presenca <- select(presenca, -ano)
-
-presenca$Date <- as.Date(presenca$Date, format="%Y-%m-%d")
-
-banco$Date <- as.Date(banco$Date, format="%Y-%m-%d")
 
 # Hora de Usar PlayerRatings
 
@@ -106,7 +80,46 @@ banco$Date <- as.Date(banco$Date, format="%Y-%m-%d")
 
 ratings <- expand.grid(unique(banco$time_casa), banco$dia )
 ratings <- data.frame(team=ratings$Var1, Date=ratings$Var2)
-ratings$team <- as.character(presenca$team)
+ratings$team <- as.character(ratings$team)
 ratings$valor <- NA
 ratings <- ratings[!duplicated(ratings), ]
 
+
+
+
+
+
+
+## Criando a rodada certa para o PlayerRatings
+banco$ano <- as.numeric(banco$ano)
+banco <- mutate(banco, rodada=ano*100+rodada)
+
+
+# Carregando as rodadas em ratings
+rod <- select(banco, Date=dia, rodada) %>%
+  arrange(rodada)
+ratings <- left_join(ratings, rod)
+
+# Poe os primeiros ELOs
+ratings$elo <- NA
+
+rodadas_iter <- sort(unique(rod$rodada))# Definindo rodadas unicas e ordenadas para iterar
+
+
+ratings <- ratings[!duplicated(ratings),]
+
+
+
+for (i in rod$rodada[1:length(rod$rodada)]) { # Pula o primeiro
+  print(i)
+    provisorio <- filter(banco, rodada <= i)
+  x <- data.frame(provisorio$rodada, provisorio$time_casa, provisorio$time_fora, provisorio$ponto,  stringsAsFactors=FALSE)
+  ranking <- elo(x,init=1200)
+  for (j in ranking$ratings$Player) {
+    ratings[ratings$team==j & ratings$rodada==i,]$elo <- ranking$ratings$Rating[ranking$ratings$Player==j]
+  }
+}
+
+
+
+x <- data.frame(banco$rodada, banco$time_casa, banco$time_fora, banco$ponto, stringsAsFactors=FALSE)
