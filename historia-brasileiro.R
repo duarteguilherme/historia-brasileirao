@@ -63,15 +63,14 @@ for (i in 2003:2014) { # Código mal escrito, mas é o que temos
   }
 }
 
-# Cria winner, loser and draw
-banco <- banco %>%
-  mutate(Date=dia) %>%
-  mutate(winner=ifelse(gols_casa>=gols_fora, time_casa, time_fora)) %>%
-  mutate(loser=ifelse(gols_casa<gols_fora, time_casa, time_fora)) %>%
-  mutate(draw=ifelse(gols_casa==gols_fora, TRUE, FALSE))
+# Cria winner, loser and draw, Mas esse bloco é inútil
+# banco <- banco %>%
+#  mutate(Date=dia) %>%
+#  mutate(winner=ifelse(gols_casa>=gols_fora, time_casa, time_fora)) %>%
+#  mutate(loser=ifelse(gols_casa<gols_fora, time_casa, time_fora)) %>%
+#  mutate(draw=ifelse(gols_casa==gols_fora, TRUE, FALSE))
 
 
-# Cria presence para banco
 
 # Hora de Usar PlayerRatings
 
