@@ -106,6 +106,27 @@ ratings <- filter(ratings, dia!="0000-00-00")
 
 
 
+colunas <- unique(ratings$time)
+ratings_json <- spread(ratings, time, rating)
+
+for (j in 2:ncol(ratings_json)) {
+  print(i)
+  primeiro <- which(!is.na(ratings_json[,j]))[1]
+  if ( length(primeiro)==0)
+    next
+  for (i in primeiro:nrow(ratings_json)) {
+    if ( is.na(ratings_json[i,j]) )
+      ratings_json[i,j] <- ratings_json[(i-1),j]
+  }
+}
+
+library(RJSONIO)
+ratings_json <- toJSON(ratings_json)
+
+write(ratings_json, file="historia_fut.json")
+
+
+
 coringao <- filter(ratings, time=="corinthians")
 coringao$dia <- as.Date(coringao$dia, format="%Y-%m-%d")
 plot(coringao$dia, coringao$rating, type="l")

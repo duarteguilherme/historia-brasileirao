@@ -6,7 +6,7 @@ library(dplyr)
 
 # Setando pasta
 
-setwd('~/Documentos/R/historia-brasileirao/')
+setwd('~/historia_brasileirao/')
 
 
 banco <- read.csv('brasileiros.csv', stringsAsFactors=FALSE)
@@ -131,17 +131,27 @@ ratings <- rbind(initial_part, ratings)
 ratings$elo <- NA
 
 rodadas_iter <- sort(unique(rod$rodada))# Definindo rodadas unicas e ordenadas para iterar
-
-for (i in rodadas_iter) { 
-  print(i)
-    provisorio <- filter(banco, rodada <= i)
-  x <- data.frame(provisorio$rodada, provisorio$time_casa, provisorio$time_fora, provisorio$ponto,  stringsAsFactors=FALSE)
-  ranking <- elo(x,init=1200, gamma=2)
-  for (j in ranking$ratings$Player) {
-    ratings[ratings$team==j & ratings$rodada==i,]$elo <- ranking$ratings$Rating[ranking$ratings$Player==j]
-  }
-}
-
   
+  for (i in rodadas_iter) { 
+    print(i)
+      provisorio <- filter(banco, rodada <= i)
+    x <- data.frame(provisorio$rodada, provisorio$time_casa, provisorio$time_fora, provisorio$ponto,  stringsAsFactors=FALSE)
+    ranking <- elo(x,init=1800, gamma=20, kfac=16)
+    for (j in ranking$ratings$Player) {
+      ratings[ratings$team==j & ratings$rodada==i,]$elo <- ranking$ratings$Rating[ranking$ratings$Player==j]
+    }
+  }
+  
+    
+  
+  # MUdou o ano, perde a pontuação
+  
+  
+coringao <- filter(ratings, team=="corinthians")
+ plot(coringao$Date, coringao$elo, type="l")
+palmeiras <- filter(ratings, team=="palmeiras")
+plot(palmeiras$Date, palmeiras$elo, type="l")
 
-# MUdou o ano, perde a pontuação
+
+palmeiras <- filter(ratings, team=="sao-paulo")
+plot(palmeiras$Date, palmeiras$elo, type="l")
