@@ -1,0 +1,209 @@
+/* RESET */
+abbr,address,article,aside,audio,b,blockquote,body,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,samp,section,small,span,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,ul,var,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:0 0}li,ul{list-style-type:none}body{}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}nav ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:0 0;text-decoration:none}table{border-collapse:collapse;border-spacing:0}hr{display:block;height:1px;border:0;border-top:1px solid rgba(0,0,0,.1);margin:1em 0;padding:0}input,select{vertical-align:middle}
+
+body {
+
+  background: #878787 url('../img/body-bg.jpg');
+
+  font-family: 'flamabook', arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-size: 10px;
+  
+}
+
+/*TITULO DA PAGINA*/
+#titulo {
+  width: 970px;
+  margin: 0 auto;
+  margin-top: 36px;
+  margin-bottom: 40px;
+  text-align: right;
+  /*border-bottom: 1px solid rgba(32,38,44,1.0);*/
+  
+}
+
+h1 {
+  text-transform: uppercase;
+  font-family: 'flamabold';
+  font-size:44px;
+  line-height:1.2;
+  color: #20262C;
+  text-shadow:0px 1px 0px rgba(0,0,0,0.2);
+
+}
+
+h1 span {
+  font-weight: normal;
+  font-family: "flamathin";
+  font-size:30px;
+  color: #20262C;
+  opacity: 0.8;
+}
+/*FIM TITULO DA PAGINA*/
+
+/* CODIGO REFERENTE AO GRAFICO*/
+svg {
+  background-color:color|transparent;
+  margin-bottom: 100px;
+  width: 960px;
+  height: 500px;
+  border-style: solid;
+  border-width: 0.5px;
+  border-color: #d2d2d2;
+}
+
+div.svgWrap {
+    width:1000px;
+    margin:0px auto;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #757575;
+  shape-rendering: crispEdges;
+  stroke-width: .1px;
+}
+
+.x.axis path {
+	
+}
+
+.x.axis line {
+ 
+ }
+
+.linha {
+  fill: none;
+  /*stroke: steelblue;*/
+  /*stroke-width: 1.5px;*/
+}
+
+.linhaEscolhida {
+  stroke: #ff6600;
+}
+/* FIM CODIGO REFERENTE AO GRAFICO */
+
+
+/* CODIGO REFERENTE AO DROPDOWN MENU */
+.clearfix:after {
+    display:block;
+    clear:both;
+}
+ 
+.menu-wrap {
+    width:100%;
+    box-shadow:0px 1px 3px rgba(0,0,0,0.2);
+    background:#20262C;
+    display: block;
+    clear: both;
+    height:50px;
+}
+ 
+.menu {
+    width:1000px;
+    margin:0px auto;
+}
+ 
+.menu li {
+    margin:0px;
+    list-style:none;
+    font-family:'flamabold';
+    text-transform: uppercase;
+}
+
+.menu a {
+    transition:all linear 0.15s;
+    color:#b4c0d3;
+}
+
+.menu li:hover > a, .menu .current-item > a {
+    text-decoration:none;
+    color:#be5b70;
+}
+ 
+.menu .arrow {
+    font-size:8px;
+    line-height:0%;
+}
+
+h1 .metodologia {
+    color: #20262C;
+    font-size:16px;
+    font-family: flamabook;
+    line-height:0.2;
+}
+ 
+.menu > ul > li {
+    float:left;
+    display:inline-block;
+    position:relative;
+    font-size:19px;
+}
+ 
+.menu > ul > li > a {
+    padding:10px 40px;
+    display:inline-block;
+    text-shadow:0px 1px 0px rgba(0,0,0,0.4);
+}
+ 
+.menu > ul > li:hover > a, .menu > ul > .current-item > a {
+    background:#1e2329;
+}
+ 
+.menu li:hover .sub-menu {
+    z-index:1;
+    opacity:1;
+}
+ 
+.sub-menu {
+    width:160%;
+    padding:5px 0px;
+    position:absolute;
+    top:100%;
+    left:0px;
+    z-index:-1;
+    opacity:0;
+    transition:opacity linear 0.15s;
+    box-shadow:0px 2px 3px rgba(0,0,0,0.2);
+    background:#1e2329;
+}
+ 
+.sub-menu li {
+    display:block;
+    font-size:16px;
+}
+ 
+.sub-menu li a {
+    padding:10px 30px;
+    display:block;
+}
+ 
+.sub-menu li a:hover, .sub-menu .current-item a {
+    
+}
+/* FIM CODIGO REFERENTE AO DROPDOWN MENU */
+
+/*INICIO CODIGO REFERENTE AO MENU HORIZONTAL*/
+.menuEscudos{
+    border:1px solid #ccc;
+    border-width:1px 0;
+    list-style:none;
+    margin:0;
+    margin-top: 10px;
+    padding:0;
+    text-align:center;
+}
+.menuEscudos li{
+    display:inline;
+    font-family: "flamathin";
+    text-transform: uppercase;
+    font-size: 14px;
+
+}
+.menuEscudos a{
+  display:inline-block;
+  padding:10px;
+}
+/*FIM CODIGO REFERENTE AO MENU HORIZONTAL*/
