@@ -17,7 +17,7 @@ b2015 <- select(b2015, ano, dia, time_casa, gols_casa, time_fora, gols_fora)
 
 transforma_banco <- function(db) { #Função para juntar banco de 2015
   
-  db <- select(db, ano, dia, time_casa, gols_casa, time_fora,gols_fora)
+  db <- select(db, ano, dia, time_casa, gols_casa, time_fora,gols_fora, r_timecasa, r_timefora)
   db$time_casa <- tolower(db$time_casa)
   db$time_fora <- tolower(db$time_fora)
   db$time_casa <- iconv(db$time_casa, to="ascii//translit")
