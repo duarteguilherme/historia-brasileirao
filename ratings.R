@@ -106,10 +106,24 @@ organize_ratings <- function(banco) {
 
 
 
-banco <- read.csv('brasileiros-unique.csv', stringsAsFactors=FALSE)
+banco <- read.csv('banco-historia.csv', stringsAsFactors=FALSE)
+
+
+
+
+# Analyze db
+times <- unique(c(banco$time_casa, banco$time_fora))
+
+for (i in 1:length(times)) { 
+cat(times[i])
+if( (i %% 2)==0 ) cat('\n')
+else cat(',')
+}
+
 
 
 banco <- organize_ratings(banco)
+
 
 
 ### Create database with all ratings
@@ -121,7 +135,7 @@ ratings <- filter(ratings, dia!="0000-00-00")
 
 # Teste
 
-
+banco[which(banco$time_fora=="to"),]
 
 
 # Acrescenta NA para antes de o time entrar no banco
