@@ -7,9 +7,12 @@ def date_range(start, end, intv):
         yield (start + diff * i).strftime("%Y-%m-%d")
     yield end.strftime("%Y-%m-%d")
 
-with open('visualizacao/data/dadosfull.json','r') as file:
+with open('visualizacao/data/historia_fut.json','r') as file:
     dados = json.load(file)
+    dados['data'] = dados['dia']
+    del dados['dia']
     datas = [datetime.strptime(d,'%Y-%m-%d').date() for d in dados['data']]
+
     n_dados = {}
     for d in datas:
         if d.year not in n_dados:
