@@ -126,6 +126,11 @@ for (j in jsons) {
 
 banco <- rbind(banco,banco2)
 
+banco$time_fora[banco$time_fora=="mi"] <- "mixto"
+banco$gols_casa <- as.numeric(banco$gols_casa)
+
+banco$gols_fora <- as.numeric(banco$gols_fora)
+banco$ano <- as.numeric(banco$ano)
 
 banco <- banco[!duplicated(banco),]
 banco <- na.omit(banco)
