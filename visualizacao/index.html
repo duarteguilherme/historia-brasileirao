@@ -7,10 +7,13 @@
         <title>Brasileirão</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/fonts.css">
-        <!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ek+Mukta">-->
     </head>
 
     <body>
+
+        <div id="loading">
+          <img id="loading-image" src="img/preloader.gif" alt="Loading..." />
+        </div>
 
         <div class="menu-wrap">
             <nav class="menu">
@@ -29,27 +32,56 @@
             </nav>
         </div>
 
-        <!--<ul class="menuEscudos">
-          <li><a href="#">ESCUDO TIME 01</a></li>
-          <li><a href="#">ESCUDO TIME 02</a></li>
-          <li><a href="#">ESCUDO TIME 03</a></li>
-          <li><a href="#">ESCUDO TIME 04</a></li>
-          <li><a href="#">ESCUDO TIME 05</a></li>
-        </ul>-->
-        
-        <div id="titulo">
-            <h1><span>TABELA ESTADÃO DO</span> <br>CAMPEONATO BRASILEIRO</h1>
-        </div>
-        
         <div class="svgWrap">
-            <svg>
-            </svg>
+            
+            <div id="titulo">
+                <h1>HISTÓRIA DO BRASILEIRÃO</h1>
+            </div>
+            
+            <div id="linhaFina">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus tempor nisl commodo cursus. Vivamus et ante ut enim rhoncus porta. Sed posuere sem vel fringilla aliquet. Quisque nec orci ut augue efficitur elementum</p>
+            </div>
+
+            <ul id="menuEscudos01" class="menuEscudos">
+              <li id="atleticomg"><a href="javascript:void(0)"><img src="img/escudos/atleticomg.png"></a></li>
+              <li id="atleticopr"><a href="javascript:void(0)"><img src="img/escudos/atleticopr.png"></a></li>
+              <li id="avai"><a href="javascript:void(0)"><img src="img/escudos/avai.png"></a></li>
+              <li id="chapecoense"><a href="javascript:void(0)"><img src="img/escudos/chapecoense.png"></a></li>
+              <li id="corinthians"><a href="javascript:void(0)"><img src="img/escudos/corinthians.png"></a></li>
+              <li id="coritiba"><a href="javascript:void(0)"><img src="img/escudos/coritiba.png"></a></li>
+              <li id="cruzeiro"><a href="javascript:void(0)"><img src="img/escudos/cruzeiro.png"></a></li>
+              <li id="figueirense"><a href="javascript:void(0)"><img src="img/escudos/figueirense.png"></a></li>
+              <li id="flamengo"><a href="javascript:void(0)"><img src="img/escudos/flamengo.png"></a></li>
+              <li id="fluminense"><a href="javascript:void(0)"><img src="img/escudos/fluminense.png"></a></li>
+            </ul>
+
+            <ul id="menuEscudos02" class="menuEscudos">
+              <li id="goias"><a href="javascript:void(0)"><img src="img/escudos/goias.png"></a></li>
+              <li id="gremio"><a href="javascript:void(0)"><img src="img/escudos/gremio.png"></a></li>
+              <li id="internacional"><a href="javascript:void(0)"><img src="img/escudos/internacional.png"></a></li>
+              <li id="joinville"><a href="javascript:void(0)"><img src="img/escudos/joinville.png"></a></li>
+              <li id="palmeiras"><a href="javascript:void(0)"><img src="img/escudos/palmeiras.png"></a></li>
+              <li id="pontepreta"><a href="javascript:void(0)"><img src="img/escudos/pontepreta.png"></a></li>
+              <li id="santos"><a href="javascript:void(0)"><img src="img/escudos/santos.png"></a></li>
+              <li id="saopaulo"><a href="javascript:void(0)"><img src="img/escudos/saopaulo.png"></a></li>
+              <li id="sport"><a href="javascript:void(0)"><img src="img/escudos/sport.png"></a></li>
+              <li id="vasco"><a href="javascript:void(0)"><img src="img/escudos/vasco.png"></a></li>
+            </ul>
+        
         </div>
         
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>-->
-        <!--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>-->
-        <script type="text/javascript" src="js/d3.min.js"></script>
-        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <div id="legenda">
+            <p id="nomeTimeSelecionado"><br><p>
+        </div>
+
+        <svg></svg>
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+        <!--<script type="text/javascript" src="js/d3.min.js"></script>-->
+        <!--<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>-->
         <script type="text/javascript" src="js/script.js"></script>
   
   </body>

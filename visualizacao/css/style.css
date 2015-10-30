@@ -3,30 +3,52 @@ abbr,address,article,aside,audio,b,blockquote,body,canvas,caption,cite,code,dd,d
 
 body {
 
-  background: #878787 url('../img/body-bg.jpg');
+  background: #878787 url('../img/body-bg-claro.jpg');
 
-  font-family: 'flamabook', arial, sans-serif;
+  font-family: 'flamathin', arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-size: 10px;
+  font-size: 12px;
   
+}
+
+/*LOADING*/
+#loading {
+   width: 100%;
+   height: 100%;
+   top: 0px;
+   left: 0px;
+   position: fixed;
+   display: block;
+   opacity: 0.5;
+   background-color: #fff;
+   z-index: 99;
+   text-align: center;
+}
+
+#loading-image {
+  position: absolute;
+  top: 44%;
+  left: 48%;
+  z-index: 100;
 }
 
 /*TITULO DA PAGINA*/
 #titulo {
-  width: 970px;
+  width: 1000px;
   margin: 0 auto;
   margin-top: 36px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   text-align: right;
+  text-align: center;
+  vertical-align: middle;
   /*border-bottom: 1px solid rgba(32,38,44,1.0);*/
-  
 }
 
 h1 {
   text-transform: uppercase;
   font-family: 'flamabold';
-  font-size:44px;
+  font-size:48px;
   line-height:1.2;
   color: #20262C;
   text-shadow:0px 1px 0px rgba(0,0,0,0.2);
@@ -36,21 +58,46 @@ h1 {
 h1 span {
   font-weight: normal;
   font-family: "flamathin";
-  font-size:30px;
+  font-size:34px;
   color: #20262C;
   opacity: 0.8;
 }
-/*FIM TITULO DA PAGINA*/
+
+/*LINHA FINA*/
+#linhaFina {
+  width: 600px;
+  margin: 0 auto;
+  margin-bottom: 26px;
+}
+
+#linhaFina p {
+  color: #606060;
+  font-size: 16px;
+  font-family: "flamabook";
+  text-align: right;
+  text-align: center;
+  vertical-align: middle;
+}
 
 /* CODIGO REFERENTE AO GRAFICO*/
+#nomeTimeSelecionado {
+  color: #20262C;
+  font-size: 14px;
+  margin-bottom: 6px;
+  margin-left: 6%;
+  text-transform: uppercase;
+  font-family: 'flamabold', arial, sans-serif;
+}
+
+#informacaoTimeSelecionado {
+  font-family: 'flamathin', arial, sans-serif;
+}
+
 svg {
   background-color:color|transparent;
   margin-bottom: 100px;
-  width: 960px;
-  height: 500px;
-  border-style: solid;
-  border-width: 0.5px;
-  border-color: #d2d2d2;
+  -webkit-box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
 
 div.svgWrap {
@@ -76,12 +123,23 @@ div.svgWrap {
 
 .linha {
   fill: none;
+  stroke: #7f7f7f;
   /*stroke: steelblue;*/
   /*stroke-width: 1.5px;*/
 }
 
-.linhaEscolhida {
+.linhaSelecionada {
   stroke: #ff6600;
+}
+
+.infoTooltip {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  font-family: 'flamathin', arial, sans-serif;
+}
+
+.infoTooltip span {
+  font-family: 'flamabold', arial, sans-serif;
 }
 /* FIM CODIGO REFERENTE AO GRAFICO */
 
@@ -185,25 +243,45 @@ h1 .metodologia {
 }
 /* FIM CODIGO REFERENTE AO DROPDOWN MENU */
 
-/*INICIO CODIGO REFERENTE AO MENU HORIZONTAL*/
-.menuEscudos{
+/*MENU HORIZONTAL*/
+.menuEscudos {
     border:1px solid #ccc;
     border-width:1px 0;
     list-style:none;
     margin:0;
     margin-top: 10px;
+    margin-bottom: 30px;
     padding:0;
     text-align:center;
+    height: 34px;
 }
-.menuEscudos li{
+.menuEscudos li {
     display:inline;
     font-family: "flamathin";
     text-transform: uppercase;
     font-size: 14px;
 
 }
-.menuEscudos a{
+.menuEscudos a {
   display:inline-block;
   padding:10px;
 }
-/*FIM CODIGO REFERENTE AO MENU HORIZONTAL*/
+
+.menuEscudos img {
+  width: 30px;
+  height: 30px;
+  transition: all .4s ease;
+  filter: gray; /* IE6-9 */
+  filter: grayscale(.8); /* Firefox 35+ */
+  -webkit-filter: grayscale(.8); /* Google Chrome, Safari 6+ & Opera 15+ */
+}
+
+.menuEscudos img:hover {
+  filter: none;
+  -webkit-filter: grayscale(0);
+}
+
+#menuEscudos01 {
+  margin-bottom: 10px;
+}
+/*MENU HORIZONTAL*/
