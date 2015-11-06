@@ -1,3 +1,19 @@
+function make_x_axis() {        
+        return d3.svg.axis()
+                    .scale(x)
+                             .orient("bottom")
+                                     .ticks(23)
+}
+
+function make_y_axis() {        
+        return d3.svg.axis()
+                    .scale(y)
+                            .orient("left")
+                                    .ticks(30)
+}
+
+
+
 //FUNCAO AUXILIAR PARA DEBUGAR O CODIGO
 function printa(string) {
   //CASO SEJA PASSADO PARAMETRO
@@ -160,6 +176,19 @@ d3.json ("data/dadosfull.json", function(error, dados) {
   yDomainMax += 120;
 
   y.domain([yDomainMin, yDomainMax]);
+svg.append("g")         
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(make_x_axis()
+        .tickSize(-height, 0, 0)
+        .tickFormat("")
+  )  
+  svg.append("g")         
+          .attr("class", "grid")
+                  .call(make_y_axis()
+                                      .tickSize(-width, 0, 0)
+                                                  .tickFormat("")
+                                                          )
 
   //CRIACAO DO CONTAINER PARA INCLUIR OS ELEMENTOS SEGUINTES
   container = svg.append("g")
@@ -222,6 +251,7 @@ d3.json ("data/dadosfull.json", function(error, dados) {
 
     }
 
+    
   })
 
   //CRIANDO O EVENTO RETIRAR A INFORMACAO
