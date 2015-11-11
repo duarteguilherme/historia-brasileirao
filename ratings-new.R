@@ -1,5 +1,6 @@
 library(tidyr)
 library(dplyr)
+library(ggplot2)
 setwd('/var/www/html/historia_brasileirao/')
 
 
@@ -120,8 +121,7 @@ organize_ratings <- function(banco,k=10) {
   # banco$r_timecasa <- NA # Create column filled in with Home Team rating
   # banco$r_timefora <- NA # Create column filled in with Guest Team rating
   banco <- arrange(banco, dia)
-  newbank <- data.frame(dia=as.Date("1929-01-01", "%Y-%m-%d")
-,
+  newbank <- data.frame(dia=as.Date("1929-01-01", "%Y-%m-%d"),
                         time_casa=NA,
                         gols_casa=NA,
                         gols_fora=NA,
@@ -194,13 +194,13 @@ banco <- read.csv('banco.csv', stringsAsFactors=FALSE)
 
 
 ##### Numero de jogos por ano
-a <- 3 ## a ajustará o K
-
+a <- 4 ## a ajustará o K
+b <- 25 ## media
 n_jogos <- banco %>%
   group_by(ano) %>%
   summarise(jogos=n()) %>%
   mutate(media=-1*(jogos-mean(jogos))/sd(jogos)) %>%
-  mutate(media=media*a+15)
+  mutate(media=media*a+b)
   
 
 
