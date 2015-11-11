@@ -1,29 +1,3 @@
-function make_x_axis() {        
-        return d3.svg.axis()
-                    .scale(x)
-                             .orient("bottom")
-                                     .ticks(23)
-}
-
-function make_y_axis() {        
-        return d3.svg.axis()
-                    .scale(y)
-                            .orient("left")
-                                    .ticks(30)
-}
-
-
-
-//FUNCAO AUXILIAR PARA DEBUGAR O CODIGO
-function printa(string) {
-  //CASO SEJA PASSADO PARAMETRO
-  if(string) {
-    console.log(string);
-  }
-  else {
-  console.log("opa!");
-  }
-}
 
 //DIMENSOES DO GRAFICO
 var margin = {top: 10, right: 55, bottom: 30, left: 50},
@@ -31,11 +5,6 @@ var margin = {top: 10, right: 55, bottom: 30, left: 50},
     w = window.innerWidth - 20,
     width = window.innerWidth - margin.right - margin.left - 20,
     height = 500 - margin.top - margin.bottom;
-
-//CODIGO REFERENTE AO ZOOM
-var zoom = d3.behavior.zoom()
-    .scaleExtent([1, 6])
-    .on("zoom", zoomed);
 
 //CODIGO REFERENTE AO DRAG
 /*var drag = d3.behavior.drag()
@@ -46,56 +15,6 @@ var zoom = d3.behavior.zoom()
 
 //FORMATO DE PARSEMENTO DOS DADOS DE DATA
 var parseData = d3.time.format("%Y-%m-%d").parse;
-
-//ESCALA DOS DADOS NOS RESPECTIVOS EIXOS
-var x = d3.time.scale()
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
-//DE QUE MANEIRA AS INFORMACOES DO EIXO X VAO APARECER 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    //.tickSize(-height, 0)
-    //.tickPadding(6)
-    .orient("bottom")
-    .ticks(d3.time.years, 2);
-
-//DE QUE MANEIRA AS INFORMACOES DO EIXO Y VAO APARECER 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    //.orient("right")
-    //.tickSize(-width)
-    //.tickPadding(6)
-    .orient("left");
-
-var line = d3.svg.line()
-    .interpolate("linear")
-    .defined(function(d) { return d.indice != null; })
-    .x(function(d) {
-      return x(d.data);
-    })
-    .y(function(d) {
-      return y(d.indice); 
-    });
-
-//INICIO DO DESENHO DO GRAFICO
-var svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .on("mousedown", clickGrafico)
-    .call(zoom);
-    //.on("mousedown.zoom", null);
-
-//CRIADO UM RETANGULO QUE PARA DEMARCAR O DRAG
-var rect = svg.append("rect")
-    .attr("width", width)
-    .attr("height", height)
-    .style("fill", "none")
-    .style("pointer-events", "all");
 
 var cities, city;
 var timeEscolhido; //ARMAZENA O TIME ESCOLHIDO PELO USUARIO NO MENU
@@ -118,7 +37,76 @@ d3.json ("data/dadosfull.json", function(error, dados) {
   
   if (error) throw error;
 
-  //ARMAZENANDO O TOTAL DE TIMES
+
+    //funções e variáveis para eixos e linhas
+    var make_x_axis = function () {
+    return d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(5);
+    };
+
+    var make_y_axis = function () {
+    return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(5);
+    };
+
+    //PARSEANDO AS DATAS PARA O FORMATO DE LEITURA DO GRAFICO
+    dados["data_fake"].forEach(function(data, index) {
+
+        dados["data_fake"][index] = parseData(data);
+
+    });
+
+    var x = d3.time.scale()
+        .domain(d3.extent(dados["data_fake"], function(d) { return d; }))
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(d3.time.years, 2);
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .interpolate("linear")
+        .defined(function(d) { return d.indice != null; })
+        .x(function(d) {
+            return x(d.data);
+        })
+        .y(function(d) {
+            return y(d.indice);
+        });
+
+    var zoom = d3.behavior.zoom()
+        .x(x)
+        .on("zoom", zoomed);
+
+    var svg = d3.select("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .on("mousedown", clickGrafico)
+        .call(zoom);
+
+    svg.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "none")
+        .attr('class','plot')
+        .style("pointer-events", "all");
+
+
+    //ARMAZENANDO O TOTAL DE TIMES
   nomesDosTimes = d3.keys(dados).filter(function(index, element) { return index !== "data"; });
   nomesDosTimes.splice(nomesDosTimes.indexOf("data_fake"), 1);
   
@@ -129,12 +117,6 @@ d3.json ("data/dadosfull.json", function(error, dados) {
 
   });
 
-  //PARSEANDO AS DATAS PARA O FORMATO DE LEITURA DO GRAFICO
-  dados["data_fake"].forEach(function(data, index) {
-
-    dados["data_fake"][index] = parseData(data);
-
-  });
 
   //CRIANDO UM ARRAY DE OBJETOS COM OS TIMES E SEUS RESPECTIVOS VALORES
   times = nomesDosTimes.map(function(nomeTime) {
@@ -155,9 +137,18 @@ d3.json ("data/dadosfull.json", function(error, dados) {
     }; 
   });
 
-  //PARA LEMBRAR: COMO ACESSAR OS ITENS NA VARIAVEL TIMES
+
+    //ESTABELECENDO O DOMINIO DE VALORES DO EIXO Y
+    //A PARTIR DOS INDICES
+    y.domain([
+        d3.min(times, function(t) { return d3.min(t.valores, function(v) { return v.indice; }); }),
+        d3.max(times, function(t) { return d3.max(t.valores, function(v) { return v.indice; }); })
+    ]);
+
+
+    //PARA LEMBRAR: COMO ACESSAR OS ITENS NA VARIAVEL TIMES
   //console.log(times[0].valores[0].indice);
-  
+ /*
   //ESTABELECENDO O DOMINIO DE VALORES DO EIXO X A PARTIR DAS DATAS
   x.domain(d3.extent(dados["data_fake"], function(d) { return d; }));
 
@@ -175,21 +166,73 @@ d3.json ("data/dadosfull.json", function(error, dados) {
   yDomainMin -= 120;
   yDomainMax += 120;
 
-  y.domain([yDomainMin, yDomainMax]);
-svg.append("g")         
-        .attr("class", "grid")
+  y.domain([yDomainMin, yDomainMax]);*/
+
+    svg.append("svg:g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0, " + height + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+    svg.append("g")
+        .attr("class", "x grid")
         .attr("transform", "translate(0," + height + ")")
         .call(make_x_axis()
-        .tickSize(-height, 0, 0)
-        .tickFormat("")
-  )  
-  svg.append("g")         
-          .attr("class", "grid")
-                  .call(make_y_axis()
-                                      .tickSize(-width, 0, 0)
-                                                  .tickFormat("")
-                                                          )
+            .tickSize(-height, 0, 0)
+            .tickFormat(""));
 
+    svg.append("g")
+        .attr("class", "y grid")
+        .call(make_y_axis()
+            .tickSize(-width, 0, 0)
+            .tickFormat(""));
+
+    var clip = svg.append("svg:clipPath")
+        .attr("id", "clip")
+        .append("svg:rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", width)
+        .attr("height", height);
+
+    var chartBody = svg.selectAll('.times')
+        .data(times)
+        .enter().append("g")
+        .attr("class","times")
+
+    chartBody.append("path")
+        .attr("class", "line")
+        .attr("opacity", 0.7)
+        .attr("d", function(d) { return line(d.valores); })
+        .style("stroke-width", function() { return ".5px"; })
+        .style("stroke", function() { return "rgb(127, 127, 127)"; });
+
+    function zoomed () {
+
+        svg.select(".x.axis").call(xAxis);
+        svg.select(".y.axis").call(yAxis);
+        svg.select(".x.grid")
+            .call(make_x_axis()
+                .tickSize(-height, 0, 0)
+                .tickFormat(""));
+        svg.select(".y.grid")
+            .call(make_y_axis()
+                .tickSize(-width, 0, 0)
+                .tickFormat(""));
+        svg.selectAll(".times").selectAll(".line")
+            .attr("class", "line")
+            .attr("d", function(d) { return line(d.valores); });
+
+    }
+
+
+
+
+
+    /*
   //CRIACAO DO CONTAINER PARA INCLUIR OS ELEMENTOS SEGUINTES
   container = svg.append("g")
                 .attr("class", "container");
@@ -267,6 +310,7 @@ svg.append("g")
   //CAPTURA DE MOVIMENTO DENTRO DO SVG
   var w = d3.select("svg")
       .on("mousemove", mousemove);
+      */
 
 });
 
@@ -341,25 +385,6 @@ function mostraLinha (timeEscolhido, linhaSelecionada) {
 }
 
 //FUNCOES REFERENTES AO ZOOM/DRAG
-function zoomed () {
-
-  var t = d3.event.translate,
-      s = d3.event.scale;
-
-  container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
- 
-  /*
-  if (s == 1) {
-    t[0] = Math.min(width / 2 * (s - 1), Math.max(width / 2  * (1 - s), t[0]));
-    t[1] = Math.min(height / 2 * (s - 1), Math.max(height / 2 * (1 - s), t[1]));
-    zoom.translate(t);
-    container.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");      
-  }
-  else {
-    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");  
-  }*/
-
-}
 
 /*
 function dragstarted(d) {
@@ -378,7 +403,6 @@ function dragended(d) {
 
 //FEEDBACK VISUAL DO CLICK FEITO PELO USUARIO
 function clickGrafico() {
-
     var stop = d3.event.button || d3.event.ctrlKey;
     if (stop) d3.event.stopImmediatePropagation(); // stop zoom
 
@@ -394,7 +418,6 @@ function clickGrafico() {
         .duration(500)
         .attr("r", 12)
         .style("stroke-opacity", 0);
-
 }
 
 //ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
