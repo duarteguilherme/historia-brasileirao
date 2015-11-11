@@ -131,6 +131,7 @@ organize_ratings <- function(banco,k=10) {
                         r_timefora=NA
                         ,stringsAsFactors=FALSE)
   for (j in 1:length(unique(banco$ano))) {
+    ano_k <- unique(banco$ano)[j]
     prov <- filter(banco, ano==unique(banco$ano)[j]) %>%
       arrange(dia)
     print(unique(banco$ano)[j])
@@ -163,7 +164,11 @@ organize_ratings <- function(banco,k=10) {
       rating_ante_fora <- banco_ante$rating[banco_ante$time == time_fora ][1] # Find rating
       gols_casa <- prov[i,]$gols_casa
       gols_fora <- prov[i,]$gols_fora
-      k <- 15
+      
+      #Define k
+      k <- n_jogos$media[n_jogos$ano==ano_k]
+      print(ano_k)
+      print(k)
       ratings_game <- return_rating(gols_1=gols_casa,
                                     gols_2=gols_fora,
                                     rating_1=rating_ante_casa,
@@ -188,40 +193,21 @@ organize_ratings <- function(banco,k=10) {
 banco <- read.csv('banco.csv', stringsAsFactors=FALSE)
 
 
+##### Numero de jogos por ano
+a <- 3 ## a ajustará o K
+
+n_jogos <- banco %>%
+  group_by(ano) %>%
+  summarise(jogos=n()) %>%
+  mutate(media=-1*(jogos-mean(jogos))/sd(jogos)) %>%
+  mutate(media=media*a+15)
+  
 
 
-# Analyze db
-times <- unique(c(banco$time_casa, banco$time_fora))
-
-for (i in 1:length(times)) { 
-cat(times[i])
-if( (i %% 2)==0 ) cat('\n')
-else cat(',')
-}
-
-
-# k1 <- organize_ratings(banco,1)
-# k5 <- organize_ratings(banco,5)
-# k10 <- organize_ratings(banco,10)
-# k15 <- organize_ratings(banco,15)
-# k20 <- organize_ratings(banco,20)
-# k25 <- organize_ratings(banco,25)
-# k30 <- organize_ratings(banco,30)
-
-# k1$k <- 1
-# k5$k <- 5
-# k10$k <- 10
-# k15$k <- 15
-# k20$k <- 20
-# k25$k <- 25
-# k30$k <- 30
-
-# banco <- rbind(k1,k5,k10,k15,k20,k25,k30)
 
 
 banco <- organize_ratings(banco)
   
-banco$k <- 10
 
 banco <- na.omit(banco)
 
@@ -357,3 +343,14 @@ qplot(V1,medias,data=medias_db)
 
 
 ### Acha primeira rodada pra cada campeonato
+
+classificacao <- read.csv('CLASSIFICACAO-TIMES.csv', stringsAsFactors=FALSE)
+classificacao <- classificacao %>%
+  group_by(ano) %>%
+  mutate(classificacao=(class-mean(class))/sd(class))
+
+
+
+
+
+
