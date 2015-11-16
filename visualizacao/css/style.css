@@ -283,8 +283,8 @@ h1 .metodologia {
   height: 30px;
   transition: all .4s ease;
   filter: gray; /* IE6-9 */
-  filter: grayscale(.8); /* Firefox 35+ */
-  -webkit-filter: grayscale(.8); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(.4); /* Firefox 35+ */
+  -webkit-filter: grayscale(.4); /* Google Chrome, Safari 6+ & Opera 15+ */
 }
 
 .menuEscudos img:hover {

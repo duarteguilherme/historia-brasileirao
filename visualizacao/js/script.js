@@ -280,7 +280,7 @@ function zoomed () {
 
 }
 
-
+//FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
 function adiciona_escudos() {
     var escudos = ['atleticomg','atleticopr','avai','chapecoense','corinthians','coritiba','cruzeiro','figueirense','flamengo','fluminense','goias','gremio','internacional','joinville','palmeiras','pontepreta','santos','saopaulo','sport','vasco']
     var html_base = function (time) { return '<li id="'+time+'"><a class="escudo" id="escudo_'+time+'" href="javascript:void(0)"><img src="img/escudos/'+time+'.png"></a></li>' }
@@ -297,8 +297,9 @@ function adiciona_escudos() {
 
 //FUNCAO CHAMADA QUANDO O DOCUMENTO ESTA PRONTO
 $(document).ready(function(){
-
-    adiciona_escudos();
+    
+  adiciona_escudos();
+  //selecionaPrimeiroEscudo();
 
   //CASO ALGUM ITEM DO MENU SEJA SELECIONADO
   $(".sub-menu").click(function(event) {
@@ -310,7 +311,7 @@ $(document).ready(function(){
     linhaSelecionada = $(".line")[timeEscolhido];
     //linhaSelecionada = d3.selectAll(".linhaTime .linha")[0][timeEscolhido]; //MESMO EFEITO REALIZADO COM D3
 
-    mostraLinha(timeEscolhido, linhaSelecionada);
+    mostraLinha(timeEscolhido, linhaSelecionada, true);
 
   });
 
@@ -330,7 +331,7 @@ $(document).ready(function(){
 
         //APAGA AS LINHAS SENDO EM EVIDENCIA E MOSTRA A SELECIONADA
         //ANIMA A TELA
-        mostraLinha(timeEscolhido, linhaSelecionada);
+        mostraLinha(timeEscolhido, linhaSelecionada, true);
 
       }
 
@@ -340,11 +341,11 @@ $(document).ready(function(){
 
 });
 
-function mostraLinha (timeEscolhido, linhaSelecionada) {
+function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
 
   //DIMINUI A OPACIDADE DE TODAS AS LINHAS
   //RETORNA A COR DE TODAS AS LINHAS PARA O CINZA
-  $(".line").attr("opacity", function(d) {return 0.4});
+  $(".line").attr("opacity", function(d) {return 0.7});
   $(".line").css("stroke", function(d) { return "rgb(127, 127, 127)"});
   $(".line").css("stroke-width", function(d) { return ".5px"});
 
@@ -362,12 +363,14 @@ function mostraLinha (timeEscolhido, linhaSelecionada) {
   $("#nomeTimeSelecionado").text(times[timeEscolhido].nome /*+ " | Fundado em: | Vencedor de x Campeonatos Brasileiros"*/);
 
   //tira destaque de todos os escudos e destaca só o escolhido agora
-  $('.escudo').css('border-style','');
-  $("#escudo_"+times[timeEscolhido].nome).css('border-style','solid');
+  //$('.escudo').css('border-style','');
+  //$("#escudo_"+times[timeEscolhido].nome).css('border-style','solid');
 
-  $('html, body').delay(60).animate({
-     scrollTop: $("#menuEscudos01").offset().top
-  }, 500, 'easeInOutCubic');
+  if (animaTela) {
+    $('html, body').delay(60).animate({
+       scrollTop: $("#menuEscudos01").offset().top
+    }, 500, 'easeInOutCubic');
+  }
 
 }
 
@@ -424,7 +427,7 @@ function criaCirculos (timeEscolhido) {
      
     })
     .attr("cy", function (d) {
-      
+
       return y(d.indice);
     
     })
@@ -493,7 +496,38 @@ function achaCirculoMaisProximo (nomeDoTime, distanciaX) {
 
 }
 
-//LOADING
+//FUNÇÃO PARA QUANDO A JANELA CARREGAR
 $(window).load(function() {
-   $('#loading').hide();
+  
+  //APAGA O LOADING
+  $('#loading').hide();
+
+  //SELECIONA O PRIMEIRO ESCUDO AO CARREGAR A PÁGINA
+  selecionaPrimeiroEscudo();
+
 });
+
+//FUNÇÃO PARA SELECIONAR O PRIMEIRO TIME NA ORDEM DE ESCUDOS
+//USADA AO INICIAR A PÁGINA
+function selecionaPrimeiroEscudo () {
+
+  var idPrimeiroEscudo = $("#menuEscudos01").children()[0].id;
+
+  times.forEach(function(time, index){
+      
+    if (time.nome == idPrimeiroEscudo) {
+
+      primeiroEscudo = index;
+      
+      //ARMAZENA A LINHA ESCOLHIDA
+      linhaSelecionada = $(".line")[primeiroEscudo];
+
+      //APAGA AS LINHAS SENDO EM EVIDENCIA E MOSTRA A SELECIONADA
+      //ANIMA A TELA
+      mostraLinha(primeiroEscudo, linhaSelecionada, false);
+
+    }
+
+  });
+
+}
