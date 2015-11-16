@@ -5,6 +5,8 @@ var margin = {top: 10, right: 55, bottom: 30, left: 50},
     w = window.innerWidth - 20,
     width = window.innerWidth - margin.right - margin.left - 20,
     height = 500 - margin.top - margin.bottom;
+    //para o gráfico menor
+    height_2 = 200 - margin.top - margin.bottom;
 
 //CODIGO REFERENTE AO DRAG
 /*var drag = d3.behavior.drag()
@@ -16,13 +18,11 @@ var margin = {top: 10, right: 55, bottom: 30, left: 50},
 //FORMATO DE PARSEMENTO DOS DADOS DE DATA
 var parseData = d3.time.format("%Y-%m-%d").parse;
 
-var cities, city;
 var timeEscolhido; //ARMAZENA O TIME ESCOLHIDO PELO USUARIO NO MENU
 var linhaSelecionada; //ARMAZENA A LINHA ESCOLHIDA A PARTIR DO TIME ESCOLHIDO PELO USUARIO NO MENU
 var nomesDosTimes; //ARMAZENA O NOME DOS TIMES; VARIAVEL DE APOIO PARA CHECAGEM E ITERACAO
 var times; //ARMAZENA CADA OBJETO-TIME INTEIRO COM SEUS RESPECTIVOS VALORES (DATAS E INDICES)
-var linhaTime; //ARMAZENA A LINHA ESPECIFICA DE CADA TIME
-var container; //CONTAINER PARA ENVOLVER OS ELEMENTOS INTERNOS DO SVG
+var dados;
 var circulos; //ADICIONADOS AO GRAFICO QUANDO O USUARIO SELECIONA UMA LINHA ESPECIFICA
 //TOOLTIP COM INFORMACOES A SEREM APRESENTADAS AO USUARIO
 var tooltip = d3.select("body").append("div")
@@ -32,27 +32,27 @@ var tooltip = d3.select("body").append("div")
       .style("background", function(d) {return "rgb(239,239,239)"})
       .style("opacity", 0);
 
-//TRABALHANDO COM OS DADOS DO ARQUIVO .JSON
-d3.json ("data/dadosfull.json", function(error, dados) {
-  
-  if (error) throw error;
-
-
-    //funções e variáveis para eixos e linhas
-    var make_x_axis = function () {
+//funções e variáveis para eixos e linhas
+var make_x_axis = function () {
     return d3.svg.axis()
         .scale(x)
         .orient("bottom")
         .ticks(5);
-    };
+};
 
-    var make_y_axis = function () {
+var make_y_axis = function () {
     return d3.svg.axis()
         .scale(y)
         .orient("left")
         .ticks(5);
-    };
+};
 
+
+//baixa os dados e chama a função de começar
+d3.json ("data/dadosfull.json", comeca_tudo);
+
+function comeca_tudo(data) {
+    dados = data;
     //PARSEANDO AS DATAS PARA O FORMATO DE LEITURA DO GRAFICO
     dados["data_fake"].forEach(function(data, index) {
 
@@ -60,23 +60,23 @@ d3.json ("data/dadosfull.json", function(error, dados) {
 
     });
 
-    var x = d3.time.scale()
+    x = d3.time.scale()
         .domain(d3.extent(dados["data_fake"], function(d) { return d; }))
         .range([0, width]);
 
-    var y = d3.scale.linear()
+    y = d3.scale.linear()
         .range([height, 0]);
 
-    var xAxis = d3.svg.axis()
+    xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
         .ticks(d3.time.years, 2);
 
-    var yAxis = d3.svg.axis()
+    yAxis = d3.svg.axis()
         .scale(y)
         .orient("left");
 
-    var line = d3.svg.line()
+    line = d3.svg.line()
         .interpolate("linear")
         .defined(function(d) { return d.indice != null; })
         .x(function(d) {
@@ -86,11 +86,13 @@ d3.json ("data/dadosfull.json", function(error, dados) {
             return y(d.indice);
         });
 
-    var zoom = d3.behavior.zoom()
+    zoom = d3.behavior.zoom()
         .x(x)
+        .scaleExtent([1, 20])
         .on("zoom", zoomed);
 
-    var svg = d3.select("svg")
+    //primeiro grafico
+    svg = d3.select("#grafico1")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -107,36 +109,30 @@ d3.json ("data/dadosfull.json", function(error, dados) {
 
 
     //ARMAZENANDO O TOTAL DE TIMES
-  nomesDosTimes = d3.keys(dados).filter(function(index, element) { return index !== "data"; });
-  nomesDosTimes.splice(nomesDosTimes.indexOf("data_fake"), 1);
-  
-  //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
-  nomesDosTimes.forEach(function(d) {
+    nomesDosTimes = d3.keys(dados).filter(function(index, element) { return index !== "data"; });
+    nomesDosTimes.splice(nomesDosTimes.indexOf("data_fake"), 1);
 
-    $("ul.sub-menu").append("<li class=\"timeBrasileirao" + " " + d + "\"><a href=\"javascript:void(0)\">" + d + "</a></li>");
-
-  });
+    //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
+    nomesDosTimes.forEach(function(d) {
+        $("ul.sub-menu").append("<li class=\"timeBrasileirao" + " " + d + "\"><a href=\"javascript:void(0)\">" + d + "</a></li>");
+    });
 
 
-  //CRIANDO UM ARRAY DE OBJETOS COM OS TIMES E SEUS RESPECTIVOS VALORES
-  times = nomesDosTimes.map(function(nomeTime) {
-
-    return {
-
-      nome : nomeTime,
-      valores : dados["data_fake"].map (function(d, index) {
+    //CRIANDO UM ARRAY DE OBJETOS COM OS TIMES E SEUS RESPECTIVOS VALORES
+    times = nomesDosTimes.map(function(nomeTime) {
 
         return {
 
-          data: dados["data_fake"][index],
-          data_real: dados["data"][index],
-          indice: dados[nomeTime][index]
-
+            nome : nomeTime,
+            valores : dados["data_fake"].map (function(d, index) {
+                return {
+                    data: dados["data_fake"][index],
+                    data_real: dados["data"][index],
+                    indice: dados[nomeTime][index]
+                };
+            })
         };
-      })
-    }; 
-  });
-
+    });
 
     //ESTABELECENDO O DOMINIO DE VALORES DO EIXO Y
     //A PARTIR DOS INDICES
@@ -144,29 +140,6 @@ d3.json ("data/dadosfull.json", function(error, dados) {
         d3.min(times, function(t) { return d3.min(t.valores, function(v) { return v.indice; }); }),
         d3.max(times, function(t) { return d3.max(t.valores, function(v) { return v.indice; }); })
     ]);
-
-
-    //PARA LEMBRAR: COMO ACESSAR OS ITENS NA VARIAVEL TIMES
-  //console.log(times[0].valores[0].indice);
- /*
-  //ESTABELECENDO O DOMINIO DE VALORES DO EIXO X A PARTIR DAS DATAS
-  x.domain(d3.extent(dados["data_fake"], function(d) { return d; }));
-
-  //ESTABELECENDO O DOMINIO DE VALORES DO EIXO Y 
-  //A PARTIR DOS INDICES
-  y.domain([
-    d3.min(times, function(t) { return d3.min(t.valores, function(v) { return v.indice; }); }),
-    d3.max(times, function(t) { return d3.max(t.valores, function(v) { return v.indice; }); })
-  ]);
-
-  //AUMENTANDO O DOMINIO AS LINHAS NAO COINCIDIREM
-  //COM O TOPO E COM A BASE DO GRAFICO
-  var yDomainMin = y.domain()[0];
-  var yDomainMax = y.domain()[1];
-  yDomainMin -= 120;
-  yDomainMax += 120;
-
-  y.domain([yDomainMin, yDomainMax]);*/
 
     svg.append("svg:g")
         .attr("class", "x axis")
@@ -208,114 +181,125 @@ d3.json ("data/dadosfull.json", function(error, dados) {
         .attr("opacity", 0.7)
         .attr("d", function(d) { return line(d.valores); })
         .style("stroke-width", function() { return ".5px"; })
-        .style("stroke", function() { return "rgb(127, 127, 127)"; });
+        .style("stroke", function() { return "rgb(127, 127, 127)"; })
+        //tooltip on
+        .on("mouseover", function(element, i) {
+            if(zoom.scale() > 4 && $(".circulo").length > 0) {  }
+            else {
+                tooltip.transition()
+                    .style("opacity", .9)
+                    .text(nomesDosTimes[i])
+                tooltip
+                    .style("left", (d3.event.pageX+5) + "px")
+                    .style("top", (d3.event.pageY-30) + "px");
+            }
+        })
+        .on("mouseout", function(d, i) {
+            tooltip.style("opacity", 0)
+        })
 
-    function zoomed () {
+    //ELEMENTO PARA AGRUPAR OS CIRCULOS DE REFERENCIA
+    circulos = chartBody.append("g")
+        .attr("class", "circulos");
 
-        svg.select(".x.axis").call(xAxis);
-        svg.select(".y.axis").call(yAxis);
-        svg.select(".x.grid")
-            .call(make_x_axis()
-                .tickSize(-height, 0, 0)
-                .tickFormat(""));
-        svg.select(".y.grid")
-            .call(make_y_axis()
-                .tickSize(-width, 0, 0)
-                .tickFormat(""));
-        svg.selectAll(".times").selectAll(".line")
-            .attr("class", "line")
-            .attr("d", function(d) { return line(d.valores); });
+    //agora criamos o grafico menor
+    y_2 = d3.scale.linear()
+        .range([height_2,0])
+        .domain([
+            d3.min(times, function(t) { return d3.min(t.valores, function(v) { return v.indice; }); }),
+            d3.max(times, function(t) { return d3.max(t.valores, function(v) { return v.indice; }); })
+        ]);
 
-    }
+    yAxis_2 = d3.svg.axis()
+        .scale(y_2)
+        .orient("left");
+
+    line_2 = d3.svg.line()
+        .interpolate("linear")
+        .defined(function(d) { return d.indice != null; })
+        .x(function(d) {
+            return x(d.data);
+        })
+        .y(function(d) {
+            return y_2(d.indice);
+        });
+
+    svg_2 = d3.select("#grafico2")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height_2 + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg_2.append("rect")
+        .attr("width", width)
+        .attr("height", height_2)
+        .style("fill", "none")
+        .attr('class','plot')
+        .style("pointer-events", "all");
+
+    svg_2.append("svg:g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0, " + height_2 + ")")
+        .call(xAxis);
+
+    svg_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis_2);
+
+    svg_2.append("g")
+        .attr("class", "x grid")
+        .attr("transform", "translate(0," + height_2 + ")")
+        .call(make_x_axis()
+            .tickSize(-height_2, 0, 0)
+            .tickFormat(""));
+
+    svg_2.append("g")
+        .attr("class", "y grid")
+        .call(make_y_axis()
+            .tickSize(-width, 0, 0)
+            .tickFormat(""));
 
 
 
+}
+
+function zoomed () {
+
+    svg.select(".x.axis").call(xAxis);
+    svg.select(".y.axis").call(yAxis);
+    svg.select(".x.grid")
+        .call(make_x_axis()
+            .tickSize(-height, 0, 0)
+            .tickFormat(""));
+    svg.select(".y.grid")
+        .call(make_y_axis()
+            .tickSize(-width, 0, 0)
+            .tickFormat(""));
+    svg.selectAll(".times").selectAll(".line")
+        .attr("class", "line")
+        .attr("d", function(d) { return line(d.valores); });
+
+}
 
 
-    /*
-  //CRIACAO DO CONTAINER PARA INCLUIR OS ELEMENTOS SEGUINTES
-  container = svg.append("g")
-                .attr("class", "container");
-
-  //CONTINUANDO O DESENHO DO GRAFICO
-  //ADICIONANDO O EIXO X
-  container.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  //ADICIONANDO O EIXO Y
-  container.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end");
-      //.text("Índice");
-
-  //INICIANDO O DESENHO DAS LINHAS INDIVIDUAIS
-  linhaTime = container.append("g")
-    .attr("class", "linhas")
-    .selectAll(".linhaTime")
-    .data(times)
-    .enter().append("g")
-    .attr("class", "linhaTime");
-
-  //DESENHANDO AS LINHAS
-  linhaTime.append("path")
-      .attr("class", "linha")
-      .attr("d", function(d) {
-
-        return line(d.valores); 
-
-      })
-      .attr("opacity", 0.7)
-      .style("stroke-width", function(d) { return ".5px"; })
-      .style("stroke", function(d) { return "rgb(127, 127, 127)"; })
-
-  //CRIANDO O EVENTO PARA MOSTRAR A INFORMACAO DA LINHA
-  //AO PASSAR O MOUSE PELA LINHA
-  .on("mouseover", function(element, i) {
-
-    if(zoom.scale() > 4 && $(".circulo").length > 0) {
-
-    }
-
-    else {
-
-      tooltip.transition()
-      .style("opacity", .9)
-      .text(nomesDosTimes[i])
-      tooltip
-      .style("left", (d3.event.pageX+5) + "px")
-      .style("top", (d3.event.pageY-30) + "px");
-
-    }
-
-    
-  })
-
-  //CRIANDO O EVENTO RETIRAR A INFORMACAO
-  //NO MOUSEOUT DA LINHA
-  .on("mouseout", function(d, i) {
-    tooltip.style("opacity", 0)
-  })
-
-//ELEMENTO PARA AGRUPAR OS CIRCULOS DE REFERENCIA
-  circulos = container.append("g")
-  .attr("class", "circulos");
-
-  //CAPTURA DE MOVIMENTO DENTRO DO SVG
-  var w = d3.select("svg")
-      .on("mousemove", mousemove);
-      */
-
-});
+function adiciona_escudos() {
+    var escudos = ['atleticomg','atleticopr','avai','chapecoense','corinthians','coritiba','cruzeiro','figueirense','flamengo','fluminense','goias','gremio','internacional','joinville','palmeiras','pontepreta','santos','saopaulo','sport','vasco']
+    var html_base = function (time) { return '<li id="'+time+'"><a class="escudo" id="escudo_'+time+'" href="javascript:void(0)"><img src="img/escudos/'+time+'.png"></a></li>' }
+    var menu1 = $("#menuEscudos01")
+    var menu2 = $("#menuEscudos02")
+    escudos.forEach(function (d,i) {
+        if (i < 10) {
+            menu1.append(html_base(d))
+        } else {
+            menu2.append(html_base(d))
+        }
+    })
+}
 
 //FUNCAO CHAMADA QUANDO O DOCUMENTO ESTA PRONTO
 $(document).ready(function(){
+
+    adiciona_escudos();
 
   //CASO ALGUM ITEM DO MENU SEJA SELECIONADO
   $(".sub-menu").click(function(event) {
@@ -373,10 +357,14 @@ function mostraLinha (timeEscolhido, linhaSelecionada) {
   $(linhaSelecionada).css("stroke-width", function(d) { return ".5px" });
 
   //ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
-  criaCirculos(timeEscolhido);
+  //criaCirculos(timeEscolhido);
 
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
   $("#nomeTimeSelecionado").text(times[timeEscolhido].nome /*+ " | Fundado em: | Vencedor de x Campeonatos Brasileiros"*/);
+
+  //tira destaque de todos os escudos e destaca só o escolhido agora
+  $('.escudo').css('border-style','');
+  $("#escudo_"+times[timeEscolhido].nome).css('border-style','solid');
 
   $('html, body').delay(60).animate({
      scrollTop: $("#menuEscudos01").offset().top
