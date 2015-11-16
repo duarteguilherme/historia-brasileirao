@@ -52,6 +52,7 @@ var make_y_axis = function () {
 d3.json ("data/dadosfull.json", comeca_tudo);
 
 function comeca_tudo(data) {
+    
     dados = data;
     //PARSEANDO AS DATAS PARA O FORMATO DE LEITURA DO GRAFICO
     dados["data_fake"].forEach(function(data, index) {
@@ -199,7 +200,7 @@ function comeca_tudo(data) {
         })
 
     //ELEMENTO PARA AGRUPAR OS CIRCULOS DE REFERENCIA
-    circulos = chartBody.append("g")
+    circulos = svg.append("g")
         .attr("class", "circulos");
 
     //agora criamos o grafico menor
@@ -259,8 +260,6 @@ function comeca_tudo(data) {
             .tickSize(-width, 0, 0)
             .tickFormat(""));
 
-
-
 }
 
 function zoomed () {
@@ -308,7 +307,7 @@ $(document).ready(function(){
     timeEscolhido = $(event.target).parent().index();
 
     //ARMAZENA A LINHA ESCOLHIDA
-    linhaSelecionada = $(".linhaTime .linha")[timeEscolhido];
+    linhaSelecionada = $(".line")[timeEscolhido];
     //linhaSelecionada = d3.selectAll(".linhaTime .linha")[0][timeEscolhido]; //MESMO EFEITO REALIZADO COM D3
 
     mostraLinha(timeEscolhido, linhaSelecionada);
@@ -327,7 +326,7 @@ $(document).ready(function(){
         timeEscolhido = index;
         
         //ARMAZENA A LINHA ESCOLHIDA
-        linhaSelecionada = $(".linhaTime .linha")[timeEscolhido];
+        linhaSelecionada = $(".line")[timeEscolhido];
 
         //APAGA AS LINHAS SENDO EM EVIDENCIA E MOSTRA A SELECIONADA
         //ANIMA A TELA
@@ -345,9 +344,9 @@ function mostraLinha (timeEscolhido, linhaSelecionada) {
 
   //DIMINUI A OPACIDADE DE TODAS AS LINHAS
   //RETORNA A COR DE TODAS AS LINHAS PARA O CINZA
-  $(".linhaTime .linha").attr("opacity", function(d) {return 0.4});
-  $(".linhaTime .linha").css("stroke", function(d) { return "rgb(127, 127, 127)"});
-  $(".linhaTime .linha").css("stroke-width", function(d) { return ".5px"});
+  $(".line").attr("opacity", function(d) {return 0.4});
+  $(".line").css("stroke", function(d) { return "rgb(127, 127, 127)"});
+  $(".line").css("stroke-width", function(d) { return ".5px"});
 
   //AUMENTA A OPACIDADE DA LINHA SELECIONADA
   //ALTERA A COR DA LINHA SELECIONADA
@@ -357,7 +356,7 @@ function mostraLinha (timeEscolhido, linhaSelecionada) {
   $(linhaSelecionada).css("stroke-width", function(d) { return ".5px" });
 
   //ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
-  //criaCirculos(timeEscolhido);
+  criaCirculos(timeEscolhido);
 
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
   $("#nomeTimeSelecionado").text(times[timeEscolhido].nome /*+ " | Fundado em: | Vencedor de x Campeonatos Brasileiros"*/);
@@ -420,12 +419,12 @@ function criaCirculos (timeEscolhido) {
     .append("circle")
     .attr("class", "circulo " + times[timeEscolhido].nome)
     .attr("cx", function (d) {
-     
+      
       return x(d.data);
      
     })
     .attr("cy", function (d) {
-       
+      
       return y(d.indice);
     
     })
