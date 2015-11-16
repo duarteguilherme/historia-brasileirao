@@ -16,7 +16,7 @@ var margin = {top: 10, right: 55, bottom: 30, left: 50},
     .on("dragend", dragended);*/
 
 //FORMATO DE PARSEMENTO DOS DADOS DE DATA
-var parseData = d3.time.format("%Y-%m-%d").parse;
+var parseData = d3.time.format("%y%m%d").parse;
 
 var timeEscolhido; //ARMAZENA O TIME ESCOLHIDO PELO USUARIO NO MENU
 var linhaSelecionada; //ARMAZENA A LINHA ESCOLHIDA A PARTIR DO TIME ESCOLHIDO PELO USUARIO NO MENU
@@ -51,21 +51,72 @@ var make_y_axis = function () {
 //baixa os dados e chama a função de começar
 d3.json ("data/dadosfull.json", comeca_tudo);
 
-function comeca_tudo(data) {
-    
-    dados = data;
+function conserta_dados(data) {
+    var traducao_time = {};
+    data[0]['time'].map(function (d,i) {
+        traducao_time[i+1] = d;
+    });
+    var dados = data[1];
+
     //PARSEANDO AS DATAS PARA O FORMATO DE LEITURA DO GRAFICO
     dados["data_fake"].forEach(function(data, index) {
-
         dados["data_fake"][index] = parseData(data);
-
     });
 
+    dados['time'] = dados['time'].map(function(d) {
+        return traducao_time[d];
+    });
+
+    //ARMAZENANDO O TOTAL DE TIMES
+    nomesDosTimes = data[0]['time'];
+
+    //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
+    nomesDosTimes.forEach(function(d) {
+        $("ul.sub-menu").append("<li class=\"timeBrasileirao" + " " + d + "\"><a href=\"javascript:void(0)\">" + d + "</a></li>");
+    });
+
+    //CRIANDO UM ARRAY DE OBJETOS COM OS TIMES E SEUS RESPECTIVOS VALORES
+    var times = nomesDosTimes.map(function(nomeTime) {
+        return {
+            nome : nomeTime,
+            valores : dados['time'].map(function(d,i) {
+                if (d == nomeTime) {
+                    return {
+                        data: dados["data_fake"][i],
+                        data_real: dados["data"][i],
+                        indice: dados["rating"][i]
+                    };
+                }
+            })
+        };
+    });
+
+    var saida = []
+    times.forEach(function (d) {
+        var item = {"nome": d["nome"]}
+        item["valores"] = d['valores'].filter(function (el) {
+            //console.log(el)
+            return el
+        })
+        saida.push(item)
+
+    })
+    return saida;
+}
+
+
+function comeca_tudo(data) {
+    times = conserta_dados(data);
+
     x = d3.time.scale()
-        .domain(d3.extent(dados["data_fake"], function(d) { return d; }))
+        .domain(d3.extent(data[1]['data_fake'], function(d) { return d; }))
         .range([0, width]);
 
     y = d3.scale.linear()
+        .domain([
+            d3.min(times, function(t) { return d3.min(t.valores, function(v) { return v.indice; }); }),
+            d3.max(times, function(t) { return d3.max(t.valores, function(v) { return v.indice; }); })
+        ])
         .range([height, 0]);
 
     xAxis = d3.svg.axis()
@@ -107,40 +158,6 @@ function comeca_tudo(data) {
         .style("fill", "none")
         .attr('class','plot')
         .style("pointer-events", "all");
-
-
-    //ARMAZENANDO O TOTAL DE TIMES
-    nomesDosTimes = d3.keys(dados).filter(function(index, element) { return index !== "data"; });
-    nomesDosTimes.splice(nomesDosTimes.indexOf("data_fake"), 1);
-
-    //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
-    nomesDosTimes.forEach(function(d) {
-        $("ul.sub-menu").append("<li class=\"timeBrasileirao" + " " + d + "\"><a href=\"javascript:void(0)\">" + d + "</a></li>");
-    });
-
-
-    //CRIANDO UM ARRAY DE OBJETOS COM OS TIMES E SEUS RESPECTIVOS VALORES
-    times = nomesDosTimes.map(function(nomeTime) {
-
-        return {
-
-            nome : nomeTime,
-            valores : dados["data_fake"].map (function(d, index) {
-                return {
-                    data: dados["data_fake"][index],
-                    data_real: dados["data"][index],
-                    indice: dados[nomeTime][index]
-                };
-            })
-        };
-    });
-
-    //ESTABELECENDO O DOMINIO DE VALORES DO EIXO Y
-    //A PARTIR DOS INDICES
-    y.domain([
-        d3.min(times, function(t) { return d3.min(t.valores, function(v) { return v.indice; }); }),
-        d3.max(times, function(t) { return d3.max(t.valores, function(v) { return v.indice; }); })
-    ]);
 
     svg.append("svg:g")
         .attr("class", "x axis")
@@ -265,10 +282,13 @@ function comeca_tudo(data) {
             .tickSize(-width, 0, 0)
             .tickFormat(""));
 
+    //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
+    selecionaLinha($("#menuEscudos01").children()[0].id);
+    mostraLinha(timeEscolhido, linhaSelecionada, false);
+
 }
 
 function zoomed () {
-
     svg.select(".x.axis").call(xAxis);
     svg.select(".y.axis").call(yAxis);
     svg.select(".x.grid")
@@ -282,7 +302,16 @@ function zoomed () {
     svg.selectAll(".times").selectAll(".line")
         .attr("class", "line")
         .attr("d", function(d) { return line(d.valores); });
-
+    svg.selectAll(".circulos").selectAll('.circulo')
+        .attr("class", "circulo " + times[timeEscolhido].nome)
+        .attr("cx", function (d) {
+            return x(d.data);
+        })
+        .attr("cy", function (d) {
+            return y(d.indice);
+        })
+        .attr("r", 1)
+        .style("opacity" , 1);
 }
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
@@ -302,9 +331,7 @@ function adiciona_escudos() {
 
 //FUNCAO CHAMADA QUANDO O DOCUMENTO ESTA PRONTO
 $(document).ready(function(){
-    
   adiciona_escudos();
-  //selecionaPrimeiroEscudo();
 
   //CASO ALGUM ITEM DO MENU SEJA SELECIONADO
   $(".sub-menu").click(function(event) {
@@ -332,14 +359,11 @@ $(document).ready(function(){
 });
 
 function selecionaLinha (nome) {
-
   //CHECA A LINHA SELECIONADA
     times.forEach(function(time, index){
-      
-      if (time.nome == nome) {
 
+      if (time.nome == nome) {
         timeEscolhido = index;
-        
         //ARMAZENA A LINHA ESCOLHIDA
         linhaSelecionada = $(".line")[timeEscolhido];
 
@@ -419,9 +443,7 @@ function clickGrafico() {
 
 //ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
 function criaCirculos (timeEscolhido) {
-
   removeCirculos();
-
   circulos.append("g")
     .selectAll(".circulo")
     .data(times[timeEscolhido].valores)
@@ -429,18 +451,13 @@ function criaCirculos (timeEscolhido) {
     .append("circle")
     .attr("class", "circulo " + times[timeEscolhido].nome)
     .attr("cx", function (d) {
-      
       return x(d.data);
-     
     })
     .attr("cy", function (d) {
-
       return y(d.indice);
-    
     })
     .attr("r", 1)
     .style("opacity" , 1);
-
 }
 
 //REMOVE OS CIRCULOS DE REFERENCIA ADICIONADOS ANTERIORMENTE
@@ -508,9 +525,5 @@ $(window).load(function() {
   
   //APAGA O LOADING
   $('#loading').hide();
-
-  //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
-  selecionaLinha($("#menuEscudos01").children()[0].id);
-  mostraLinha(timeEscolhido, linhaSelecionada, false);
 
 });

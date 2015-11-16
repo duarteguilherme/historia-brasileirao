@@ -7,10 +7,12 @@ def date_range(start, end, intv):
         yield (start + diff * i).strftime("%Y-%m-%d")
     yield end.strftime("%Y-%m-%d")
 
-with open('/var/www/html/historia_brasileirao/historia_fut.json','r') as file:
+with open('visualizacao/data/dadosfull.json','r') as file:
     dados = json.load(file)
-    dados['data'] = dados['data']
-    datas = [datetime.strptime(d,'%Y-%m-%d').date() for d in dados['data']]
+
+    dados[1]['data'] = dados[1]['dia']
+    del dados[1]['dia']
+    datas = [datetime.strptime(d,'%y%m%d').date() for d in dados[1]['data']]
 
     n_dados = {}
     for d in datas:
@@ -24,12 +26,12 @@ with open('/var/www/html/historia_brasileirao/historia_fut.json','r') as file:
         start = date(ano,1,1)
         end = date(ano,11,30)
         novas_datas = date_range(start,end,tamanho-1)
-        novas_datas = [n for n in novas_datas]
+        novas_datas = ["".join(n.split("-"))[2:] for n in novas_datas]
         dados_saida += novas_datas
 
-    dados['data_fake'] = dados_saida
+    dados[1]['data_fake'] = dados_saida
 
-    with open('visualizacao/data/dadosfull.json','w') as outfile:
+    with open('visualizacao/data/dadosfull_2.json','w') as outfile:
         json.dump(dados,outfile)
 
 
