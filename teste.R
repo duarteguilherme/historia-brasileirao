@@ -302,6 +302,8 @@ ratings$rating <- floor(ratings$rating)
 
 
 
+# Deleta ano
+ratings <- select(ratings, -ano)
 
 
 # Cria índice para times
