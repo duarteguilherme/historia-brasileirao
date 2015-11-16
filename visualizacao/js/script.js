@@ -198,6 +198,11 @@ function comeca_tudo(data) {
         .on("mouseout", function(d, i) {
             tooltip.style("opacity", 0)
         })
+        .on("click", function(d) {
+          console.log("uma linha selecionada com o click do mouse.");
+          selecionaLinha(d.nome);
+          mostraLinha(timeEscolhido, linhaSelecionada, false);
+        })
 
     //ELEMENTO PARA AGRUPAR OS CIRCULOS DE REFERENCIA
     circulos = svg.append("g")
@@ -317,29 +322,31 @@ $(document).ready(function(){
 
   $(".menuEscudos li").click(function(e) {
     //e.preventDefault();
-    var escudoSelecionado = $(this);
+    var nomeEscudoSelecionado = $(this).attr("id");
 
-    //CHECA O TIME SELECIONADO PELO ID DO ESCUDO
+    selecionaLinha(nomeEscudoSelecionado);
+    mostraLinha(timeEscolhido, linhaSelecionada, true);
+
+  });
+
+});
+
+function selecionaLinha (nome) {
+
+  //CHECA A LINHA SELECIONADA
     times.forEach(function(time, index){
       
-      if (time.nome == escudoSelecionado.attr("id")) {
+      if (time.nome == nome) {
 
         timeEscolhido = index;
         
         //ARMAZENA A LINHA ESCOLHIDA
         linhaSelecionada = $(".line")[timeEscolhido];
 
-        //APAGA AS LINHAS SENDO EM EVIDENCIA E MOSTRA A SELECIONADA
-        //ANIMA A TELA
-        mostraLinha(timeEscolhido, linhaSelecionada, true);
-
       }
 
-    });
-
   });
-
-});
+}
 
 function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
 
@@ -502,32 +509,8 @@ $(window).load(function() {
   //APAGA O LOADING
   $('#loading').hide();
 
-  //SELECIONA O PRIMEIRO ESCUDO AO CARREGAR A PÁGINA
-  selecionaPrimeiroEscudo();
+  //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
+  selecionaLinha($("#menuEscudos01").children()[0].id);
+  mostraLinha(timeEscolhido, linhaSelecionada, false);
 
 });
-
-//FUNÇÃO PARA SELECIONAR O PRIMEIRO TIME NA ORDEM DE ESCUDOS
-//USADA AO INICIAR A PÁGINA
-function selecionaPrimeiroEscudo () {
-
-  var idPrimeiroEscudo = $("#menuEscudos01").children()[0].id;
-
-  times.forEach(function(time, index){
-      
-    if (time.nome == idPrimeiroEscudo) {
-
-      primeiroEscudo = index;
-      
-      //ARMAZENA A LINHA ESCOLHIDA
-      linhaSelecionada = $(".line")[primeiroEscudo];
-
-      //APAGA AS LINHAS SENDO EM EVIDENCIA E MOSTRA A SELECIONADA
-      //ANIMA A TELA
-      mostraLinha(primeiroEscudo, linhaSelecionada, false);
-
-    }
-
-  });
-
-}
