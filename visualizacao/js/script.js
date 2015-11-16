@@ -5,6 +5,8 @@ var margin = {top: 10, right: 55, bottom: 30, left: 50},
     w = window.innerWidth - 20,
     width = window.innerWidth - margin.right - margin.left - 20,
     height = 500 - margin.top - margin.bottom;
+    //para o gráfico menor
+    height_2 = 200 - margin.top - margin.bottom;
 
 //CODIGO REFERENTE AO DRAG
 /*var drag = d3.behavior.drag()
@@ -89,7 +91,8 @@ function comeca_tudo(data) {
         .scaleExtent([1, 20])
         .on("zoom", zoomed);
 
-    svg = d3.select("svg")
+    //primeiro grafico
+    svg = d3.select("#grafico1")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -111,9 +114,7 @@ function comeca_tudo(data) {
 
     //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
     nomesDosTimes.forEach(function(d) {
-
         $("ul.sub-menu").append("<li class=\"timeBrasileirao" + " " + d + "\"><a href=\"javascript:void(0)\">" + d + "</a></li>");
-
     });
 
 
@@ -124,13 +125,10 @@ function comeca_tudo(data) {
 
             nome : nomeTime,
             valores : dados["data_fake"].map (function(d, index) {
-
                 return {
-
                     data: dados["data_fake"][index],
                     data_real: dados["data"][index],
                     indice: dados[nomeTime][index]
-
                 };
             })
         };
@@ -203,6 +201,66 @@ function comeca_tudo(data) {
     //ELEMENTO PARA AGRUPAR OS CIRCULOS DE REFERENCIA
     circulos = chartBody.append("g")
         .attr("class", "circulos");
+
+    //agora criamos o grafico menor
+    y_2 = d3.scale.linear()
+        .range([height_2,0])
+        .domain([
+            d3.min(times, function(t) { return d3.min(t.valores, function(v) { return v.indice; }); }),
+            d3.max(times, function(t) { return d3.max(t.valores, function(v) { return v.indice; }); })
+        ]);
+
+    yAxis_2 = d3.svg.axis()
+        .scale(y_2)
+        .orient("left");
+
+    line_2 = d3.svg.line()
+        .interpolate("linear")
+        .defined(function(d) { return d.indice != null; })
+        .x(function(d) {
+            return x(d.data);
+        })
+        .y(function(d) {
+            return y_2(d.indice);
+        });
+
+    svg_2 = d3.select("#grafico2")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height_2 + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg_2.append("rect")
+        .attr("width", width)
+        .attr("height", height_2)
+        .style("fill", "none")
+        .attr('class','plot')
+        .style("pointer-events", "all");
+
+    svg_2.append("svg:g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0, " + height_2 + ")")
+        .call(xAxis);
+
+    svg_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis_2);
+
+    svg_2.append("g")
+        .attr("class", "x grid")
+        .attr("transform", "translate(0," + height_2 + ")")
+        .call(make_x_axis()
+            .tickSize(-height_2, 0, 0)
+            .tickFormat(""));
+
+    svg_2.append("g")
+        .attr("class", "y grid")
+        .call(make_y_axis()
+            .tickSize(-width, 0, 0)
+            .tickFormat(""));
+
+
+
 }
 
 function zoomed () {
