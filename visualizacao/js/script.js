@@ -122,7 +122,7 @@ function comeca_tudo(data) {
     xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(d3.time.years, 2);
+        .ticks(d3.time.years, 1);
 
     yAxis = d3.svg.axis()
         .scale(y)
@@ -266,10 +266,6 @@ function comeca_tudo(data) {
         .call(xAxis);
 
     svg_2.append("g")
-        .attr("class", "y axis")
-        .call(yAxis_2);
-
-    svg_2.append("g")
         .attr("class", "x grid")
         .attr("transform", "translate(0," + height_2 + ")")
         .call(make_x_axis()
@@ -285,6 +281,11 @@ function comeca_tudo(data) {
     //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
     selecionaLinha($("#menuEscudos01").children()[0].id);
     mostraLinha(timeEscolhido, linhaSelecionada, false);
+
+    svg_2.append("path")
+        .datum(times[timeEscolhido].valores)
+        .attr("class", "line_aux")
+        .attr("d", line_2);
 
 }
 
@@ -344,19 +345,31 @@ $(document).ready(function(){
     //linhaSelecionada = d3.selectAll(".linhaTime .linha")[0][timeEscolhido]; //MESMO EFEITO REALIZADO COM D3
 
     mostraLinha(timeEscolhido, linhaSelecionada, true);
+    redesenha_linha();
 
   });
 
+    //CASO ALGUM ESCUDO SEJA ESCOLHIDO
   $(".menuEscudos li").click(function(e) {
     //e.preventDefault();
     var nomeEscudoSelecionado = $(this).attr("id");
 
     selecionaLinha(nomeEscudoSelecionado);
     mostraLinha(timeEscolhido, linhaSelecionada, true);
+    redesenha_linha();
 
   });
 
 });
+
+function redesenha_linha() {
+    d3.selectAll(".line_aux").remove();
+    svg_2.append("path")
+        .datum(times[timeEscolhido].valores)
+        .attr("class", "line_aux")
+        .attr("d", line_2);
+
+}
 
 function selecionaLinha (nome) {
   //CHECA A LINHA SELECIONADA

@@ -139,6 +139,12 @@ div.svgWrap {
   /*stroke-width: 1.5px;*/
 }
 
+.line_aux {
+    fill:none;
+    stroke:black;
+    stroke-width:1px;
+}
+
 .linhaSelecionada {
   stroke: #ff6600;
 }
