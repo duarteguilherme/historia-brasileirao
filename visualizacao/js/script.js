@@ -97,7 +97,7 @@ function conserta_dados(data) {
         item["valores"] = d['valores'].filter(function (el) {
             //console.log(el)
             return el
-        })
+        });
         saida.push(item)
 
     })
@@ -130,7 +130,7 @@ function comeca_tudo(data) {
 
     line = d3.svg.line()
         .interpolate("linear")
-        .defined(function(d) { return d.indice != null; })
+        .defined(function(d) {  return d.indice != null; })
         .x(function(d) {
             return x(d.data);
         })

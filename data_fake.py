@@ -31,7 +31,7 @@ with open('visualizacao/data/dadosfull.json','r') as file:
 
     dados[1]['data_fake'] = dados_saida
 
-    with open('visualizacao/data/dadosfull_2.json','w') as outfile:
+    with open('visualizacao/data/dadosfull.json','w') as outfile:
         json.dump(dados,outfile)
 
 
