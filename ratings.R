@@ -193,6 +193,8 @@ organize_ratings <- function(banco,k=10) {
 
 banco <- read.csv('banco.csv', stringsAsFactors=FALSE)
 
+source('Adicionando-2015.R')
+
 
 ##### Numero de jogos por ano
 a <- 4 ## a ajustará o K
@@ -203,7 +205,6 @@ n_jogos <- banco %>%
   mutate(media=-1*(jogos-mean(jogos))/sd(jogos)) %>%
   mutate(media=media*a+b)
   
-
 
 
 
@@ -335,6 +336,7 @@ ratings_json_j <- gsub(" ", "", ratings_json_j)
 write(ratings_json_j, file="visualizacao/data/dadosfull.json")
 
 
+system("python3 data_fake.py")
 
 # VERIFICANDO MEDIAS
 
