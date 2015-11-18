@@ -37,6 +37,7 @@ var tooltip = d3.select("body").append("div")
 d3.json ("data/dadosfull.json", comeca_tudo);
 
 function conserta_dados(data) {
+  console.log(data);
     var traducao_time = {};
     data[0]['time'].map(function (d,i) {
         traducao_time[i+1] = d;
@@ -382,6 +383,39 @@ $(document).ready(function(){
     mostraLinha(timeEscolhido, linhaSelecionada, true);
     redesenha_linha();
 
+  });
+
+  //CODIGO REFERENTE À BARRA DE PESQUISA DE TIMES
+  $("#search-box").keyup(function(){
+    
+    //ARMAZENA A ENTRADA DE TEXTO E RESETA A CONTAGEM PARA ZERO
+    var filter = $(this).val();
+    var count = 0;
+
+    //PERCORRE O ARRAY COM A LISTA DE TIMES
+    $(".sub-menu li").each(function(){
+      
+      //SE O ITEM NÃO CONTÉM O TEXTO, ELE É APAGADO
+      if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+        
+        $(this).fadeOut();
+      
+      } 
+      
+      //MOSTRA O ITEM SE O TEXTO COINCIDE E ADICIONA MAIS UM AO CONTADOR
+      else {
+
+        $(this).show();
+        count++;
+      
+      }
+
+    });
+
+    //ATUALIZA O CONTADOR
+    var numberItems = count;
+    $("#filter-count").text("Times = "+count);
+  
   });
 
 });
