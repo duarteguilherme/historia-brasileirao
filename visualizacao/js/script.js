@@ -1,4 +1,3 @@
-
 //DIMENSOES DO GRAFICO
 var margin = {top: 10, right: 55, bottom: 30, left: 50},
     // width = 1040 - margin.left - margin.right,
@@ -6,7 +5,7 @@ var margin = {top: 10, right: 55, bottom: 30, left: 50},
     width = window.innerWidth - margin.right - margin.left - 20,
     height = 500 - margin.top - margin.bottom;
     //para o gráfico menor
-    height_2 = 200 - margin.top - margin.bottom;
+    height_2 = 100 - margin.top - margin.bottom;
 
 //CODIGO REFERENTE AO DRAG
 /*var drag = d3.behavior.drag()
@@ -32,20 +31,6 @@ var tooltip = d3.select("body").append("div")
       .style("background", function(d) {return "rgb(239,239,239)"})
       .style("opacity", 0);
 
-//funções e variáveis para eixos e linhas
-var make_x_axis = function () {
-    return d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
-        .ticks(5);
-};
-
-var make_y_axis = function () {
-    return d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .ticks(5);
-};
 
 
 //baixa os dados e chama a função de começar
@@ -91,7 +76,7 @@ function conserta_dados(data) {
         };
     });
 
-    var saida = []
+    var saida = [];
     times.forEach(function (d) {
         var item = {"nome": d["nome"]}
         item["valores"] = d['valores'].filter(function (el) {
@@ -104,12 +89,28 @@ function conserta_dados(data) {
     return saida;
 }
 
+//funções e variáveis para eixos e linhas
+var make_x_axis = function () {
+    return d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(5);
+};
+
+var make_y_axis = function () {
+    return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(5);
+};
 
 function comeca_tudo(data) {
     times = conserta_dados(data);
 
+    dominio_x = d3.extent(data[1]['data_fake'], function(d) { return d; })
+
     x = d3.time.scale()
-        .domain(d3.extent(data[1]['data_fake'], function(d) { return d; }))
+        .domain(dominio_x)
         .range([0, width]);
 
     y = d3.scale.linear()
@@ -226,6 +227,11 @@ function comeca_tudo(data) {
         .attr("class", "circulos");
 
     //agora criamos o grafico menor
+
+    x_2 = d3.time.scale()
+        .domain(d3.extent(data[1]['data_fake'], function(d) { return d; }))
+        .range([0, width]);
+
     y_2 = d3.scale.linear()
         .range([height_2,0])
         .domain([
@@ -241,7 +247,7 @@ function comeca_tudo(data) {
         .interpolate("linear")
         .defined(function(d) { return d.indice != null; })
         .x(function(d) {
-            return x(d.data);
+            return x_2(d.data);
         })
         .y(function(d) {
             return y_2(d.indice);
@@ -265,19 +271,6 @@ function comeca_tudo(data) {
         .attr("transform", "translate(0, " + height_2 + ")")
         .call(xAxis);
 
-    svg_2.append("g")
-        .attr("class", "x grid")
-        .attr("transform", "translate(0," + height_2 + ")")
-        .call(make_x_axis()
-            .tickSize(-height_2, 0, 0)
-            .tickFormat(""));
-
-    svg_2.append("g")
-        .attr("class", "y grid")
-        .call(make_y_axis()
-            .tickSize(-width, 0, 0)
-            .tickFormat(""));
-
     //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
     selecionaLinha($("#menuEscudos01").children()[0].id);
     mostraLinha(timeEscolhido, linhaSelecionada, false);
@@ -290,9 +283,10 @@ function comeca_tudo(data) {
 }
 
 function zoomed () {
+
     svg.select(".x.axis").call(xAxis);
     svg.select(".y.axis").call(yAxis);
-    svg.select(".x.grid")
+    svg.select(".x.grid").call(xAxis)
         .call(make_x_axis()
             .tickSize(-height, 0, 0)
             .tickFormat(""));
@@ -300,9 +294,12 @@ function zoomed () {
         .call(make_y_axis()
             .tickSize(-width, 0, 0)
             .tickFormat(""));
+
     svg.selectAll(".times").selectAll(".line")
         .attr("class", "line")
         .attr("d", function(d) { return line(d.valores); });
+
+    //zoom nos circulos
     svg.selectAll(".circulos").selectAll('.circulo')
         .attr("class", "circulo " + times[timeEscolhido].nome)
         .attr("cx", function (d) {
