@@ -7,6 +7,8 @@ var margin = {top: 10, right: 55, bottom: 30, left: 50},
     //para o gráfico menor
     height_2 = 100 - margin.top - margin.bottom;
 
+var largura_barrinha = 5;
+
 //CODIGO REFERENTE AO DRAG
 /*var drag = d3.behavior.drag()
     .origin(function(d) { return d; })
@@ -22,6 +24,7 @@ var linhaSelecionada; //ARMAZENA A LINHA ESCOLHIDA A PARTIR DO TIME ESCOLHIDO PE
 var nomesDosTimes; //ARMAZENA O NOME DOS TIMES; VARIAVEL DE APOIO PARA CHECAGEM E ITERACAO
 var times; //ARMAZENA CADA OBJETO-TIME INTEIRO COM SEUS RESPECTIVOS VALORES (DATAS E INDICES)
 var dados;
+var alca_esquerda, alca_direita;
 var circulos; //ADICIONADOS AO GRAFICO QUANDO O USUARIO SELECIONA UMA LINHA ESPECIFICA
 //TOOLTIP COM INFORMACOES A SEREM APRESENTADAS AO USUARIO
 var tooltip = d3.select("body").append("div")
@@ -105,6 +108,7 @@ var make_y_axis = function () {
         .ticks(5);
 };
 
+
 function comeca_tudo(data) {
     times = conserta_dados(data);
 
@@ -123,6 +127,10 @@ function comeca_tudo(data) {
         ])
         .range([height, 0]);
 
+    x_reverso = d3.time.scale()
+        .domain(x.range())
+        .range(dominio_x));
+
     xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
@@ -133,7 +141,7 @@ function comeca_tudo(data) {
         .orient("left");
 
     line = d3.svg.line()
-        .interpolate("linear")
+        .interpolate("cardinal")
         .defined(function(d) {  return d.indice != null; })
         .x(function(d) {
             return x(d.data);
@@ -262,17 +270,80 @@ function comeca_tudo(data) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    svg_2.append("rect")
+    regua = svg_2.append("rect")
         .attr("width", width)
         .attr("height", height_2)
-        .style("fill", "none")
-        .attr('class','plot')
+        .style("opacity","0.3")
+        .attr('class','regua')
         .style("pointer-events", "all");
+
+    var dragesquerda = d3.behavior.drag()
+        .on("drag", dragleft);
+
+    alca_esquerda = svg_2.append("rect")
+        .attr("class","alca esquerda")
+        .attr("height", height_2)
+        .attr("width", largura_barrinha)
+        .attr("x",0)
+        .call(dragesquerda);
+
+    var dragdireita = d3.behavior.drag()
+        .on("drag", dragright);
+
+    alca_direita = svg_2.append("rect")
+        .attr("class","alca direita")
+        .attr("height", height_2)
+        .attr("width", largura_barrinha)
+        .attr("x",0)
+        .attr("transform","translate("+(width-largura_barrinha)+",0)")
+        .call(dragdireita);
 
     svg_2.append("svg:g")
         .attr("class", "x axis")
         .attr("transform", "translate(0, " + height_2 + ")")
         .call(xAxis);
+
+    //função[s] para o drag das alças
+    function dragleft(d) {
+        var x_orig = d3.transform(alca_esquerda.attr("transform")).translate[0];
+
+        //x novo não pode ser menor que zero
+        var x = d3.event.x > 0 ? d3.event.x : 0;
+
+        //tbm não pode ser maior que a posição da alça da direita
+        var x_direita = d3.transform(alca_direita.attr("transform")).translate[0];
+        x = x < (x_direita - largura_barrinha) ? x : (x_direita - largura_barrinha);
+
+        //move barrinha
+        d3.select(this).attr("transform", "translate(" + x + ",0)");
+
+        //move e resize retangulo
+        var delta_x = x_orig - x;
+        var width_agora = parseInt(regua.attr("width"));
+
+        regua.attr("width",function () { return width_agora + delta_x })
+        regua.attr("transform", "translate(" + x + ",0)");
+    }
+
+    function dragright(d) {
+        var x_orig = d3.transform(alca_direita.attr("transform")).translate[0];
+
+        //x não pode ser maior que o tamanho do grafico
+        var x = d3.event.x > (width-largura_barrinha) ? (width-largura_barrinha) : d3.event.x;
+
+        //tbm não pode ser menor que a posição da alça da esquerda
+        var x_esquerda = d3.transform(alca_esquerda.attr("transform")).translate[0];
+        x = x > (x_esquerda + largura_barrinha) ? x : (x_esquerda + largura_barrinha);
+
+        //move barrinha
+        d3.select(this).attr("transform", "translate(" + x + ",0)");
+
+        //move e resize retangulo
+        var delta_x = x_orig - x;
+        var width_agora = parseInt(regua.attr("width"));
+
+        regua.attr("width",function () { return width_agora - delta_x })
+    }
 
     //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
     selecionaLinha($("#menuEscudos01").children()[0].id);
@@ -284,6 +355,7 @@ function comeca_tudo(data) {
         .attr("d", line_2);
 
 }
+
 
 function zoomed () {
     //gambiarra para não dar zoom além dos anos dos dados
@@ -335,9 +407,7 @@ function panLimit() {
                 y.domain()[1] > panExtent.y[1] ?
             maxY :
             zoom.translate()[1];
-
     return [tx,ty];
-
 }
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
