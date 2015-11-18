@@ -107,7 +107,9 @@ var make_y_axis = function () {
 function comeca_tudo(data) {
     times = conserta_dados(data);
 
+    //gambiarra para não dar zoom além dos anos dos dados
     dominio_x = d3.extent(data[1]['data_fake'], function(d) { return d; })
+    panExtent = {x: dominio_x, y: [-10000,400000] };
 
     x = d3.time.scale()
         .domain(dominio_x)
@@ -283,6 +285,8 @@ function comeca_tudo(data) {
 }
 
 function zoomed () {
+    //gambiarra para não dar zoom além dos anos dos dados
+    zoom.translate(panLimit());
 
     svg.select(".x.axis").call(xAxis);
     svg.select(".y.axis").call(yAxis);
@@ -310,6 +314,29 @@ function zoomed () {
         })
         .attr("r", 1)
         .style("opacity" , 1);
+}
+
+//limite no eixo X para o gráfico (parte da gambiarra)
+function panLimit() {
+    var divisor = {h: height / ((y.domain()[1]-y.domain()[0])*zoom.scale()), w: width / ((x.domain()[1]-x.domain()[0])*zoom.scale())},
+        minX = -(((x.domain()[0]-x.domain()[1])*zoom.scale())+(panExtent.x[1]-(panExtent.x[1]-(width/divisor.w)))),
+        minY = -(((y.domain()[0]-y.domain()[1])*zoom.scale())+(panExtent.y[1]-(panExtent.y[1]-(height*(zoom.scale())/divisor.h))))*divisor.h,
+        maxX = -(((x.domain()[0]-x.domain()[1]))+(panExtent.x[1]-panExtent.x[0]))*divisor.w*zoom.scale(),
+        maxY = (((y.domain()[0]-y.domain()[1])*zoom.scale())+(panExtent.y[1]-panExtent.y[0]))*divisor.h*zoom.scale(),
+
+        tx = x.domain()[0] < panExtent.x[0] ?
+            minX :
+                x.domain()[1] > panExtent.x[1] ?
+            maxX :
+            zoom.translate()[0],
+        ty = y.domain()[0]  < panExtent.y[0]?
+            minY :
+                y.domain()[1] > panExtent.y[1] ?
+            maxY :
+            zoom.translate()[1];
+
+    return [tx,ty];
+
 }
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
