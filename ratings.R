@@ -306,6 +306,26 @@ ratings$dia <- format(ratings$dia, "%y%m%d")
 ratings$rating <- floor(ratings$rating)
 
 
+# Define times  imporatntes
+importantes <- ratings %>%
+  filter(!is.na(rating)) %>%
+  group_by(ano, time) %>%
+  summarise(inutil=n()) %>%
+  select(-inutil) %>%
+  group_by(time) %>%
+  summarise(quantos=n()) %>%
+  filter(quantos > 3)
+
+times_pontos_corrigos <- ratings %>%
+  filter(ano>=2003) %>%
+  select(time) %>%
+  unique()
+  
+
+# RETIRA TIMES NAO IMPORTANTES
+ratings <- ratings %>%
+  filter( (time %in% importantes$time) | (time %in% times_pontos_corrigos$time) )
+
 
 # Deleta ano
 ratings <- select(ratings, -ano)
