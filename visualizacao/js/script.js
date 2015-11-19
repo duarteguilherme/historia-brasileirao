@@ -546,9 +546,9 @@ $(document).ready(function(){
             $(".sub-menu").css("opacity", 0);
         }
 
-        //ATUALIZA O CONTADOR
-        var numberItems = count;
-        $("#filter-count").text("Times = "+count);
+        if (count < 10) {
+            console.log("menos de dez itens!");
+        }
 
     });
     
@@ -614,7 +614,7 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
 
 }
 
-
+//APAGA OS VALORES DA BARRA DE PESQUISA
 function resetSearchBar () {
 
     $(".search-box")
@@ -722,4 +722,3 @@ function achaCirculoMaisProximo (nomeDoTime, distanciaX) {
   return objeto;
 
 }
-
