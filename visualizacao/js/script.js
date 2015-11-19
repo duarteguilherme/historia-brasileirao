@@ -24,6 +24,7 @@ var linhaSelecionada; //ARMAZENA A LINHA ESCOLHIDA A PARTIR DO TIME ESCOLHIDO PE
 var nomesDosTimes; //ARMAZENA O NOME DOS TIMES; VARIAVEL DE APOIO PARA CHECAGEM E ITERACAO
 var times; //ARMAZENA CADA OBJETO-TIME INTEIRO COM SEUS RESPECTIVOS VALORES (DATAS E INDICES)
 var dados;
+var zoom_atual = [0,0];
 var alca_esquerda, alca_direita;
 var circulos; //ADICIONADOS AO GRAFICO QUANDO O USUARIO SELECIONA UMA LINHA ESPECIFICA
 //TOOLTIP COM INFORMACOES A SEREM APRESENTADAS AO USUARIO
@@ -40,7 +41,6 @@ var tooltip = d3.select("body").append("div")
 d3.json ("data/dadosfull.json", comeca_tudo);
 
 function conserta_dados(data) {
-  console.log(data);
     var traducao_time = {};
     data[0]['time'].map(function (d,i) {
         traducao_time[i+1] = d;
@@ -127,10 +127,6 @@ function comeca_tudo(data) {
         ])
         .range([height, 0]);
 
-    x_reverso = d3.time.scale()
-        .domain(x.range())
-        .range(dominio_x));
-
     xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
@@ -201,10 +197,12 @@ function comeca_tudo(data) {
         .attr("width", width)
         .attr("height", height);
 
-    var chartBody = svg.selectAll('.times')
+    chartBody = svg.append("g")
+        .attr("clip-path", "url(#clip)")
+        .selectAll('.times')
         .data(times)
         .enter().append("g")
-        .attr("class","times")
+        .attr("class","times");
 
     chartBody.append("path")
         .attr("class", "line")
@@ -231,14 +229,12 @@ function comeca_tudo(data) {
           console.log("uma linha selecionada com o click do mouse.");
           selecionaLinha(d.nome);
           mostraLinha(timeEscolhido, linhaSelecionada, false);
-        })
+        });
 
     //ELEMENTO PARA AGRUPAR OS CIRCULOS DE REFERENCIA
-    circulos = svg.append("g")
-        .attr("class", "circulos");
+    //circulos = chartBody.append("g").attr("class", "circulos");
 
     //agora criamos o grafico menor
-
     x_2 = d3.time.scale()
         .domain(d3.extent(data[1]['data_fake'], function(d) { return d; }))
         .range([0, width]);
@@ -303,48 +299,6 @@ function comeca_tudo(data) {
         .attr("transform", "translate(0, " + height_2 + ")")
         .call(xAxis);
 
-    //função[s] para o drag das alças
-    function dragleft(d) {
-        var x_orig = d3.transform(alca_esquerda.attr("transform")).translate[0];
-
-        //x novo não pode ser menor que zero
-        var x = d3.event.x > 0 ? d3.event.x : 0;
-
-        //tbm não pode ser maior que a posição da alça da direita
-        var x_direita = d3.transform(alca_direita.attr("transform")).translate[0];
-        x = x < (x_direita - largura_barrinha) ? x : (x_direita - largura_barrinha);
-
-        //move barrinha
-        d3.select(this).attr("transform", "translate(" + x + ",0)");
-
-        //move e resize retangulo
-        var delta_x = x_orig - x;
-        var width_agora = parseInt(regua.attr("width"));
-
-        regua.attr("width",function () { return width_agora + delta_x })
-        regua.attr("transform", "translate(" + x + ",0)");
-    }
-
-    function dragright(d) {
-        var x_orig = d3.transform(alca_direita.attr("transform")).translate[0];
-
-        //x não pode ser maior que o tamanho do grafico
-        var x = d3.event.x > (width-largura_barrinha) ? (width-largura_barrinha) : d3.event.x;
-
-        //tbm não pode ser menor que a posição da alça da esquerda
-        var x_esquerda = d3.transform(alca_esquerda.attr("transform")).translate[0];
-        x = x > (x_esquerda + largura_barrinha) ? x : (x_esquerda + largura_barrinha);
-
-        //move barrinha
-        d3.select(this).attr("transform", "translate(" + x + ",0)");
-
-        //move e resize retangulo
-        var delta_x = x_orig - x;
-        var width_agora = parseInt(regua.attr("width"));
-
-        regua.attr("width",function () { return width_agora - delta_x })
-    }
-
     //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
     selecionaLinha($("#menuEscudos01").children()[0].id);
     mostraLinha(timeEscolhido, linhaSelecionada, false);
@@ -354,15 +308,14 @@ function comeca_tudo(data) {
         .attr("class", "line_aux")
         .attr("d", line_2);
 
+    //esconde o loading
+    $('#loading').hide();
+
 }
 
-
-function zoomed () {
-    //gambiarra para não dar zoom além dos anos dos dados
-    zoom.translate(panLimit());
-
+function redesenha() {
+    //muda eixos e grids
     svg.select(".x.axis").call(xAxis);
-    svg.select(".y.axis").call(yAxis);
     svg.select(".x.grid").call(xAxis)
         .call(make_x_axis()
             .tickSize(-height, 0, 0)
@@ -372,21 +325,34 @@ function zoomed () {
             .tickSize(-width, 0, 0)
             .tickFormat(""));
 
+    //muda linhas
     svg.selectAll(".times").selectAll(".line")
         .attr("class", "line")
         .attr("d", function(d) { return line(d.valores); });
 
     //zoom nos circulos
-    svg.selectAll(".circulos").selectAll('.circulo')
-        .attr("class", "circulo " + times[timeEscolhido].nome)
+    /*circulos.selectAll('.circulo')
         .attr("cx", function (d) {
             return x(d.data);
         })
         .attr("cy", function (d) {
             return y(d.indice);
-        })
-        .attr("r", 1)
-        .style("opacity" , 1);
+        })*/
+}
+function zoomed () {
+    //gambiarra para não dar zoom além dos anos dos dados
+    zoom.translate(panLimit());
+    //checa se houve mudança de posição antes de redesenhar
+    if (zoom.translate()[0] != zoom_atual[0] || zoom.translate()[1] != zoom_atual[1]) {
+        //atualiza o grafico
+        redesenha();
+
+        //muda retangulo de baixo
+        dragleft(x_2(x.domain()[0]));
+        dragright(x_2(x.domain()[1]));
+
+        zoom_atual = zoom.translate();
+    }
 }
 
 //limite no eixo X para o gráfico (parte da gambiarra)
@@ -408,6 +374,74 @@ function panLimit() {
             maxY :
             zoom.translate()[1];
     return [tx,ty];
+}
+
+//função[s] para o drag das alças
+function dragleft(d) {
+    var posicao = d3.event.x;
+    var mudar_graficao = true;
+    if (d) {
+        posicao = d;
+        mudar_graficao = false;
+    }
+    var x_orig = d3.transform(alca_esquerda.attr("transform")).translate[0];
+
+    //x novo não pode ser menor que zero
+    var new_x = posicao > 0 ? posicao : 0;
+
+    //tbm não pode ser maior que a posição da alça da direita
+    var x_direita = d3.transform(alca_direita.attr("transform")).translate[0];
+    new_x = new_x < (x_direita - largura_barrinha) ? new_x : (x_direita - largura_barrinha);
+
+    //move barrinha
+    alca_esquerda.attr("transform", "translate(" + new_x + ",0)");
+
+    //move e resize retangulo
+    var delta_x = x_orig - new_x;
+    var width_agora = parseInt(regua.attr("width"));
+
+    regua.attr("width",function () { return width_agora + delta_x })
+    regua.attr("transform", "translate(" + new_x + ",0)");
+
+    //muda a escala do grafico maior
+    if (mudar_graficao) {
+        var novo_dominio = x_2.invert(new_x)
+        x.domain([novo_dominio, dominio_x[1]])
+        redesenha()
+    }
+}
+
+function dragright(d) {
+    var posicao = d3.event.x;
+    var mudar_graficao = true;
+    if (d) {
+        posicao = d;
+        mudar_graficao = false;
+    }
+    var x_orig = d3.transform(alca_direita.attr("transform")).translate[0];
+
+    //x não pode ser maior que o tamanho do grafico
+    var new_x = posicao > (width-largura_barrinha) ? (width-largura_barrinha) : posicao;
+
+    //tbm não pode ser menor que a posição da alça da esquerda
+    var x_esquerda = d3.transform(alca_esquerda.attr("transform")).translate[0];
+    new_x = new_x > (x_esquerda + largura_barrinha) ? new_x : (x_esquerda + largura_barrinha);
+
+    //move barrinha
+    alca_direita.attr("transform", "translate(" + new_x + ",0)");
+
+    //move e resize retangulo
+    var delta_x = x_orig - new_x;
+    var width_agora = parseInt(regua.attr("width"));
+
+    regua.attr("width",function () { return width_agora - delta_x })
+
+    //muda a escala do grafico maior só se tiver sido chamado mexendo no retangulo de baixo, e nao dando zoom em cima
+    if (mudar_graficao) {
+        var novo_dominio = x_2.invert(new_x)
+        x.domain([dominio_x[0],novo_dominio])
+        redesenha()
+    }
 }
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
@@ -496,7 +530,6 @@ function redesenha_linha() {
         .datum(times[timeEscolhido].valores)
         .attr("class", "line_aux")
         .attr("d", line_2);
-
 }
 
 function selecionaLinha (nome) {
@@ -529,7 +562,7 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
   $(linhaSelecionada).css("stroke-width", function(d) { return ".5px" });
 
   //ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
-  criaCirculos(timeEscolhido);
+  //criaCirculos(timeEscolhido);
 
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
   $("#nomeTimeSelecionado").text(times[timeEscolhido].nome /*+ " | Fundado em: | Vencedor de x Campeonatos Brasileiros"*/);
@@ -585,7 +618,7 @@ function clickGrafico() {
 //ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
 function criaCirculos (timeEscolhido) {
   removeCirculos();
-  circulos.append("g")
+  chartBody.append("g")
     .selectAll(".circulo")
     .data(times[timeEscolhido].valores)
     .enter()
@@ -661,10 +694,3 @@ function achaCirculoMaisProximo (nomeDoTime, distanciaX) {
 
 }
 
-//FUNÇÃO PARA QUANDO A JANELA CARREGAR
-$(window).load(function() {
-  
-  //APAGA O LOADING
-  $('#loading').hide();
-
-});
