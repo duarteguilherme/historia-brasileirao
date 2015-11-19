@@ -2,14 +2,11 @@
 abbr,address,article,aside,audio,b,blockquote,body,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,samp,section,small,span,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,ul,var,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:0 0}li,ul{list-style-type:none}body{}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}nav ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:0 0;text-decoration:none}table{border-collapse:collapse;border-spacing:0}hr{display:block;height:1px;border:0;border-top:1px solid rgba(0,0,0,.1);margin:1em 0;padding:0}input,select{vertical-align:middle}
 
 body {
-
   background: #878787 url('../img/body-bg-claro.jpg');
-
   font-family: 'flamathin', arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-size: 12px;
-  
 }
 
 /*LOADING*/
@@ -91,15 +88,6 @@ h1 span {
 
 
 /* CODIGO REFERENTE AO GRAFICO*/
-#nomeTimeSelecionado {
-  color: #20262C;
-  font-size: 14px;
-  margin-bottom: 6px;
-  margin-left: 6%;
-  text-transform: uppercase;
-  font-family: 'flamathin', arial, sans-serif;
-}
-
 #informacaoTimeSelecionado {
   font-family: 'flamathin', arial, sans-serif;
 }
@@ -254,7 +242,7 @@ h1 .metodologia {
 }
  
 .sub-menu {
-    width:160%;
+    width:100%;
     padding:5px 0px;
     position:absolute;
     top:100%;
@@ -282,13 +270,14 @@ h1 .metodologia {
 /* DROPDOWN MENU */
 
 /*MENU ESCUDOS*/
+#caixaEscudos {
+  margin-bottom: 44px;
+}
 .menuEscudos {
     border:1px solid #ccc;
     border-width:1px 0;
     list-style:none;
     margin:0;
-    margin-top: 10px;
-    margin-bottom: 30px;
     padding:0;
     text-align:center;
     height: 34px;
@@ -385,3 +374,27 @@ h1 .metodologia {
   left: 9px;
 }
 /*BARRA DE PESQUISA*/
+
+/* TOOLTIP */
+#legenda {
+}
+#legenda p {
+  font-size: 14px;
+  color: #b4c0d3;
+  text-transform: uppercase;
+  font-family: 'flamathin', arial, sans-serif;
+  padding: 6px 8px;
+  background-color: #20262C;
+  display: inline-block;
+  border-radius: 1px;
+  margin-left: 120px;
+}
+.arrow{
+    border: solid;
+    border-color: #20262C transparent;
+    border-width: 6px 6px 0 6px;
+    width: 1px;
+    margin-bottom: 4px;
+    margin-left: 130px;
+}
+/* TOOLTIP */
