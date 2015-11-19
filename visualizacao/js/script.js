@@ -41,6 +41,7 @@ var tooltip = d3.select("body").append("div")
 d3.json ("data/dadosfull.json", comeca_tudo);
 
 function conserta_dados(data) {
+
     var traducao_time = {};
     data[0]['time'].map(function (d,i) {
         traducao_time[i+1] = d;
@@ -508,38 +509,53 @@ $(document).ready(function(){
 
   });
 
-  //CODIGO REFERENTE À BARRA DE PESQUISA DE TIMES
-  $("#search-box").keyup(function(){
-    
-    //ARMAZENA A ENTRADA DE TEXTO E RESETA A CONTAGEM PARA ZERO
-    var filter = $(this).val();
-    var count = 0;
+    //CODIGO REFERENTE À BARRA DE PESQUISA DE TIMES
+    $("#search-box").keyup(function(){
 
-    //PERCORRE O ARRAY COM A LISTA DE TIMES
-    $(".sub-menu li").each(function(){
-      
-      //SE O ITEM NÃO CONTÉM O TEXTO, ELE É APAGADO
-      if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-        
-        $(this).fadeOut();
-      
-      } 
-      
-      //MOSTRA O ITEM SE O TEXTO COINCIDE E ADICIONA MAIS UM AO CONTADOR
-      else {
+        //ARMAZENA A ENTRADA DE TEXTO E RESETA A CONTAGEM PARA ZERO
+        var filter = $(this).val();
+        var count = 0;
 
-        $(this).show();
-        count++;
-      
-      }
+        //PERCORRE O ARRAY COM A LISTA DE TIMES
+        $(".sub-menu li").each(function(){
+          
+          //SE O ITEM NÃO CONTÉM O TEXTO, ELE É APAGADO
+          if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+            
+            $(this).fadeOut();
+          
+          } 
+          
+          //MOSTRA O ITEM SE O TEXTO COINCIDE E ADICIONA MAIS UM AO CONTADOR
+          else {
+
+            $(this).show();
+            count++;
+          
+          }
+
+        });
+
+        if (filter.length > 0) {
+            $(".sub-menu").css("opacity", 1);
+            $(".sub-menu").css("z-index", 1);
+        }
+
+        else {
+            $(".sub-menu").css("z-index", 0);
+            $(".sub-menu").css("opacity", 0);
+        }
+
+        //ATUALIZA O CONTADOR
+        var numberItems = count;
+        $("#filter-count").text("Times = "+count);
 
     });
-
-    //ATUALIZA O CONTADOR
-    var numberItems = count;
-    $("#filter-count").text("Times = "+count);
-  
-  });
+    
+    //ATIVA A BARRA DE PESQUISA COM O PASSAR DO MOUSE
+    $(".search-icon").mouseover(function() {
+        $(".search-box").focus();
+    });
 
 });
 
@@ -598,22 +614,16 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
 
 }
 
-//FUNCOES REFERENTES AO ZOOM/DRAG
 
-/*
-function dragstarted(d) {
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("dragging", true);
-}
+function resetSearchBar () {
 
-function dragged(d) {
-  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
-}
+    $(".search-box")
+    .not(':button, :submit, :reset, :hidden')
+    .val('')
+    .removeAttr('checked')
+    .removeAttr('selected');
 
-function dragended(d) {
-  d3.select(this).classed("dragging", false);
 }
-*/
 
 //FEEDBACK VISUAL DO CLICK FEITO PELO USUARIO
 function clickGrafico() {
