@@ -233,7 +233,7 @@ function comeca_tudo(data) {
         });
 
     //ELEMENTO PARA AGRUPAR OS CIRCULOS DE REFERENCIA
-    //circulos = chartBody.append("g").attr("class", "circulos");
+    //circulos = svg.append("g").attr("class", "circulos");
 
     //agora criamos o grafico menor
     x_2 = d3.time.scale()
@@ -267,12 +267,16 @@ function comeca_tudo(data) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    var dragregua = d3.behavior.drag()
+        .on("drag", move_regua);
+
     regua = svg_2.append("rect")
         .attr("width", width)
         .attr("height", height_2)
         .style("opacity","0.3")
         .attr('class','regua')
-        .style("pointer-events", "all");
+        .style("pointer-events", "all")
+        .call(dragregua);
 
     var dragesquerda = d3.behavior.drag()
         .on("drag", dragleft);
@@ -311,8 +315,8 @@ function comeca_tudo(data) {
 
     //esconde o loading
     $('#loading').hide();
-
 }
+
 
 function redesenha() {
     //muda eixos e grids
@@ -377,13 +381,30 @@ function panLimit() {
     return [tx,ty];
 }
 
+//função para mover a regua de baixo
+function move_regua(d) {
+    var pos_left = d3.transform(alca_esquerda.attr("transform")).translate[0] + d3.event.dx;
+    pos_left = Math.m
+
+    var pos_right = d3.transform(alca_direita.attr("transform")).translate[0] + d3.event.dx;
+
+
+    regua.attr("transform","translate("+d3.event.x+",0)");
+
+    dragleft(pos_left,true);
+    dragright(pos_right,true);
+}
+
+
 //função[s] para o drag das alças
-function dragleft(d) {
+function dragleft(d,mudar_grafico) {
     var posicao = d3.event.x;
     var mudar_graficao = true;
     if (d) {
         posicao = d;
-        mudar_graficao = false;
+        if (!(mudar_graficao)) {
+            mudar_graficao = false;
+        }
     }
     var x_orig = d3.transform(alca_esquerda.attr("transform")).translate[0];
 
@@ -407,19 +428,20 @@ function dragleft(d) {
     //muda a escala do grafico maior
     if (mudar_graficao) {
         var novo_dominio = x_2.invert(new_x);
-        x.domain([novo_dominio, dominio_x[1]]);
+        x.domain([novo_dominio, x.domain()[1]]);
         redesenha()
     }
 }
 
-function dragright(d) {
+function dragright(d,mudar_grafico) {
     var posicao = d3.event.x;
     var mudar_graficao = true;
     if (d) {
         posicao = d;
-        mudar_graficao = false;
+        if (!(mudar_graficao)) {
+            mudar_graficao = false;
+        }
     }
-    var x_orig = d3.transform(alca_direita.attr("transform")).translate[0];
 
     //x não pode ser maior que o tamanho do grafico
     var new_x = posicao > (width-largura_barrinha) ? (width-largura_barrinha) : posicao;
@@ -437,7 +459,7 @@ function dragright(d) {
     //muda a escala do grafico maior só se tiver sido chamado mexendo no retangulo de baixo, e nao dando zoom em cima
     if (mudar_graficao) {
         var novo_dominio = x_2.invert(new_x);
-        x.domain([dominio_x[0],novo_dominio]);
+        x.domain([x.domain()[0],novo_dominio]);
         redesenha()
     }
 }
