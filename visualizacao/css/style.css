@@ -136,6 +136,23 @@ div.svgWrap {
  
  }
 
+.regua {
+    stroke: black;
+    fill: #D4AF6A;
+}
+
+.regua:hover {
+    cursor:move;
+}
+
+.alca:hover {
+    cursor:ew-resize;
+}
+
+.alca {
+    fill:gray;
+}
+
 .line {
   fill: none;
   stroke: #7f7f7f;
