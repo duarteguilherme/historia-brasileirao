@@ -400,13 +400,13 @@ function dragleft(d) {
     var delta_x = x_orig - new_x;
     var width_agora = parseInt(regua.attr("width"));
 
-    regua.attr("width",function () { return width_agora + delta_x })
+    regua.attr("width",function () { return width_agora + delta_x });
     regua.attr("transform", "translate(" + new_x + ",0)");
 
     //muda a escala do grafico maior
     if (mudar_graficao) {
-        var novo_dominio = x_2.invert(new_x)
-        x.domain([novo_dominio, dominio_x[1]])
+        var novo_dominio = x_2.invert(new_x);
+        x.domain([novo_dominio, dominio_x[1]]);
         redesenha()
     }
 }
@@ -431,15 +431,12 @@ function dragright(d) {
     alca_direita.attr("transform", "translate(" + new_x + ",0)");
 
     //move e resize retangulo
-    var delta_x = x_orig - new_x;
-    var width_agora = parseInt(regua.attr("width"));
-
-    regua.attr("width",function () { return width_agora - delta_x })
+    regua.attr("width",function () { return new_x + largura_barrinha - d3.transform(alca_esquerda.attr("transform")).translate[0] });
 
     //muda a escala do grafico maior só se tiver sido chamado mexendo no retangulo de baixo, e nao dando zoom em cima
     if (mudar_graficao) {
-        var novo_dominio = x_2.invert(new_x)
-        x.domain([dominio_x[0],novo_dominio])
+        var novo_dominio = x_2.invert(new_x);
+        x.domain([dominio_x[0],novo_dominio]);
         redesenha()
     }
 }
