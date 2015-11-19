@@ -165,7 +165,7 @@ div.svgWrap {
 /* FIM CODIGO REFERENTE AO GRAFICO */
 
 
-/* CODIGO REFERENTE AO DROPDOWN MENU */
+/* DROPDOWN MENU */
 .clearfix:after {
     display:block;
     clear:both;
@@ -262,7 +262,7 @@ h1 .metodologia {
 .sub-menu li a:hover, .sub-menu .current-item a {
     
 }
-/* FIM CODIGO REFERENTE AO DROPDOWN MENU */
+/* DROPDOWN MENU */
 
 /*MENU ESCUDOS*/
 .menuEscudos {
@@ -310,9 +310,9 @@ h1 .metodologia {
 /*BARRA DE PESQUISA*/
 .search-container {
   padding-top: 10px;
-  /*background: pink;*/
   display: inline-block;
   float: right;
+  padding-right: 44px;
 }
 .search-box {
   -webkit-transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
@@ -322,7 +322,7 @@ h1 .metodologia {
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  background: #ebebeb;
+  background: #c8c8c8;
 }
 .search-box + label .search-icon {
   color: black;
@@ -354,16 +354,17 @@ h1 .metodologia {
 .search-box:not(:focus) {
   text-indent: -5000px;
 }
-
-#search-submit {
-  position: relative;
-  left: -5000px;
-}
-
 .search-icon {
   position: relative;
   left: -30px;
   color: white;
   cursor: pointer;
+}
+
+.search-icon img {
+  width: 14px;
+  position: absolute;
+  top: 4px;
+  left: 9px;
 }
 /*BARRA DE PESQUISA*/
