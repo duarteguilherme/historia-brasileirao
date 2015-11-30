@@ -56,8 +56,8 @@ function conserta_dados(data) {
         dados["data_fake"][index] = parseData(data);
     });
 
-    dados['time'] = dados['time'].map(function(d) {
 
+    dados['time'] = dados['time'].map(function(d) {
         return traducao_time[d];
     });
 
@@ -86,16 +86,24 @@ function conserta_dados(data) {
     });
 
     var saida = [];
+
     times.forEach(function (d) {
         var item = {"nome": d["nome"]}
         item["valores"] = d['valores'].filter(function (el) {
-            //console.log(el)
             return el
         });
         saida.push(item)
 
-    })
-    return saida;
+    });
+
+    var times_filtrado = [];
+    saida.forEach(function (d) {
+        if (escudos.indexOf(d.nome) >= 0) {
+            times_filtrado.push(d)
+        }
+    });
+
+    return times_filtrado;
 }
 
 //funções e variáveis para eixos e linhas
@@ -217,17 +225,7 @@ function comeca_tudo(data) {
         .attr("d", function(d) { return line(d.valores); })
         .style("stroke", function() { return "rgb(127, 127, 127)"; })
         //tooltip on
-        .on("mouseover", function(element, i) {
-            if(zoom.scale() > 4 && $(".circulo").length > 0) {  }
-            else {
-                tooltip.transition()
-                    .style("opacity", .9)
-                    .text(nomesDosTimes[i])
-                tooltip
-                    .style("left", (d3.event.pageX+5) + "px")
-                    .style("top", (d3.event.pageY-30) + "px");
-            }
-        })
+        .on("mouseover", mostra_tooltip)
         .on("mouseout", function(d, i) {
             tooltip.style("opacity", 0)
         })
@@ -349,6 +347,20 @@ function redesenha() {
             return y(d.indice);
         })*/
 }
+
+function mostra_tooltip (element, i) {
+    //console.log($('.'+element['nome']));
+    if(zoom.scale() > 4 && $(".circulo").length > 0) {  }
+    else {
+        tooltip.transition()
+            .style("opacity", .9)
+            .text(element['nome'])
+        tooltip
+            .style("left", (d3.event.pageX+5) + "px")
+            .style("top", (d3.event.pageY-30) + "px");
+    }
+}
+
 function zoomed () {
     zoom.scale(parseInt(zoom.scale()));
 
@@ -602,7 +614,6 @@ function redesenha_linha() {
 function selecionaLinha (nome) {
   //CHECA A LINHA SELECIONADA
     times.forEach(function(time, index){
-
       if (time.nome == nome) {
         timeEscolhido = index;
         //ARMAZENA A LINHA ESCOLHIDA
