@@ -145,7 +145,7 @@ div.svgWrap {
   fill: none;
   stroke: #7f7f7f;
   /*stroke: steelblue;*/
-  /*stroke-width: 1.5px;*/
+  stroke-width: 1.5px;
 }
 
 .line_aux {

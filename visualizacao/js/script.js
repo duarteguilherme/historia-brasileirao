@@ -35,7 +35,10 @@ var tooltip = d3.select("body").append("div")
       .style("background", function(d) {return "rgb(239,239,239)"})
       .style("opacity", 0);
 
+//times que têm os escudos à mostra
+var escudos = ['atleticomg','atleticopr','avai','chapecoense','corinthians','coritiba','cruzeiro','figueirense','flamengo','fluminense','goias','gremio','internacional','joinville','palmeiras','pontepreta','santos','saopaulo','sport','vasco']
 
+var traduz_zoom = d3.scale.linear().domain([0,width]).range([20,1]);
 
 //baixa os dados e chama a função de começar
 d3.json ("data/dadosfull.json", comeca_tudo);
@@ -54,6 +57,7 @@ function conserta_dados(data) {
     });
 
     dados['time'] = dados['time'].map(function(d) {
+
         return traducao_time[d];
     });
 
@@ -206,10 +210,11 @@ function comeca_tudo(data) {
         .attr("class","times");
 
     chartBody.append("path")
-        .attr("class", "line")
+        .attr("class", function (d,i) {
+            return "line " + nomesDosTimes[i]
+        })
         .attr("opacity", 0.7)
         .attr("d", function(d) { return line(d.valores); })
-        .style("stroke-width", function() { return ".5px"; })
         .style("stroke", function() { return "rgb(127, 127, 127)"; })
         //tooltip on
         .on("mouseover", function(element, i) {
@@ -332,9 +337,9 @@ function redesenha() {
 
     //muda linhas
     svg.selectAll(".times").selectAll(".line")
-        .attr("class", "line")
         .attr("d", function(d) { return line(d.valores); });
 
+    arruma_destaque_linhas();
     //zoom nos circulos
     /*circulos.selectAll('.circulo')
         .attr("cx", function (d) {
@@ -345,6 +350,8 @@ function redesenha() {
         })*/
 }
 function zoomed () {
+    zoom.scale(parseInt(zoom.scale()));
+
     //gambiarra para não dar zoom além dos anos dos dados
     zoom.translate(panLimit());
     //checa se houve mudança de posição antes de redesenhar
@@ -383,21 +390,39 @@ function panLimit() {
 
 //função para mover a regua de baixo
 function move_regua(d) {
-    var pos_left = d3.transform(alca_esquerda.attr("transform")).translate[0] + d3.event.dx;
-    pos_left = Math.m
 
-    var pos_right = d3.transform(alca_direita.attr("transform")).translate[0] + d3.event.dx;
+    var variacao =  d3.event.dx;
+
+    var pos_left = d3.transform(alca_esquerda.attr("transform")).translate[0];
+    var pos_right = d3.transform(alca_direita.attr("transform")).translate[0];
+    var mudar = true;
+
+    //veja se não passou do limite (se passou, não faz nada)
+    if (pos_left == 0) {
+        if (variacao < 0) {
+            mudar = false;
+        }
+    }
+
+    if (pos_right == (width-largura_barrinha)) {
+        if (variacao > 0) {
+            mudar = false;
+        }
+    }
 
 
-    regua.attr("transform","translate("+d3.event.x+",0)");
-
-    dragleft(pos_left,true);
-    dragright(pos_right,true);
+    if (mudar) {
+        dragleft(pos_left+variacao,false);
+        dragright(pos_right+variacao,true);
+    }
 }
 
 
 //função[s] para o drag das alças
 function dragleft(d,mudar_grafico) {
+    if (mudar_grafico == 0) {
+        mudar_grafico = true;
+    }
     var posicao = d3.event.x;
     var mudar_graficao = true;
     if (d) {
@@ -429,11 +454,17 @@ function dragleft(d,mudar_grafico) {
     if (mudar_graficao) {
         var novo_dominio = x_2.invert(new_x);
         x.domain([novo_dominio, x.domain()[1]]);
-        redesenha()
+        if (mudar_grafico) {
+            redesenha();
+        }
     }
 }
 
 function dragright(d,mudar_grafico) {
+    if (mudar_grafico == 0) {
+        mudar_grafico = true;
+    }
+
     var posicao = d3.event.x;
     var mudar_graficao = true;
     if (d) {
@@ -460,13 +491,14 @@ function dragright(d,mudar_grafico) {
     if (mudar_graficao) {
         var novo_dominio = x_2.invert(new_x);
         x.domain([x.domain()[0],novo_dominio]);
-        redesenha()
+        if (mudar_grafico) {
+            redesenha();
+        }
     }
 }
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
 function adiciona_escudos() {
-    var escudos = ['atleticomg','atleticopr','avai','chapecoense','corinthians','coritiba','cruzeiro','figueirense','flamengo','fluminense','goias','gremio','internacional','joinville','palmeiras','pontepreta','santos','saopaulo','sport','vasco']
     var html_base = function (time) { return '<li id="'+time+'"><a class="escudo" id="escudo_'+time+'" href="javascript:void(0)"><img src="img/escudos/'+time+'.png"></a></li>' }
     var menu1 = $("#menuEscudos01")
     var menu2 = $("#menuEscudos02")
@@ -581,20 +613,47 @@ function selecionaLinha (nome) {
   });
 }
 
+function arruma_destaque_linhas() {
+    //DIMINUI A OPACIDADE DE TODAS AS LINHAS DE ACORDO COM O NÍVEL DE ZOOM, ALEM DE MUDAR COR
+    if (zoom.scale() <= 3) {
+        $('.line').each(function (i,d) {
+            var time = $(d).attr("class").split(" ")[1];
+            if (escudos.indexOf(time) > 0) {
+                $(d).attr("opacity", function(d) {return 0.6});
+                $(d).css("stroke", function(d) { return "rgb(127, 127, 127)"});
+                $(d).css("stroke-width", function(d) { return ".5px"});
+            } else {
+                $(d).attr("opacity", function(d) {return 0});
+            }
+        })
+    } else if (zoom.scale() <= 10) {
+        $('.line').each(function (i,d) {
+            var time = $(d).attr("class").split(" ")[1];
+            if (escudos.indexOf(time) > 0) {
+                $(d).attr("opacity", function(d) {return 0.6});
+                $(d).css("stroke", function(d) { return "rgb(127, 127, 127)"});
+                $(d).css("stroke-width", function(d) { return ".5px"});
+            } else {
+                $(d).attr("opacity", function(d) {return 0.2});
+            }
+        })
+    }
+    else {
+        $(".line").attr("opacity", function(d) {return 0.6});
+        $(".line").css("stroke", function(d) { return "rgb(127, 127, 127)"});
+        $(".line").css("stroke-width", function(d) { return ".5px"});
+    }
+    //AUMENTA A OPACIDADE DA LINHA SELECIONADA
+    //ALTERA A COR DA LINHA SELECIONADA
+    //DESLOCA ELA PARA CIMA DAS OUTRAS
+    $(linhaSelecionada).attr("opacity", 1);
+    $(linhaSelecionada).css("stroke", "rgb(255, 102, 0)");
+    $(linhaSelecionada).css("stroke-width", function(d) { return "1.5px" });
+
+}
+
 function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
-
-  //DIMINUI A OPACIDADE DE TODAS AS LINHAS
-  //RETORNA A COR DE TODAS AS LINHAS PARA O CINZA
-  $(".line").attr("opacity", function(d) {return 0.7});
-  $(".line").css("stroke", function(d) { return "rgb(127, 127, 127)"});
-  $(".line").css("stroke-width", function(d) { return ".5px"});
-
-  //AUMENTA A OPACIDADE DA LINHA SELECIONADA
-  //ALTERA A COR DA LINHA SELECIONADA
-  //DESLOCA ELA PARA CIMA DAS OUTRAS
-  $(linhaSelecionada).attr("opacity", 1);
-  $(linhaSelecionada).css("stroke", "rgb(255, 102, 0)");
-  $(linhaSelecionada).css("stroke-width", function(d) { return ".5px" });
+  arruma_destaque_linhas();
 
   //ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
   //criaCirculos(timeEscolhido);
