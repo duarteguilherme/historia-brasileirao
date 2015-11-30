@@ -200,20 +200,20 @@ source('Adicionando-2015.R')
 a <- 4 ## a ajustará o K
 b <- 25 ## media
 
-bancob <- rbind(select(banco, time=time_casa, ano, dia),select(banco, time=time_fora, ano, dia))
-n_jogos <- bancob %>%
-  group_by(ano, time) %>%
-  summarise(jogos=n()) %>%
-  group_by(ano) %>%
-  summarise(media=max(jogos)) %>%
-  mutate(media=(media-65)*(-1))
-
-
-# n_jogos <- banco %>%
-#  group_by(ano) %>%
+# bancob <- rbind(select(banco, time=time_casa, ano, dia),select(banco, time=time_fora, ano, dia))
+#n_jogos <- bancob %>%
+#  group_by(ano, time) %>%
 #  summarise(jogos=n()) %>%
-#  mutate(media=-1*(jogos-mean(jogos))/sd(jogos)) %>%
-#  mutate(media=media*a+b)
+#  group_by(ano) %>%
+#  summarise(media=max(jogos)) %>%
+#  mutate(media=(media-65)*(-1))
+
+
+n_jogos <- banco %>%
+  group_by(ano) %>%
+  summarise(jogos=n()) %>%
+  mutate(media=-1*(jogos-mean(jogos))/sd(jogos)) %>%
+  mutate(media=media*a+b)
   
 
 
@@ -373,7 +373,7 @@ system("python3 data_fake.py")
 meanrn <- function(vetor) {
   return(mean(vetor, na.rm=TRUE))
 }
-
+  
 medias <- ratings_json  %>%
   select(-data) %>%
   select(-ano)
