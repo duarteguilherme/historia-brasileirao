@@ -199,11 +199,21 @@ source('Adicionando-2015.R')
 ##### Numero de jogos por ano
 a <- 4 ## a ajustará o K
 b <- 25 ## media
-n_jogos <- banco %>%
-  group_by(ano) %>%
+
+bancob <- rbind(select(banco, time=time_casa, ano, dia),select(banco, time=time_fora, ano, dia))
+n_jogos <- bancob %>%
+  group_by(ano, time) %>%
   summarise(jogos=n()) %>%
-  mutate(media=-1*(jogos-mean(jogos))/sd(jogos)) %>%
-  mutate(media=media*a+b)
+  group_by(ano) %>%
+  summarise(media=max(jogos)) %>%
+  mutate(media=(media-65)*(-1))
+
+
+# n_jogos <- banco %>%
+#  group_by(ano) %>%
+#  summarise(jogos=n()) %>%
+#  mutate(media=-1*(jogos-mean(jogos))/sd(jogos)) %>%
+#  mutate(media=media*a+b)
   
 
 

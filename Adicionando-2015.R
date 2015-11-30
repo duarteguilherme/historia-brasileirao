@@ -31,6 +31,8 @@ banco2015$r_timefora <- NA
 
 
 banco2015$ano <- 2015
+banco2015 <- select(banco2015, -estadio, -cidade)
+
 
 banco <- rbind(banco,banco2015)
 
