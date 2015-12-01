@@ -118,7 +118,7 @@ var make_y_axis = function () {
     return d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(5);
+        .ticks(1);
 };
 
 
@@ -189,13 +189,7 @@ function comeca_tudo(data) {
         .attr("class", "y axis")
         .call(yAxis);
 
-    svg.append("g")
-        .attr("class", "x grid")
-        .attr("transform", "translate(0," + height + ")")
-        .call(make_x_axis()
-            .tickSize(-height, 0, 0)
-            .tickFormat(""));
-
+    //um tick pra ser a linha da média
     svg.append("g")
         .attr("class", "y grid")
         .call(make_y_axis()
@@ -487,7 +481,7 @@ function dragright(d,mudar_grafico) {
     }
 
     //x não pode ser maior que o tamanho do grafico
-    var new_x = posicao > (width-largura_barrinha) ? (width-largura_barrinha) : posicao;
+    var new_x = posicao > (width) ? (width) : posicao;
 
     //tbm não pode ser menor que a posição da alça da esquerda
     var x_esquerda = d3.transform(alca_esquerda.attr("transform")).translate[0];
@@ -511,7 +505,7 @@ function dragright(d,mudar_grafico) {
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
 function adiciona_escudos() {
-    var html_base = function (time) { return '<li id="'+time+'"><a class="escudo" id="escudo_'+time+'" href="javascript:void(0)"><img src="img/escudos/'+time+'.png"></a></li>' }
+    var html_base = function (time) { return '<li id="'+time+'"><a class="escudo" title="'+time+'" id="escudo_'+time+'" href="javascript:void(0)"><img src="img/escudos/'+time+'.png"></a></li>' }
     var menu1 = $("#menuEscudos01")
     var menu2 = $("#menuEscudos02")
     escudos.forEach(function (d,i) {
@@ -626,7 +620,7 @@ function selecionaLinha (nome) {
 
 function arruma_destaque_linhas() {
     //DIMINUI A OPACIDADE DE TODAS AS LINHAS DE ACORDO COM O NÍVEL DE ZOOM, ALEM DE MUDAR COR
-    if (zoom.scale() <= 3) {
+    /*if (zoom.scale() <= 3) {
         $('.line').each(function (i,d) {
             var time = $(d).attr("class").split(" ")[1];
             if (escudos.indexOf(time) > 0) {
@@ -649,11 +643,11 @@ function arruma_destaque_linhas() {
             }
         })
     }
-    else {
+    else {*/
         $(".line").attr("opacity", function(d) {return 0.6});
         $(".line").css("stroke", function(d) { return "rgb(127, 127, 127)"});
         $(".line").css("stroke-width", function(d) { return ".5px"});
-    }
+    //}
     //AUMENTA A OPACIDADE DA LINHA SELECIONADA
     //ALTERA A COR DA LINHA SELECIONADA
     //DESLOCA ELA PARA CIMA DAS OUTRAS
