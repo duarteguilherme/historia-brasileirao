@@ -178,6 +178,8 @@ div.svgWrap {
   font-size: 10.5px;
   text-transform: uppercase;
   font-family: 'flamathin', arial, sans-serif;
+  font-weight: bold;
+  color:#c8c8c8;
 }
 
 .infoTooltip span {

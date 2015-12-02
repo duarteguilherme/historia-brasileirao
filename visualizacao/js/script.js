@@ -14,13 +14,21 @@ var linhaSelecionada; //ARMAZENA A LINHA ESCOLHIDA A PARTIR DO TIME ESCOLHIDO PE
 var nomesDosTimes; //ARMAZENA O NOME DOS TIMES; VARIAVEL DE APOIO PARA CHECAGEM E ITERACAO
 var times; //ARMAZENA CADA OBJETO-TIME INTEIRO COM SEUS RESPECTIVOS VALORES (DATAS E INDICES)
 
-//TOOLTIP COM INFORMACOES A SEREM APRESENTADAS AO USUARIO
+//TOOLTIP COM INFORMACOES DA LINHA
 var tooltip = d3.select("body").append("div")
       .attr("class", "infoTooltip")
       .style("position", "absolute")
       .style("padding", "4px 8px")
       .style("background", function(d) {return "rgb(239,239,239)"})
       .style("opacity", 0);
+
+//TOOLTIP COM INFOS DO JOGO
+var tooltip_jogo = d3.select("body").append("div")
+    .attr("class", "infoTooltip")
+    .style("position", "absolute")
+    .style("padding", "4px 8px")
+    .style("background", "black")
+    .style("opacity", 0);
 
 //times que têm os escudos à mostra
 var escudos = ['atleticomg','atleticopr','avai','chapecoense','corinthians','coritiba','cruzeiro','figueirense','flamengo','fluminense','goias','gremio','internacional','joinville','palmeiras','pontepreta','santos','saopaulo','sport','vasco']
@@ -101,6 +109,8 @@ function comeca_tudo(data) {
     dominio_x = d3.extent(data[1]['data_fake'], function(d) { return d; })
     panExtent = {x: dominio_x, y: [-10000,400000] };
 
+    bisectDate = d3.bisector(function(d) { return d.data; }).left;
+
     x = d3.time.scale()
         .domain(dominio_x)
         .range([0, width]);
@@ -156,15 +166,26 @@ function comeca_tudo(data) {
 
     svg = d3.select("#grafico")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom);
 
     svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
+        .attr("width", width)
+        .attr("height", height);
+
+
+    svg.append('rect')
         .attr("class","overlay")
+        .attr('opacity',0)
         .attr("width", width)
         .attr("height", height)
-        .on("mousemove", mousemove);
+        .on("mousemove", mousemove)
+        .on("mouseout", function(d, i) {
+            tooltip_jogo.style("opacity", 0);
+            linha_tooltip.style("opacity",0);
+        });
+
 
     var focus = svg.append("g")
         .attr("class", "focus")
@@ -190,7 +211,6 @@ function comeca_tudo(data) {
             tooltip.style("opacity", 0)
         })
         .on("click", function(d) {
-            console.log("uma linha selecionada com o click do mouse.");
             selecionaLinha(d.nome);
             mostraLinha(timeEscolhido, linhaSelecionada, false);
         });
@@ -225,6 +245,11 @@ function comeca_tudo(data) {
     brushg.selectAll("rect")
         .attr("height", height2 );
 
+    linha_tooltip = focus.append('line')
+        .attr("class","linha_tooltip")
+        .style("opacity",0)
+        .style("stroke","black")
+        .style("stroke-dasharray","5,5");
 
     mostraLinha(timeEscolhido, linhaSelecionada, false);
 
@@ -233,10 +258,8 @@ function comeca_tudo(data) {
         focus.selectAll(".line").attr("d", function(d) { return line(d.valores); });
         focus.select(".x.axis").call(xAxis);
     }
-
     //esconde o loading
     $('#loading').hide();
-
 
 }
 
@@ -436,76 +459,29 @@ function resetSearchBar () {
 
 }
 
-//FEEDBACK VISUAL DO CLICK FEITO PELO USUARIO
-function clickGrafico() {
-    var stop = d3.event.button || d3.event.ctrlKey;
-    if (stop) d3.event.stopImmediatePropagation(); // stop zoom
-
-    svg.append("circle")
-        .attr("transform", "translate(" + d3.mouse(this) + ")")
-        .attr("r", 1e-6)
-        .style("fill", "none")
-        .style("stroke", stop ? "green" : "rgb(255, 102, 0)")
-        .style("stroke-width", "3px")
-        .style("stroke-opacity", 1)
-      .transition()
-        .ease(Math.sqrt)
-        .duration(500)
-        .attr("r", 12)
-        .style("stroke-opacity", 0);
-}
-
-//ADICIONA OS CIRCULOS DE REFERENCIA DA LINHA SELECIONADA    
-function criaCirculos (timeEscolhido) {
-  removeCirculos();
-  chartBody.append("g")
-    .selectAll(".circulo")
-    .data(times[timeEscolhido].valores)
-    .enter()
-    .append("circle")
-    .attr("class", "circulo " + times[timeEscolhido].nome)
-    .attr("cx", function (d) {
-      return x(d.data);
-    })
-    .attr("cy", function (d) {
-      return y(d.indice);
-    })
-    .attr("r", 1)
-    .style("opacity" , 1);
-}
-
-//REMOVE OS CIRCULOS DE REFERENCIA ADICIONADOS ANTERIORMENTE
-function removeCirculos () {
-  $(".circulo").remove();
-}
 
 function mousemove() {
-    console.log('cole')
+    var dados = times[timeEscolhido].valores,
+        coordenadas = d3.mouse(this),
+        x0 = x.invert(coordenadas[0]),
+        i = bisectDate(dados, x0, 1),
+        d0 = dados[i - 1],
+        d1 = dados[i],
+        d = x0 - d0.data > d1.data - x0 ? d1 : d0;
 
-  tooltip.transition()
-  .style("opacity", .9)
-  .text(nomesDosTimes[timeEscolhido] + " : " + circuloMaisProximo.indice)
-  tooltip
-  .style("left", (d3.event.pageX+5) + "px")
-  .style("top", (d3.event.pageY-30) + "px")
-
-
-}
-
-//FUNCAO PARA ACHAR O CIRCULO DE REFERENCIA
-//MAIS PROXIMO DO MOUSE DO USUARIO
-function achaCirculoMaisProximo (nomeDoTime, distanciaX) {
-
-  var maximo = width;
-  var objeto;
-  d3.selectAll("circle." + nomeDoTime).each(function (d) {
-      var distancia = Math.abs(d3.select(this).attr("cx") - distanciaX);
-      if (distancia < maximo) {
-          maximo = distancia;
-          objeto = d;
-      }
-  })
-
-  return objeto;
+    if (d.indice) {
+        var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getYear()+"</p><p>Ranking:"+ d.indice+"</p>"
+        linha_tooltip.style("opacity",0.8)
+            .attr("x1",coordenadas[0])
+            .attr("y1",coordenadas[1])
+            .attr("x2",coordenadas[0])
+            .attr("y2",y(d.indice));
+        tooltip_jogo.transition()
+            .style("opacity", .9)
+        tooltip_jogo
+            .html(texto)
+            .style("left", (d3.event.pageX+15) + "px")
+            .style("top", (d3.event.pageY) + "px");
+    }
 
 }
