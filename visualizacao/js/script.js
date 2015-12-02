@@ -251,6 +251,17 @@ function comeca_tudo(data) {
         .style("stroke","black")
         .style("stroke-dasharray","5,5");
 
+    //linha da média
+    focus.append('line')
+        .attr("class","linha_media")
+        .style("opacity",1)
+        .style("stroke","#505050")
+        .style("stroke-dasharray","10,10")
+        .attr("x1",x.range()[0])
+        .attr("x2",x.range()[1])
+        .attr("y1",y(946))
+        .attr("y2",y(946));
+
     mostraLinha(timeEscolhido, linhaSelecionada, false);
 
     function brushed() {
