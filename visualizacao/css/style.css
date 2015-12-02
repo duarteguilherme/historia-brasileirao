@@ -86,6 +86,13 @@ h1 span {
         stroke-width: 0;
 }
 
+/* ESTILO DA BARRA DE BAIXO */
+
+.brush .extent {
+    stroke: #fff;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+}
 
 /* CODIGO REFERENTE AO GRAFICO*/
 #informacaoTimeSelecionado {
@@ -105,6 +112,11 @@ div.svgWrap {
 
 }
 
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
 #grafico2 {
     background-color: #F0F0F0;
     margin-bottom: 60px;
@@ -115,6 +127,7 @@ div.svgWrap {
   stroke: #757575;
   shape-rendering: crispEdges;
   stroke-width: .1px;
+
 }
 
 .x.axis path {
@@ -147,6 +160,8 @@ div.svgWrap {
   stroke: #7f7f7f;
   /*stroke: steelblue;*/
   stroke-width: 1.5px;
+  clip-path: url(#clip);
+
 }
 
 .line_aux {
