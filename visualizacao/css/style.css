@@ -175,11 +175,11 @@ div.svgWrap {
 }
 
 .infoTooltip {
-  font-size: 10.5px;
+  font-size: 12.5px;
   text-transform: uppercase;
   font-family: 'flamathin', arial, sans-serif;
   font-weight: bold;
-  color:#c8c8c8;
+  color:ghostwhite;
 }
 
 .infoTooltip span {
@@ -404,7 +404,8 @@ h1 .metodologia {
 }
 #legenda p {
   font-size: 14px;
-  color: #c8c8c8;
+  color: #ffffff;
+  font-weight: bold;
   text-transform: uppercase;
   font-family: 'flamathin', arial, sans-serif;
   padding: 6px 8px;

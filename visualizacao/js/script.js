@@ -19,7 +19,7 @@ var tooltip = d3.select("body").append("div")
       .attr("class", "infoTooltip")
       .style("position", "absolute")
       .style("padding", "4px 8px")
-      .style("background", function(d) {return "rgb(239,239,239)"})
+      .style("background", function(d) {return "orange"})
       .style("opacity", 0);
 
 //TOOLTIP COM INFOS DO JOGO
@@ -285,18 +285,6 @@ function comeca_tudo(data) {
         .attr("width", width)
         .attr("height", height);
 
-    svg.append('rect')
-        .attr("class","overlay")
-        .attr('opacity',0)
-        .attr("width", width)
-        .attr("height", height)
-        .on("mousemove", mousemove)
-        .on("mouseout", function(d, i) {
-            tooltip_jogo.style("opacity", 0);
-            linha_tooltip.style("opacity",0);
-        });
-
-
     focus = svg.append("g")
         .attr("class", "focus")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -312,18 +300,18 @@ function comeca_tudo(data) {
         .attr("class", "times")
         .append('path')
         .attr("class", function (d,i) {
-            return "line " + d.nome
+            return "line " + d.nome.replace(' ','-')
         })
         .attr("opacity", 0.7)
         .attr("d", function(d) { return line(d.valores); })
-        .on("mouseover", mostra_tooltip)
+        /*.on("mouseover", mostra_tooltip)
         .on("mouseout", function(d, i) {
             tooltip.style("opacity", 0)
         })
         .on("click", function(d) {
             selecionaLinha(d.nome);
             mostraLinha(timeEscolhido, linhaSelecionada, false);
-        });
+        });*/
 
     eixo_x = focus.append("g")
         .attr("class", "x axis")
@@ -372,7 +360,31 @@ function comeca_tudo(data) {
         .attr("y1",y(946))
         .attr("y2",y(946));
 
+    //mouseover
+    focus.append('rect')
+        .attr("class","overlay")
+        .attr('opacity',0)
+        .attr("width", width)
+        .attr("height", height)
+        .on("mousemove", mousemove)
+        .on("mouseout", function(d, i) {
+            tooltip_jogo.style("opacity", 0);
+            linha_tooltip.style("opacity",0);
+        });
+
+    //destaca a linha
     mostraLinha(timeEscolhido, linhaSelecionada, false);
+
+    //importa o svg da tacinha
+    var svg_name = "img/trophy.svg";
+    d3.xml(svg_name, function(xml) {
+
+        // Take xml as nodes.
+        imported_node = document.importNode(xml.documentElement, true);
+        coloca_tacinhas();
+
+    });
+
 
     function brushed() {
         //arruma a data do grafico de cima
@@ -393,29 +405,34 @@ function comeca_tudo(data) {
         var pixels = x(new Date('07/01/1990')) - x(new Date('01/01/1990'))
         eixo_x.selectAll('text').attr('transform','translate('+pixels+',0)')
         eixo_x.selectAll('line').attr('transform','translate('+pixels+',0)')
+
+        //muda a tacinha de lugar
+        focus.selectAll(".tacinha")
+            .attr("transform", function(d,i){
+                return "translate(" + (x(d.data))  + "," + (height-30)  + ") scale(0.05)";
+            });
+
     }
 
-    //importa o svg da tacinha
-    var svg_name = "img/trophy.svg";
-    d3.xml(svg_name, function(xml) {
-
-        // Take xml as nodes.
-        imported_node = document.importNode(xml.documentElement, true);
-        coloca_tacinhas();
-
-    });
     //esconde o loading
     $('#loading').hide();
 
 }
 
-function mostra_tooltip (element, i) {
+function mostra_tooltip_taca (element, i) {
+    tooltip_jogo.style("opacity", 0);
+    linha_tooltip.style("opacity",0);
+
     tooltip.transition()
         .style("opacity", .9)
-        .text(element['nome'])
+        .text("CAMPEÃO EM: "+element.data.getFullYear());
     tooltip
         .style("left", (d3.event.pageX+5) + "px")
         .style("top", (d3.event.pageY-30) + "px");
+
+    tooltip_jogo.style("opacity", 0);
+    linha_tooltip.style("opacity",0);
+
 }
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
@@ -561,64 +578,56 @@ function arruma_destaque_linhas() {
         })
     }
     else {*/
-        $(".line").attr("opacity", function(d) {return 0.6});
+        $(".line").attr("opacity", function(d) {return 0.4});
         $(".line").css("stroke", function(d) { return "rgb(127, 127, 127)"});
         $(".line").css("stroke-width", function(d) { return ".5px"});
     //}
     //AUMENTA A OPACIDADE DA LINHA SELECIONADA
     //ALTERA A COR DA LINHA SELECIONADA
     //DESLOCA ELA PARA CIMA DAS OUTRAS
-    var linha_destaque = $('.'+times[timeEscolhido].nome)
+    var linha_destaque = $('.'+times[timeEscolhido].nome.replace(' ','-'))
     linha_destaque.attr("opacity", 1);
     linha_destaque.css("stroke", "rgb(255, 102, 0)");
     linha_destaque.css("stroke-width", function(d) { return "1.5px" });
 
 }
 
-function acha_ultimo_jogo(ano,time) {
-    var saida = {};
-    times.forEach(function (d) {
-        if (d.nome == time) {
-            d.valores.forEach(function (d) {
-                if (d.data.getFullYear() == ano && d.indice) {
-                    saida['data'] = d.data;
-                    saida['rating'] = d.indice;
-                }
-            });
-        }
-    })
-    return saida;
-}
-
 function coloca_tacinhas() {
     focus.selectAll('.tacinha').remove();
+
+    //faz um array com o primeiro jogo do time escolhido nos anos que ele foi campeão
     var time = times[timeEscolhido].nome;
     if (time in campeoes_inverse) {
         var ano_campeao = campeoes_inverse[time];
-        var ultimos_jogos = {};
-        ano_campeao.forEach(function (d) {
-            ultimos_jogos[d] = acha_ultimo_jogo(d,time);
+        var primeiros_jogos = [];
+        ano_campeao.forEach(function (ano) {
+            primeiros_jogos.push({'data':new Date('06/01/'+ano)})
         });
+
+        //coloca os svg no node do primeiro jogo
         focus.selectAll(".svg_image")
-            .data(times[timeEscolhido].valores)
+            .data(primeiros_jogos)
             .enter()
             .append("g")
             .attr("class","tacinha")
             .each(function(d,i){
-                var ano = d.data.getFullYear();
-                if (ano_campeao.indexOf(ano) > -1) {
-                    var infos = ultimos_jogos[ano];
-                    if (infos.data == d.data) {
-                        // Clone and append xml node to each data binded element.
-                        var imported_svg = this.appendChild(imported_node.cloneNode(true));
-                    }
-                }
+                var imported_svg = this.appendChild(imported_node.cloneNode(true));
             })
-
             .attr("transform", function(d,i){
-                return "translate(" + (x(d.data))  + "," + (y(d.indice)) + ") scale(0.15)";
+                return "translate(" + (x(d.data)-45)  + "," + (height-30)  + ") scale(0.05)";
+            })
+            .append("rect")
+            .attr("width",500)
+            .attr("height",500)
+            .attr("opacity",0)
+            .on('mouseover',mostra_tooltip_taca)
+            .on('click',mostra_tooltip_taca)
+            .on("mouseout", function(d, i) {
+                tooltip.style("opacity", 0)
+            })
+            .attr("transform", function(d,i){
+                return "translate(" + (x(d.data)+600)  + "," + (height-350)  + ")";
             });
-
     }
 
     /*var time = times[timeEscolhido].nome;
@@ -655,7 +664,7 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
   //criaCirculos(timeEscolhido);
 
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
-  $("#nomeTimeSelecionado").text(times[timeEscolhido].nome /*+ " | Fundado em: | Vencedor de x Campeonatos Brasileiros"*/);
+  $("#nomeTimeSelecionado").text(times[timeEscolhido].nome + " | Campeão em: " + campeoes_inverse[times[timeEscolhido].nome].join(" - ") );
 
 
   //tira destaque de todos os escudos e destaca só o escolhido agora
@@ -688,22 +697,28 @@ function mousemove() {
         x0 = x.invert(coordenadas[0]),
         i = bisectDate(dados, x0, 1),
         d0 = dados[i - 1],
-        d1 = dados[i],
-        d = x0 - d0.data > d1.data - x0 ? d1 : d0;
+        d1 = dados[i]
+    if (d1) {
+        var d = x0 - d0.data > d1.data - x0 ? d1 : d0;
+        if (d.indice) {
+            var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getFullYear()+"</p><p>Ranking:"+ d.indice+"</p>"
+            linha_tooltip.style("opacity",0.8)
+                .attr("x1",coordenadas[0])
+                .attr("y1",Math.min(coordenadas[1],250))
+                .attr("x2",coordenadas[0])
+                .attr("y2",y(d.indice));
+            tooltip_jogo.transition()
+                .style("opacity", .9)
+            tooltip_jogo
+                .html(texto)
+                .style("left", Math.min(d3.event.pageX -30,width-50) + "px")
+                .style("top", Math.min(d3.event.pageY -50,650) + "px");
+        }
 
-    if (d.indice) {
-        var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getYear()+"</p><p>Ranking:"+ d.indice+"</p>"
-        linha_tooltip.style("opacity",0.8)
-            .attr("x1",coordenadas[0])
-            .attr("y1",coordenadas[1])
-            .attr("x2",coordenadas[0])
-            .attr("y2",y(d.indice));
-        tooltip_jogo.transition()
-            .style("opacity", .9)
-        tooltip_jogo
-            .html(texto)
-            .style("left", (d3.event.pageX+15) + "px")
-            .style("top", (d3.event.pageY) + "px");
+
+
     }
+
+
 
 }
