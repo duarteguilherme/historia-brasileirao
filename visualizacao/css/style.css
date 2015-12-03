@@ -126,7 +126,7 @@ div.svgWrap {
   fill: none;
   stroke: #757575;
   shape-rendering: crispEdges;
-  stroke-width: .1px;
+  stroke-width: 1px;
 
 }
 

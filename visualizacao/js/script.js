@@ -33,6 +33,100 @@ var tooltip_jogo = d3.select("body").append("div")
 //times que têm os escudos à mostra
 var escudos = ['atleticomg','atleticopr','avai','chapecoense','corinthians','coritiba','cruzeiro','figueirense','flamengo','fluminense','goias','gremio','internacional','joinville','palmeiras','pontepreta','santos','saopaulo','sport','vasco']
 
+//traducao dos nomes que mudam
+var traducao = {
+    "americamg":"AMÉRICA-MG",
+    "americarj":"AMÉRICA-RJ",
+    "americarn":"AMÉRICA-RN",
+    "atleticogo":"ATLÉTICO-GO",
+    "atleticomg":"ATLÉTICO-MG",
+    "atleticopr":"ATLÉTICO-PR",
+    "botafogopb":"BOTAFOGO-PB",
+    "botafogosp":"BOTAFOGO-SP",
+    "brasildepelotas":"BRASIL DE PELOTAS",
+    "brasilia":"BRASÍLIA",
+    "ceara":"CEARÁ",
+    "comercialms":"COMERCIAL-MS",
+    "csaal":"CSA-AL",
+    "desportivavale":"DESPORTIVA VALE",
+    "ferroviario":"FERROVIÁRIO",
+    "flamengopi":"FLAMENGO-PI",
+    "goias":"GOIÁS",
+    "gremio":"GRÊMIO",
+    "gremiomaringa":"GRÊMIO MARINGÁ",
+    "gremioprudente":"GRÊMIO PRUDENTE",
+    "interdelimeira":"INTER DE LIMEIRA",
+    "nautico":"NÁUTICO",
+    "operarioms":"OPERÁRIO-MS",
+    "parana":"PARANÁ",
+    "pontepreta":"PONTE PRETA",
+    "riobranco":"RIO BRANCO",
+    "rionegro":"RIO NEGRO",
+    "riverpi":"RIVER-PI",
+    "sampaiocorreia":"SAMPAIO CORREIA",
+    "santacruz":"SANTA CRUZ",
+    "santoandre":"SANTO ANDRÉ",
+    "saocaetano":"SÃO CAETANO",
+    "saopaulo":"SÃO PAULO",
+    "tiradentespi":"TIRADENTES-PI",
+    "uberlandia":"UBERLÂNDIA",
+    "uniaosaojoao":"UNIÃO SÃO JOÃO",
+    "vilanova":"VILA NOVA",
+    "vitoria":"VITÓRIA"
+};
+
+//lista de campeoes e ano
+var campeoes = {
+    1971:'ATLÉTICO-MG',
+    1972:'PALMEIRAS',
+    1973:'PALMEIRAS',
+    1974:'VASCO',
+    1975:'INTERNACIONAL',
+    1976:'INTERNACIONAL',
+    1977:'SÃO PAULO',
+    1978:'GUARANI',
+    1979:'INTERNACIONAL',
+    1980:'FLAMENGO',
+    1981:'GRÊMIO',
+    1982:'FLAMENGO',
+    1983:'FLAMENGO',
+    1984:'FLUMINENSE',
+    1985:'CORITIBA',
+    1986:'SÃO PAULO',
+    1987:'SPORT',
+    1988:'BAHIA',
+    1989:'VASCO',
+    1990:'CORINTHIANS',
+    1991:'SÃO PAULO',
+    1992:'FLAMENGO',
+    1993:'PALMEIRAS',
+    1994:'PALMEIRAS',
+    1995:'BOTAFOGO',
+    1996:'GRÊMIO',
+    1997:'VASCO',
+    1998:'CORINTHIANS',
+    1999:'CORINTHIANS',
+    2000:'VASCO',
+    2001:'ATLÉTICO-PR',
+    2002:'SANTOS',
+    2003:'CRUZEIRO',
+    2004:'SANTOS',
+    2005:'CORINTHIANS',
+    2006:'SÃO PAULO',
+    2007:'SÃO PAULO',
+    2008:'SÃO PAULO',
+    2009:'FLAMENGO',
+    2010:'FLUMINENSE',
+    2011:'CORINTHIANS',
+    2012:'FLUMINENSE',
+    2013:'CRUZEIRO',
+    2014:'CRUZEIRO',
+    2015:'CORINTHIANS'
+};
+
+
+
+
 //baixa os dados e chama a função de começar
 d3.json ("data/dadosfull.json", comeca_tudo);
 
@@ -42,6 +136,7 @@ function conserta_dados(data) {
     data[0]['time'].map(function (d,i) {
         traducao_time[i+1] = d;
     });
+
     var dados = data[1];
 
     //PARSEANDO AS DATAS PARA O FORMATO DE LEITURA DO GRAFICO
@@ -51,12 +146,17 @@ function conserta_dados(data) {
 
 
     dados['time'] = dados['time'].map(function(d) {
-        return traducao_time[d];
+        //coloca o nome do time em caixa alta na tradução se não estiver
+        var time = traducao_time[d];
+        if (!(time in traducao)) {
+            traducao[time] = time.toUpperCase();
+        }
+        return traducao[time];
     });
 
     //ARMAZENANDO O TOTAL DE TIMES
     nomesDosTimes = data[0]['time'];
-
+    nomesDosTimes = nomesDosTimes.map(function (d) { return traducao[d] });
     //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
     nomesDosTimes.forEach(function(d) {
         $("ul.sub-menu").append("<li class='timeBrasileirao'><a href=\"javascript:void(0)\">" + d + "</a></li>");
@@ -89,21 +189,32 @@ function conserta_dados(data) {
 
     });
 
-    var times_filtrado = [];
+    /*var times_filtrado = [];
     saida.forEach(function (d) {
         if (escudos.indexOf(d.nome) >= 0) {
             times_filtrado.push(d)
         }
-    });
+    });*/
 
-    return times_filtrado;
+    //faz um array contrário de campeoes
+    campeoes_inverse = {};
+    for (var ano in campeoes) {
+        var time = campeoes[ano];
+        if (!(time in campeoes_inverse)) {
+            campeoes_inverse[time] = [];
+        }
+        campeoes_inverse[time].push(parseInt(ano))
+    }
+
+    return saida;
 }
 
 function comeca_tudo(data) {
     times = conserta_dados(data);
 
+
     //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
-    selecionaLinha($("#menuEscudos01").children()[0].id);
+    selecionaLinha(traducao[$("#menuEscudos01").children()[0].id]);
 
     //gambiarra para não dar zoom além dos anos dos dados
     dominio_x = d3.extent(data[1]['data_fake'], function(d) { return d; })
@@ -130,8 +241,8 @@ function comeca_tudo(data) {
         .range([height2,0])
         .domain(y.domain());
 
-    var xAxis = d3.svg.axis().scale(x).orient("bottom"),
-        xAxis2 = d3.svg.axis().scale(x2).orient("bottom"),
+    var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years, 4),
+        xAxis2 = d3.svg.axis().scale(x2).orient("bottom").ticks(d3.time.years, 2),
         yAxis = d3.svg.axis().scale(y).orient("left");
 
     var brush = d3.svg.brush()
@@ -174,7 +285,6 @@ function comeca_tudo(data) {
         .attr("width", width)
         .attr("height", height);
 
-
     svg.append('rect')
         .attr("class","overlay")
         .attr('opacity',0)
@@ -187,7 +297,7 @@ function comeca_tudo(data) {
         });
 
 
-    var focus = svg.append("g")
+    focus = svg.append("g")
         .attr("class", "focus")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -215,7 +325,7 @@ function comeca_tudo(data) {
             mostraLinha(timeEscolhido, linhaSelecionada, false);
         });
 
-    focus.append("g")
+    eixo_x = focus.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
@@ -265,10 +375,35 @@ function comeca_tudo(data) {
     mostraLinha(timeEscolhido, linhaSelecionada, false);
 
     function brushed() {
+        //arruma a data do grafico de cima
         x.domain(brush.empty() ? x2.domain() : brush.extent());
+
+        //mostra os ticks de todos os anos se for menos que dez anos no grafico
+        if (x.domain()[1].getFullYear() - x.domain()[0].getFullYear() < 11) {
+            xAxis.ticks(d3.time.years, 1)
+        } else {
+            xAxis.ticks(d3.time.years, 4)
+        }
+
+        //redesenha
         focus.selectAll(".line").attr("d", function(d) { return line(d.valores); });
         focus.select(".x.axis").call(xAxis);
+
+        //leva os ticks do eixo X pro meio dos anos
+        var pixels = x(new Date('07/01/1990')) - x(new Date('01/01/1990'))
+        eixo_x.selectAll('text').attr('transform','translate('+pixels+',0)')
+        eixo_x.selectAll('line').attr('transform','translate('+pixels+',0)')
     }
+
+    //importa o svg da tacinha
+    var svg_name = "img/trophy.svg";
+    d3.xml(svg_name, function(xml) {
+
+        // Take xml as nodes.
+        imported_node = document.importNode(xml.documentElement, true);
+        coloca_tacinhas();
+
+    });
     //esconde o loading
     $('#loading').hide();
 
@@ -313,17 +448,19 @@ $(document).ready(function(){
 
     mostraLinha(timeEscolhido, linhaSelecionada, true);
     redesenha_linha();
+    coloca_tacinhas();
 
   });
 
     //CASO ALGUM ESCUDO SEJA ESCOLHIDO
   $(".menuEscudos li").click(function(e) {
     //e.preventDefault();
-    var nomeEscudoSelecionado = $(this).attr("id");
+    var nomeEscudoSelecionado = traducao[$(this).attr("id")];
 
     selecionaLinha(nomeEscudoSelecionado);
     mostraLinha(timeEscolhido, linhaSelecionada, true);
     redesenha_linha();
+    coloca_tacinhas();
 
   });
 
@@ -438,6 +575,79 @@ function arruma_destaque_linhas() {
 
 }
 
+function acha_ultimo_jogo(ano,time) {
+    var saida = {};
+    times.forEach(function (d) {
+        if (d.nome == time) {
+            d.valores.forEach(function (d) {
+                if (d.data.getFullYear() == ano && d.indice) {
+                    saida['data'] = d.data;
+                    saida['rating'] = d.indice;
+                }
+            });
+        }
+    })
+    return saida;
+}
+
+function coloca_tacinhas() {
+    focus.selectAll('.tacinha').remove();
+    var time = times[timeEscolhido].nome;
+    if (time in campeoes_inverse) {
+        var ano_campeao = campeoes_inverse[time];
+        var ultimos_jogos = {};
+        ano_campeao.forEach(function (d) {
+            ultimos_jogos[d] = acha_ultimo_jogo(d,time);
+        });
+        focus.selectAll(".svg_image")
+            .data(times[timeEscolhido].valores)
+            .enter()
+            .append("g")
+            .attr("class","tacinha")
+            .each(function(d,i){
+                var ano = d.data.getFullYear();
+                if (ano_campeao.indexOf(ano) > -1) {
+                    var infos = ultimos_jogos[ano];
+                    if (infos.data == d.data) {
+                        // Clone and append xml node to each data binded element.
+                        var imported_svg = this.appendChild(imported_node.cloneNode(true));
+                    }
+                }
+            })
+
+            .attr("transform", function(d,i){
+                return "translate(" + (x(d.data))  + "," + (y(d.indice)) + ") scale(0.15)";
+            });
+
+    }
+
+    /*var time = times[timeEscolhido].nome;
+
+    for (var ano in campeoes) {
+        if (campeoes[ano] == time) {
+            var infos = acha_ultimo_jogo(ano,time);
+            console.log(infos);
+            console.log(x(infos.data),y(infos.rating));
+
+            tacinha = focus.append("use")
+                .attr("xlink:href", "#taca")
+                .attr('class','tacinha')
+                .attr('x',x(infos.data))
+                .attr('y',y(infos.rating));
+
+            var box = tacinha.node().getBBox();
+            var cx = box.x + box.width/2;
+            var cy = box.y + box.height/2;
+
+            tacinha.attr("transform", "translate(-" + cx + " -" + cy + ") scale(1) translate(" + (cx) + " " + (cy) + ")");
+                //.attr("transform","matrix(0.1 0 0 0.1 "+cx+" "+cy+")")
+
+
+        }
+    }*/
+}
+
+
 function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
   arruma_destaque_linhas();
 
@@ -446,6 +656,7 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
 
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
   $("#nomeTimeSelecionado").text(times[timeEscolhido].nome /*+ " | Fundado em: | Vencedor de x Campeonatos Brasileiros"*/);
+
 
   //tira destaque de todos os escudos e destaca só o escolhido agora
   //$('.escudo').css('border-style','');
