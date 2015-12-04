@@ -1,6 +1,6 @@
 //DIMENSOES DO GRAFICO
 var margin = {top: 10, right: 10, bottom: 100, left: 40},
-    width = window.innerWidth - margin.right - margin.left - 20,
+    width = Math.min(window.innerWidth - margin.right - margin.left - 20,1500),
     margin2 = {top: 430, right: 10, bottom: 20, left: 40},
     height = 500 - margin.top - margin.bottom,
     height2 = 500 - margin2.top - margin2.bottom,
@@ -125,10 +125,19 @@ var campeoes = {
 };
 
 
+function inicia() {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    // If Internet Explorer, return version number
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        var ie_version = parseInt(ua.substring(msie + 5, ua.indexOf(".", msie)));
+        alert('Este gráfico não funciona no Internet Explorer. Favor tentar em outro browser, como Chrome ou Firefox');
+    }
+    //se não for IE, começa tudo
+    else
+        d3.json ("data/dadosfull.json", comeca_tudo);
+}
 
-
-//baixa os dados e chama a função de começar
-d3.json ("data/dadosfull.json", comeca_tudo);
 
 function conserta_dados(data) {
 
@@ -409,7 +418,7 @@ function comeca_tudo(data) {
         //muda a tacinha de lugar
         focus.selectAll(".tacinha")
             .attr("transform", function(d,i){
-                return "translate(" + (x(d.data))  + "," + (height-30)  + ") scale(0.05)";
+                return "translate(" + (x(d.data)-width/60)  + "," + (height-30)  + ") scale(0.05)";
             });
 
     }
@@ -605,55 +614,23 @@ function coloca_tacinhas() {
         });
 
         //coloca os svg no node do primeiro jogo
-        focus.selectAll(".svg_image")
+        tacinhas = focus.selectAll(".svg_image")
             .data(primeiros_jogos)
             .enter()
             .append("g")
             .attr("class","tacinha")
-            .each(function(d,i){
-                var imported_svg = this.appendChild(imported_node.cloneNode(true));
-            })
-            .attr("transform", function(d,i){
-                return "translate(" + (x(d.data)-45)  + "," + (height-30)  + ") scale(0.05)";
-            })
-            .append("rect")
-            .attr("width",500)
-            .attr("height",500)
-            .attr("opacity",0)
             .on('mouseover',mostra_tooltip_taca)
             .on('click',mostra_tooltip_taca)
             .on("mouseout", function(d, i) {
                 tooltip.style("opacity", 0)
             })
             .attr("transform", function(d,i){
-                return "translate(" + (x(d.data)+600)  + "," + (height-350)  + ")";
-            });
+                return "translate(" + (x(d.data)-width/60)  + "," + (height-30)  + ") scale(0.05)";
+            })
+            .each(function(d,i){
+                var imported_svg = this.appendChild(imported_node.cloneNode(true));
+            })
     }
-
-    /*var time = times[timeEscolhido].nome;
-
-    for (var ano in campeoes) {
-        if (campeoes[ano] == time) {
-            var infos = acha_ultimo_jogo(ano,time);
-            console.log(infos);
-            console.log(x(infos.data),y(infos.rating));
-
-            tacinha = focus.append("use")
-                .attr("xlink:href", "#taca")
-                .attr('class','tacinha')
-                .attr('x',x(infos.data))
-                .attr('y',y(infos.rating));
-
-            var box = tacinha.node().getBBox();
-            var cx = box.x + box.width/2;
-            var cy = box.y + box.height/2;
-
-            tacinha.attr("transform", "translate(-" + cx + " -" + cy + ") scale(1) translate(" + (cx) + " " + (cy) + ")");
-                //.attr("transform","matrix(0.1 0 0 0.1 "+cx+" "+cy+")")
-
-
-        }
-    }*/
 }
 
 
@@ -692,33 +669,31 @@ function resetSearchBar () {
 
 
 function mousemove() {
+    var distancia_svg = svg.node().getBoundingClientRect();
     var dados = times[timeEscolhido].valores,
         coordenadas = d3.mouse(this),
         x0 = x.invert(coordenadas[0]),
         i = bisectDate(dados, x0, 1),
         d0 = dados[i - 1],
-        d1 = dados[i]
+        d1 = dados[i];
     if (d1) {
         var d = x0 - d0.data > d1.data - x0 ? d1 : d0;
         if (d.indice) {
-            var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getFullYear()+"</p><p>Ranking:"+ d.indice+"</p>"
+            var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getFullYear()+"</p><p>Pontos: "+ d.indice+"</p>"
             linha_tooltip.style("opacity",0.8)
                 .attr("x1",coordenadas[0])
-                .attr("y1",Math.min(coordenadas[1],250))
+                .attr("y1",Math.min(coordenadas[1],300))
                 .attr("x2",coordenadas[0])
                 .attr("y2",y(d.indice));
             tooltip_jogo.transition()
                 .style("opacity", .9)
             tooltip_jogo
                 .html(texto)
-                .style("left", Math.min(d3.event.pageX -30,width-50) + "px")
+                .style("left", Math.min(d3.event.pageX -30,width+distancia_svg['left']-20) + "px")
                 .style("top", Math.min(d3.event.pageY -50,650) + "px");
         }
-
-
-
     }
-
-
-
 }
+
+
+inicia();

@@ -107,8 +107,8 @@ svg {
 }
 
 div.svgWrap {
-    width:1000px;
     margin:0px auto;
+    padding:auto;
 
 }
 
@@ -408,11 +408,10 @@ h1 .metodologia {
   font-weight: bold;
   text-transform: uppercase;
   font-family: 'flamathin', arial, sans-serif;
-  padding: 6px 8px;
   background-color: #20262C;
-  display: inline-block;
   border-radius: 1px;
   margin-left: 34px;
+
 }
 .arrowTooltip{
     border: solid;
