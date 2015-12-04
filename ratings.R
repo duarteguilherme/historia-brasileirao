@@ -195,6 +195,9 @@ banco <- read.csv('banco.csv', stringsAsFactors=FALSE)
 
 source('Adicionando-2015.R')
 
+banco$time_casa <- gsub(" ", "",banco$time_casa)
+banco$time_fora <- gsub(" ", "",banco$time_fora)
+
 
 ##### Numero de jogos por ano
 a <- 4 ## a ajustará o K
@@ -251,6 +254,29 @@ ratings <- ratings[!duplicated(select(ratings, -rating )),]
 
 
 ratings$dia <- as.Date(ratings$dia, format="%Y-%m-%d")
+
+
+# Dicionario para times
+dict_times <- data.frame(time=unique(c(ratings$time)), stringsAsFactors=FALSE)
+dict_times$id_times <- 1:nrow(dict_times)
+
+
+
+# Criando dados para jogos
+jogos <- select(banco, time_casa, time_fora, gols_casa, gols_fora, dia, ano)
+jogos$id_jogos <- 1:nrow(jogos)
+
+
+# Adicionando valores de indice para time_casa e time_fora
+prov_times <- select(dict_times, time_casa=time, id_timecasa=id_times)
+jogos <- inner_join(jogos, prov_times)
+prov_times <- select(dict_times, time_fora=time, id_timefora=id_times)
+jogos <- inner_join(jogos, prov_times)
+
+
+
+
+
 
 # Acrescenta NA para antes de o time entrar no banco
 # Nem sempre o primeiro rating de um time começa no mesmo dia
@@ -310,10 +336,11 @@ ratings$dia <- as.Date(ratings$dia, format="%Y-%m-%d")
 
 ratings <- arrange(ratings, dia)
 
-ratings$dia <- format(ratings$dia, "%y%m%d")
 
 # Arredonda rating
 ratings$rating <- floor(ratings$rating)
+
+
 
 
 # Define times  imporatntes
@@ -324,7 +351,7 @@ importantes <- ratings %>%
   select(-inutil) %>%
   group_by(time) %>%
   summarise(quantos=n()) %>%
-  filter(quantos > 3)
+  filter(quantos > 3) # Mudar para três quando fores os importantes. Lembrar disso.
 
 times_pontos_corrigos <- ratings %>%
   filter(ano>=2003) %>%
@@ -333,9 +360,205 @@ times_pontos_corrigos <- ratings %>%
   
 
 # RETIRA TIMES NAO IMPORTANTES
+
+jogos <- jogos %>% 
+  filter( (time_casa %in% importantes$time) | (time_casa %in% times_pontos_corrigos$time) ) %>%
+  filter( (time_fora %in% importantes$time) | (time_fora %in% times_pontos_corrigos$time) )
+  
 ratings <- ratings %>%
   filter( (time %in% importantes$time) | (time %in% times_pontos_corrigos$time) )
 
+dict_times <- dict_times %>%
+  filter( (time %in% importantes$time) | (time %in% times_pontos_corrigos$time) )
+
+str(ratings)
+
+
+# Criando dicionario para ranking ( sem NULL ), mudar aqui qualquer coisa
+ratings <- na.omit(ratings) # Retira NULL
+
+dict_datas <- data.frame(dia=unique(c(ratings$dia)), stringsAsFactors=FALSE)
+dict_datas$id_datas <- 1:nrow(dict_datas)
+
+
+ratings <- inner_join(ratings, dict_times)
+ratings <- inner_join(ratings, dict_datas)
+ratings <- select(ratings, id_times, id_datas, rating)
+
+dados <- list()
+for (i in unique(ratings$id_times)) {
+  print(i)
+  pr <- filter(ratings, id_times==i)
+  dados[[i]] <- select(pr, -id_times)    
+}
+
+
+# Arruma jogos
+jogos <- inner_join(jogos, dict_datas)
+
+jogos <- select(jogos, time_casa=id_timecasa, time_fora=id_timefora,
+                gols_casa, gols_fora, id_datas, ano )
+
+# Salva ratings
+
+
+lista <- list(dados=dados, dict_times=dict_times, dict_datas=dict_datas, jogos=jogos)
+
+library(RJSONIO)
+
+lista_json <- toJSON(lista)
+
+write(lista_json, "dadosfull.json")
+
+ratings <- inner_join(ratings, dict_times)
+ratings <- inner_join(ratings, dict_datas)
+ratings <- inner_join(ratings, jogos)
+
+
+medias_times <- ratings %>%
+  group_by(time, ano) %>%
+  summarise(rating=mean(rating, na.rm=TRUE)) %>%
+  group_by(time) %>%
+  summarise(medias=sum(rating, na.rm=TRUE)/45)
+
+
+
+length(unique(ratings[ratings$time=="atleticomg",]$ano))
+
+
+minimos <- ratings %>%
+  group_by(time, ano) %>%
+  summarise(rating=mean(rating, na.rm=TRUE)) %>%
+  group_by(ano) %>%
+  summarise(minimo=min(rating))
+
+
+medias_times_pv <- data.frame(expand.grid(unique(ratings$time), unique(ratings$ano)), stringsAsFactors=FALSE)
+colnames(medias_times_pv) <- c("time","ano")
+medias_times_pv$time <- as.character(medias_times_pv$time)
+medias_times_pv <- left_join(medias_times_pv, ratings)
+
+for(i in 1971:2015) {
+  print(i)
+  medias_times_pv[medias_times_pv$ano==i & is.na(medias_times_pv$rating),]$rating <- minimos[minimos$ano==i,]$minimo
+}
+medias_times_pv <- medias_times_pv %>%
+  group_by(time, ano) %>%
+  summarise(rating=mean(rating, na.rm=TRUE)) %>%
+  group_by(time) %>%
+  summarise(medias=sum(rating, na.rm=TRUE)/45)
+medias_times_pv <- arrange(medias_times_pv, desc(medias))
+new <- medias_times_pv
+medias_times_pv <- data.frame(expand.grid(unique(filter(ratings, ano >= 2003)$time), unique(filter(ratings, ano >= 2003)$ano)), stringsAsFactors=FALSE)
+colnames(medias_times_pv) <- c("time","ano")
+medias_times_pv$time <- as.character(medias_times_pv$time)
+medias_times_pv <- left_join(medias_times_pv, ratings)
+
+for(i in 2003:2015) {
+  print(i)
+  medias_times_pv[medias_times_pv$ano==i & is.na(medias_times_pv$rating),]$rating <- minimos[minimos$ano==i,]$minimo
+}
+medias_times_pv <- medias_times_pv %>%
+  group_by(time, ano) %>%
+  summarise(rating=mean(rating, na.rm=TRUE)) %>%
+  group_by(time) %>%
+  summarise(medias=sum(rating, na.rm=TRUE)/13)
+medias_times_pv <- arrange(medias_times_pv, desc(medias))
+colnames(medias_times_pv) <- c("time","pc_medias")
+new <- left_join(new, medias_times_pv)
+
+
+medias_times_pv <- data.frame(expand.grid(unique(filter(ratings, ano >= 2003)$time), unique(filter(ratings, ano < 2003)$ano)), stringsAsFactors=FALSE)
+colnames(medias_times_pv) <- c("time","ano")
+medias_times_pv$time <- as.character(medias_times_pv$time)
+medias_times_pv <- left_join(medias_times_pv, ratings)
+
+for(i in 1971:2002) {
+  print(i)
+  medias_times_pv[medias_times_pv$ano==i & is.na(medias_times_pv$rating),]$rating <- minimos[minimos$ano==i,]$minimo
+}
+medias_times_pv <- medias_times_pv %>%
+  group_by(time, ano) %>%
+  summarise(rating=mean(rating, na.rm=TRUE)) %>%
+  group_by(time) %>%
+  summarise(medias=sum(rating, na.rm=TRUE)/32)
+medias_times_pv <- arrange(medias_times_pv, desc(medias))
+colnames(medias_times_pv) <- c("time","n_pc_medias")
+new <- left_join(new, medias_times_pv)
+
+
+quantos <- ratings %>%
+  group_by(time,ano) %>%
+  summarise(neme=n()) %>%
+  group_by(time) %>%
+  summarise(numero_campeonatos=n())
+quantospc <- filter(ratings, ano>=2003) %>%
+  group_by(time,ano) %>%
+  summarise(neme=n()) %>%
+  group_by(time) %>%
+  summarise(pc_numero_campeonatos=n())
+quantosnpc <- filter(ratings, ano<2003) %>%
+  group_by(time,ano) %>%
+  summarise(neme=n()) %>%
+  group_by(time) %>%
+  summarise(n_pc_numero_campeonatos=n())
+
+new <- left_join(left_join(left_join(new, quantos),quantospc),quantosnpc)
+
+campeoes <- read.csv('campeoes.csv', stringsAsFactors=FALSE)
+campeoes$time <- iconv(campeoes$time, from="utf8",to="ascii//translit")
+campeoes$time <- gsub("-","",campeoes$time)
+campeoes$time <- gsub(" ","",campeoes$time)
+campeoes$time <- tolower(campeoes$time)
+
+camp <- campeoes %>%
+  group_by(time) %>%
+  summarise(titulos_total=n())
+campc <- filter(campeoes, ano>=2003) %>%
+  group_by(time) %>%
+  summarise(pc_titulos_total=n())
+camnpc <- filter(campeoes, ano<2003) %>%
+  group_by(time) %>%
+  summarise(n_pc_titulos_total=n())
+
+new <- left_join(left_join(left_join(new, camp), campc), camnpc)
+
+
+new <- select(new,
+              time,
+              numero_campeonatos,
+              titulos_total,
+              media_total=medias,
+              pc_numero_campeonatos,
+              pc_titulos_total,
+              pc_medias,
+              n_pc_numero_campeonatos,
+              n_pc_titulos_total,
+              n_pc_medias)
+
+
+WriteXLS("new","medias.xls", row.names=FALSE)
+
+medias_times_av <- ratings %>%
+  group_by(time, ano) %>%
+  summarise(rating=mean(rating, na.rm=TRUE)) %>%
+  inner_join(minimos) %>%
+  group_by(time) %>%
+  summarise(medias=sum(rating, na.rm=TRUE), n=(45-n()),minimo=mean(minimo)) %>%
+  mutate(new_average=(medias+n*minimo)/45) %>%
+  arrange(desc(new_average))
+
+min <- 800
+medias_times_av <- medias_times_av %>%
+  
+
+library(WriteXLS)
+WriteXLS("medias_times", "medias_times.xls", row.names=FALSE)
+WriteXLS("medias_times_av", "medias_times_av.xls", row.names=FALSE)
+  WriteXLS("medias_times_pv", "media_times_min_ano.xls", row.names=FALSE)
+
+
+write.csv(ratings, "ratings.csv", row.names=FALSE)
 
 # Deleta ano
 ratings <- select(ratings, -ano)
@@ -349,6 +572,8 @@ dicio <- data.frame(ind=1:length(levels_time), time=levels_time, stringsAsFactor
 
 
 ratings$time <- as.numeric(ratings$time)
+
+
 
 
 arquivo <- list(dicio, ratings)
