@@ -16,46 +16,22 @@
         </div>
 
         <div class="menu-wrap">
-            <nav class="menu">
-                
-                
-                <ul class="clearfix">
-                    <li>
-                        <a href="#">CLUBES <span class="arrowMenu">&#9660;</span></a>
-         
-                        <ul class="sub-menu">
-                        	<!-- INSERIR OS CLUBES DO JSON VIA JQUERY -->
-                            <!-- MODELO
-                            <li><a href="#">Time 01</a></li>
-                            -->
-                        </ul>
-                    </li>
-                </ul>
-
-                <!-- BARRA DE PESQUISA -->
-                <form class="search-container">
-                    
-                    <input id="search-box" type="text" class="search-box" name="q" autocomplete="off" />
-                      
-                    <span class="search-icon"><img src="img/search.svg"></span>
-                      
-                    <!--<span id="filter-count" style="color: #e9e9e9"></span>-->
-
-                </form>
-            </nav>
+            <h1>História do Brasileirão em números</h1>
 
         </div>
 
         <div class="svgWrap">
             
-            <!-- TITULO DA PÁGINA -->
-            <div id="titulo">
-                <h1>HISTÓRIA DO BRASILEIRÃO EM NÚMEROS</h1>
-            </div>
-            
+
             <!-- LINHA FINA DA PÁGINA -->
             <div id="linhaFina">
-                <p>Lorem ipsum dolor sit amet, consectetur Aenean dapibus citur elementum</p>
+                <p>Escolha algum time desta lista
+                <select id="lista_times">
+                    <option disabled="disabled">CLUBES</option>
+                    <option class="select-dash" disabled="disabled">----</option>
+                </select>
+                ou clique nos escudos abaixo</p>
+
             </div>
 
             <!-- CAIXA COM AS DUAS LINHAS DE ESCUDOS -->

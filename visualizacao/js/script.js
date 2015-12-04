@@ -140,7 +140,6 @@ function inicia() {
 
 
 function conserta_dados(data) {
-
     var traducao_time = {};
     data[0]['time'].map(function (d,i) {
         traducao_time[i+1] = d;
@@ -166,10 +165,15 @@ function conserta_dados(data) {
     //ARMAZENANDO O TOTAL DE TIMES
     nomesDosTimes = data[0]['time'];
     nomesDosTimes = nomesDosTimes.map(function (d) { return traducao[d] });
+
+
     //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
+    var i = 0;
     nomesDosTimes.forEach(function(d) {
-        $("ul.sub-menu").append("<li class='timeBrasileirao'><a href=\"javascript:void(0)\">" + d + "</a></li>");
+        $("#lista_times").append("<option id="+i+">" + d + "</option>");
+        i++;
     });
+
 
     //CRIANDO UM ARRAY DE OBJETOS COM OS TIMES E SEUS RESPECTIVOS VALORES
     var times = nomesDosTimes.map(function(nomeTime) {
@@ -423,6 +427,10 @@ function comeca_tudo(data) {
 
     }
 
+    //arruma o padding do título pra se alinhar ao do gráfico
+
+    $("h1").css("padding-left",svg.node().getBoundingClientRect()['left']+margin.left)
+
     //esconde o loading
     $('#loading').hide();
 
@@ -446,7 +454,7 @@ function mostra_tooltip_taca (element, i) {
 
 //FUNCAO PARA ADICIONAR OS ESCUDOS DOS TIMES
 function adiciona_escudos() {
-    var html_base = function (time) { return '<li id="'+time+'"><a class="escudo" title="'+time+'" id="escudo_'+time+'" href="javascript:void(0)"><img src="img/escudos/'+time+'.png"></a></li>' }
+    var html_base = function (time) { return '<li id="'+time+'"><a class="escudo" title="'+traducao[time]+'" id="escudo_'+time+'" href="javascript:void(0)"><img src="img/escudos/'+time+'.png"></a></li>' }
     var menu1 = $("#menuEscudos01")
     var menu2 = $("#menuEscudos02")
     escudos.forEach(function (d,i) {
@@ -463,24 +471,16 @@ $(document).ready(function(){
   adiciona_escudos();
 
   //CASO ALGUM ITEM DO MENU SEJA SELECIONADO
-  $(".sub-menu").click(function(event) {
-
-    //ARMAZENA O INDEX DO TIME ESCOLHIDO
-    timeEscolhido = $(event.target).parent().index();
-
-    //ARMAZENA A LINHA ESCOLHIDA
-    linhaSelecionada = $(".line")[timeEscolhido];
-    //linhaSelecionada = d3.selectAll(".linhaTime .linha")[0][timeEscolhido]; //MESMO EFEITO REALIZADO COM D3
-
-    mostraLinha(timeEscolhido, linhaSelecionada, true);
-    redesenha_linha();
-    coloca_tacinhas();
-      console.log('eieiie')
-
-  });
+    $('#lista_times').change(function() {
+        timeEscolhido =  $(this).children(":selected").attr("id");
+        linhaSelecionada = $(".line")[timeEscolhido];
+        mostraLinha(timeEscolhido, linhaSelecionada, true);
+        redesenha_linha();
+        coloca_tacinhas();
+    });
 
     //CASO ALGUM ESCUDO SEJA ESCOLHIDO
-  $(".menuEscudos li").click(function(e) {
+    $(".menuEscudos li").click(function(e) {
     //e.preventDefault();
     var nomeEscudoSelecionado = traducao[$(this).attr("id")];
 
@@ -490,54 +490,6 @@ $(document).ready(function(){
     coloca_tacinhas();
 
   });
-
-    //CODIGO REFERENTE À BARRA DE PESQUISA DE TIMES
-    $("#search-box").keyup(function(){
-
-        //ARMAZENA A ENTRADA DE TEXTO E RESETA A CONTAGEM PARA ZERO
-        var filter = $(this).val();
-        var count = 0;
-
-        //PERCORRE O ARRAY COM A LISTA DE TIMES
-        $(".sub-menu li").each(function(){
-          
-          //SE O ITEM NÃO CONTÉM O TEXTO, ELE É APAGADO
-          if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-            
-            $(this).fadeOut();
-          
-          } 
-          
-          //MOSTRA O ITEM SE O TEXTO COINCIDE E ADICIONA MAIS UM AO CONTADOR
-          else {
-
-            $(this).show();
-            count++;
-          
-          }
-
-        });
-
-        if (filter.length > 0) {
-            $(".sub-menu").css("opacity", 1);
-            $(".sub-menu").css("z-index", 1);
-        }
-
-        else {
-            $(".sub-menu").css("z-index", 0);
-            $(".sub-menu").css("opacity", 0);
-        }
-
-        if (count < 10) {
-            console.log("menos de dez itens!");
-        }
-
-    });
-    
-    //ATIVA A BARRA DE PESQUISA COM O PASSAR DO MOUSE
-    $(".search-icon").mouseover(function() {
-        $(".search-box").focus();
-    });
 
 });
 
@@ -660,18 +612,6 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
 
 }
 
-//APAGA OS VALORES DA BARRA DE PESQUISA
-function resetSearchBar () {
-
-    $(".search-box")
-    .not(':button, :submit, :reset, :hidden')
-    .val('')
-    .removeAttr('checked')
-    .removeAttr('selected');
-
-}
-
-
 function mousemove() {
     var distancia_svg = svg.node().getBoundingClientRect();
     var dados = times[timeEscolhido].valores,
@@ -689,12 +629,14 @@ function mousemove() {
                 .attr("y1",Math.min(coordenadas[1],300))
                 .attr("x2",coordenadas[0])
                 .attr("y2",y(d.indice));
-            tooltip_jogo.transition()
+            tooltip_jogo.transition().duration(100)
                 .style("opacity", .9)
             tooltip_jogo
                 .html(texto)
                 .style("left", Math.min(d3.event.pageX -30,width+distancia_svg['left']-20) + "px")
                 .style("top", Math.min(d3.event.pageY -50,650) + "px");
+
+
         }
     }
 }
