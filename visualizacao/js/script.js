@@ -1,7 +1,7 @@
 //DIMENSOES DO GRAFICO
-var margin = {top: 10, right: 10, bottom: 100, left: 40},
+var margin = {top: 10, right: 25, bottom: 100, left: 40},
     width = Math.min(window.innerWidth - margin.right - margin.left - 20,1500),
-    margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+    margin2 = {top: 430, right: 25, bottom: 20, left: 40},
     height = 500 - margin.top - margin.bottom,
     height2 = 500 - margin2.top - margin2.bottom,
     w = window.innerWidth - 20;
@@ -475,6 +475,7 @@ $(document).ready(function(){
     mostraLinha(timeEscolhido, linhaSelecionada, true);
     redesenha_linha();
     coloca_tacinhas();
+      console.log('eieiie')
 
   });
 
@@ -602,6 +603,8 @@ function arruma_destaque_linhas() {
 }
 
 function coloca_tacinhas() {
+    //retira as tacinhas e a legenda se tiver
+    tooltip.style("opacity", 0);
     focus.selectAll('.tacinha').remove();
 
     //faz um array com o primeiro jogo do time escolhido nos anos que ele foi campeão
@@ -641,8 +644,9 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
   //criaCirculos(timeEscolhido);
 
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
-  $("#nomeTimeSelecionado").text(times[timeEscolhido].nome + " | Campeão em: " + campeoes_inverse[times[timeEscolhido].nome].join(" - ") );
-
+    var time = times[timeEscolhido].nome;
+    var campeao_em = time in campeoes_inverse ? "| Campeão em: "+ campeoes_inverse[time].join(" - ") : "";
+    $("#nomeTimeSelecionado").text(times[timeEscolhido].nome + campeao_em );
 
   //tira destaque de todos os escudos e destaca só o escolhido agora
   //$('.escudo').css('border-style','');

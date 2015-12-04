@@ -2,7 +2,7 @@
 abbr,address,article,aside,audio,b,blockquote,body,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,samp,section,small,span,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,ul,var,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:0 0}li,ul{list-style-type:none}body{}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}nav ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:0 0;text-decoration:none}table{border-collapse:collapse;border-spacing:0}hr{display:block;height:1px;border:0;border-top:1px solid rgba(0,0,0,.1);margin:1em 0;padding:0}input,select{vertical-align:middle}
 
 body {
-  background: #878787 url('../img/body-bg-claro.jpg');
+  background: white;
   font-family: 'flamathin', arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -100,10 +100,9 @@ h1 span {
 }
 
 svg {
-  background-color:#F0F0F0;
+  background-color:white;
   margin-bottom: 10px;
-  -webkit-box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+
 }
 
 div.svgWrap {
@@ -298,8 +297,6 @@ h1 .metodologia {
   margin-bottom: 44px;
 }
 .menuEscudos {
-    border:1px solid #ccc;
-    border-width:1px 0;
     list-style:none;
     margin:0;
     padding:0;
@@ -323,8 +320,8 @@ h1 .metodologia {
   height: 30px;
   transition: all .4s ease;
   filter: gray; /* IE6-9 */
-  filter: grayscale(.8); /* Firefox 35+ */
-  -webkit-filter: grayscale(.8); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(0); /* Firefox 35+ */
+  -webkit-filter: grayscale(0); /* Google Chrome, Safari 6+ & Opera 15+ */
 }
 
 .menuEscudos img:hover {
@@ -411,6 +408,7 @@ h1 .metodologia {
   background-color: #20262C;
   border-radius: 1px;
   margin-left: 34px;
+  padding:7px;
 
 }
 .arrowTooltip{
