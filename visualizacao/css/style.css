@@ -30,20 +30,12 @@ body {
   z-index: 100;
 }
 
-/*TITULO DA PAGINA*/
 #titulo {
-  width: 1000px;
-  margin: 0 auto;
-  margin-top: 36px;
-  margin-bottom: 20px;
-  vertical-align: middle;
-  /*border-bottom: 1px solid rgba(32,38,44,1.0);*/
-}
-
-h1 {
     text-align: left;
 
-    padding:5px;
+    padding-left:15px;
+    margin-bottom:10px;
+    margin-top: 0px;
   text-transform: uppercase;
   font-family: 'flamabold';
   font-size:30px;
@@ -194,16 +186,47 @@ div.svgWrap {
     display:block;
     clear:both;
 }
- 
+
+
 .menu-wrap {
     width:100%;
     box-shadow:0px 1px 3px rgba(0,0,0,0.2);
     background:#20262C;
-    display: block;
-    clear: both;
-    height:50px;
+    overflow:hidden;
+    position:relative;
+    display:table;
 }
- 
+
+.imagem {
+    display:table-cell;
+}
+
+.titulo {
+    display:table-cell;
+}
+
+.rede_social {
+    position: relative;
+    float:right;
+    padding-right: 50px;
+}
+ul.share-buttons{
+    list-style: none;
+    padding: 0;
+}
+
+ul.share-buttons li {
+    display: inline
+}
+
+
+
+.titulo_tacinha {
+    color:black;
+    font-size:10px;
+    font-family: arial;
+    opacity: 1;
+}
 .menu {
     width:1000px;
     margin:0px auto;

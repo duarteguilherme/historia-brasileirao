@@ -421,34 +421,33 @@ function comeca_tudo(data) {
 
         //muda a tacinha de lugar
         focus.selectAll(".tacinha")
+            .transition()
             .attr("transform", function(d,i){
                 return "translate(" + (x(d.data)-width/60)  + "," + (height-30)  + ") scale(0.05)";
             });
+
+        //e o textinho também
+        /*
+        focus.selectAll(".titulo_tacinha")
+            .attr("transform", function (d,i) {
+                return "translate("+(x(d.data)) +",0)"
+            });*/
+
+        focus.selectAll(".titulo_tacinha")
+            .selectAll('text')
+            .transition()
+            .attr("x",function (d) {
+                return x(d.data)+2;
+            })
 
     }
 
     //arruma o padding do título pra se alinhar ao do gráfico
 
-    $("h1").css("padding-left",svg.node().getBoundingClientRect()['left']+margin.left)
+    $(".imagem").css("padding-left",svg.node().getBoundingClientRect()['left']+margin.left)
 
     //esconde o loading
     $('#loading').hide();
-
-}
-
-function mostra_tooltip_taca (element, i) {
-    tooltip_jogo.style("opacity", 0);
-    linha_tooltip.style("opacity",0);
-
-    tooltip.transition()
-        .style("opacity", .9)
-        .text("CAMPEÃO EM: "+element.data.getFullYear());
-    tooltip
-        .style("left", (d3.event.pageX+5) + "px")
-        .style("top", (d3.event.pageY-30) + "px");
-
-    tooltip_jogo.style("opacity", 0);
-    linha_tooltip.style("opacity",0);
 
 }
 
@@ -466,10 +465,13 @@ function adiciona_escudos() {
     })
 }
 
+function formata_numero(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 //FUNCAO CHAMADA QUANDO O DOCUMENTO ESTA PRONTO
 $(document).ready(function(){
   adiciona_escudos();
-
   //CASO ALGUM ITEM DO MENU SEJA SELECIONADO
     $('#lista_times').change(function() {
         timeEscolhido =  $(this).children(":selected").attr("id");
@@ -558,6 +560,7 @@ function coloca_tacinhas() {
     //retira as tacinhas e a legenda se tiver
     tooltip.style("opacity", 0);
     focus.selectAll('.tacinha').remove();
+    focus.selectAll('.titulo_tacinha').remove();
 
     //faz um array com o primeiro jogo do time escolhido nos anos que ele foi campeão
     var time = times[timeEscolhido].nome;
@@ -574,17 +577,28 @@ function coloca_tacinhas() {
             .enter()
             .append("g")
             .attr("class","tacinha")
-            .on('mouseover',mostra_tooltip_taca)
-            .on('click',mostra_tooltip_taca)
-            .on("mouseout", function(d, i) {
-                tooltip.style("opacity", 0)
-            })
             .attr("transform", function(d,i){
                 return "translate(" + (x(d.data)-width/60)  + "," + (height-30)  + ") scale(0.05)";
             })
             .each(function(d,i){
                 var imported_svg = this.appendChild(imported_node.cloneNode(true));
+            });
+
+        focus.selectAll(".titulo_tacinha")
+            .data(primeiros_jogos)
+            .enter()
+            .append("g")
+            .attr("class","titulo_tacinha")
+            .append("text").text(function (d) {
+                return d.data.getFullYear();
             })
+            .attr("x", function(d,i){
+                return x(d.data)+2;
+            })
+            .attr("y", function (d) {
+                return height-32;
+            })
+
     }
 }
 
@@ -598,7 +612,7 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
     var time = times[timeEscolhido].nome;
     var campeao_em = time in campeoes_inverse ? "| Campeão em: "+ campeoes_inverse[time].join(" - ") : "";
-    $("#nomeTimeSelecionado").text(times[timeEscolhido].nome + campeao_em );
+    $("#nomeTimeSelecionado").html(times[timeEscolhido].nome + campeao_em );
 
   //tira destaque de todos os escudos e destaca só o escolhido agora
   //$('.escudo').css('border-style','');
@@ -623,10 +637,10 @@ function mousemove() {
     if (d1) {
         var d = x0 - d0.data > d1.data - x0 ? d1 : d0;
         if (d.indice) {
-            var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getFullYear()+"</p><p>Pontos: "+ d.indice+"</p>"
+            var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getFullYear()+"</p><p>Pontos: "+ formata_numero(d.indice)+"</p>"
             linha_tooltip.style("opacity",0.8)
                 .attr("x1",coordenadas[0])
-                .attr("y1",Math.min(coordenadas[1],300))
+                .attr("y1",340)
                 .attr("x2",coordenadas[0])
                 .attr("y2",y(d.indice));
             tooltip_jogo.transition().duration(100)
@@ -634,7 +648,7 @@ function mousemove() {
             tooltip_jogo
                 .html(texto)
                 .style("left", Math.min(d3.event.pageX -30,width+distancia_svg['left']-20) + "px")
-                .style("top", Math.min(d3.event.pageY -50,650) + "px");
+                .style("top", 620 + "px");
 
 
         }
@@ -643,3 +657,4 @@ function mousemove() {
 
 
 inicia();
+
