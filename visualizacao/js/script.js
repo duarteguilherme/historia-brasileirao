@@ -93,7 +93,7 @@ var campeoes = {
     1984:'FLUMINENSE',
     1985:'CORITIBA',
     1986:'SÃO PAULO',
-    1987:'SPORT',
+    1987:['SPORT','FLAMENGO'],
     1988:'BAHIA',
     1989:'VASCO',
     1990:'CORINTHIANS',
@@ -124,6 +124,13 @@ var campeoes = {
     2015:'CORINTHIANS'
 };
 
+//função para checar se array é unique
+function uniq(a) {
+    var seen = {};
+    return a.filter(function(item) {
+        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+    });
+}
 
 function inicia() {
     var ua = window.navigator.userAgent;
@@ -138,7 +145,6 @@ function inicia() {
         d3.json ("data/dadosfull.json", comeca_tudo);
 }
 
-
 function conserta_dados(data) {
     var traducao_time = {};
     data[0]['time'].map(function (d,i) {
@@ -147,11 +153,10 @@ function conserta_dados(data) {
 
     var dados = data[1];
 
-    //PARSEANDO AS DATAS PARA O FORMATO DE LEITURA DO GRAFICO
+    //PARSEANDO A DATA FAKE PARA O FORMATO DE DATA PARA ENTRAR NO EIXO X
     dados["data_fake"].forEach(function(data, index) {
         dados["data_fake"][index] = parseData(data);
     });
-
 
     dados['time'] = dados['time'].map(function(d) {
         //coloca o nome do time em caixa alta na tradução se não estiver
@@ -163,9 +168,8 @@ function conserta_dados(data) {
     });
 
     //ARMAZENANDO O TOTAL DE TIMES
-    nomesDosTimes = data[0]['time'];
+    nomesDosTimes = uniq(data[0]['time']);
     nomesDosTimes = nomesDosTimes.map(function (d) { return traducao[d] });
-
 
     //INSERINDO O NOME DOS CLUBES NO DROPDOWN MENU
     var i = 0;
@@ -173,7 +177,6 @@ function conserta_dados(data) {
         $("#lista_times").append("<option id="+i+">" + d + "</option>");
         i++;
     });
-
 
     //CRIANDO UM ARRAY DE OBJETOS COM OS TIMES E SEUS RESPECTIVOS VALORES
     var times = nomesDosTimes.map(function(nomeTime) {
@@ -212,11 +215,14 @@ function conserta_dados(data) {
     //faz um array contrário de campeoes
     campeoes_inverse = {};
     for (var ano in campeoes) {
-        var time = campeoes[ano];
-        if (!(time in campeoes_inverse)) {
-            campeoes_inverse[time] = [];
-        }
-        campeoes_inverse[time].push(parseInt(ano))
+        //transforma todos os valores em array, e não faz nada com os q já são (1987, qnd houve 2 campeoes)
+        var times_campeoes = [].concat(campeoes[ano]);
+        times_campeoes.forEach(function (time) {
+            if (!(time in campeoes_inverse)) {
+                campeoes_inverse[time] = [];
+            }
+            campeoes_inverse[time].push(parseInt(ano))
+        })
     }
 
     return saida;
@@ -611,7 +617,7 @@ function mostraLinha (timeEscolhido, linhaSelecionada, animaTela) {
 
   //ADICIONANDO A LEGENDA ACIMA DO GRAFICO
     var time = times[timeEscolhido].nome;
-    var campeao_em = time in campeoes_inverse ? "| Campeão em: "+ campeoes_inverse[time].join(" - ") : "";
+    var campeao_em = time in campeoes_inverse ? " || Campeão em: "+ campeoes_inverse[time].join(" - ") : "";
     $("#nomeTimeSelecionado").html(times[timeEscolhido].nome + campeao_em );
 
   //tira destaque de todos os escudos e destaca só o escolhido agora
@@ -637,7 +643,8 @@ function mousemove() {
     if (d1) {
         var d = x0 - d0.data > d1.data - x0 ? d1 : d0;
         if (d.indice) {
-            var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ d.data.getDay()+"/"+ d.data.getMonth()+"/"+ d.data.getFullYear()+"</p><p>Pontos: "+ formata_numero(d.indice)+"</p>"
+            var data = [d.data_real.substring(4,6), d.data_real.substring(2,4), d.data_real.substring(0,2)];
+            var texto = "<p>"+times[timeEscolhido].nome + "</p><p>Data: "+ data[0] +"/"+ data[1] +"/"+ data[2]+"</p><p>Pontos: "+ formata_numero(d.indice)+"</p>"
             linha_tooltip.style("opacity",0.8)
                 .attr("x1",coordenadas[0])
                 .attr("y1",340)

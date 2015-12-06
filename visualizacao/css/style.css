@@ -445,3 +445,9 @@ h1 .metodologia {
     margin-left: 44px;
 }
 /* TOOLTIP LEGENDA */
+
+footer {
+    color:black;
+    font-size: 14px;
+    text-align: center;
+}
