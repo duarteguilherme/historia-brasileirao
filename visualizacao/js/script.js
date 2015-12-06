@@ -132,6 +132,11 @@ function uniq(a) {
     });
 }
 
+//função para replace all
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
 function inicia() {
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE ");
@@ -319,7 +324,7 @@ function comeca_tudo(data) {
         .attr("class", "times")
         .append('path')
         .attr("class", function (d,i) {
-            return "line " + d.nome.replace(' ','-')
+            return "line " + replaceAll(d.nome,' ','-');
         })
         .attr("opacity", 0.7)
         .attr("d", function(d) { return line(d.valores); })
@@ -555,7 +560,7 @@ function arruma_destaque_linhas() {
     //AUMENTA A OPACIDADE DA LINHA SELECIONADA
     //ALTERA A COR DA LINHA SELECIONADA
     //DESLOCA ELA PARA CIMA DAS OUTRAS
-    var linha_destaque = $('.'+times[timeEscolhido].nome.replace(' ','-'))
+    var linha_destaque = $('.'+ replaceAll(times[timeEscolhido].nome,' ','-'))
     linha_destaque.attr("opacity", 1);
     linha_destaque.css("stroke", "rgb(255, 102, 0)");
     linha_destaque.css("stroke-width", function(d) { return "1.5px" });
