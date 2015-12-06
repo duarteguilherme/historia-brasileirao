@@ -1,7 +1,7 @@
 library(tidyr)
 
 
-banco2015 <- read.csv('~/elo_futebol/banco2015.csv', stringsAsFactors=FALSE)
+banco2015 <- read.csv('/var/www/html/historia-brasileirao/banco2015.csv', stringsAsFactors=FALSE)
 
 
 banco2015$ano <- 2015

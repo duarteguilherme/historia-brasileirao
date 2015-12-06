@@ -2,7 +2,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(lubridate)
-setwd('/var/www/html/historia_brasileirao/')
+setwd('/var/www/html/historia-brasileirao/')
 
 
 
@@ -231,8 +231,11 @@ ratings <- rbind(select(ratings, time=time_casa, rating=r_timecasa, dia, ano),
                     select(ratings, time=time_fora, rating=r_timefora, dia, ano))
 
 ratings$day <- as.Date(ratings$dia, format="%Y-%m-%d")
+ratings <- arrange(ratings, day)
 ratings$day <- format(ratings$day, "%d-%m")
 ratings <- filter(ratings, day!="01-01")
+
+
 
 ratings <- select(ratings, -day)
 
@@ -331,6 +334,9 @@ times_pontos_corrigos <- ratings %>%
   select(time) %>%
   unique()
   
+# ratings$data <- ratings$dia
+
+# ratings <- select(ratings, -dia)
 
 # RETIRA TIMES NAO IMPORTANTES
 ratings <- ratings %>%
@@ -351,9 +357,13 @@ dicio <- data.frame(ind=1:length(levels_time), time=levels_time, stringsAsFactor
 ratings$time <- as.numeric(ratings$time)
 
 
+
+
+
 arquivo <- list(dicio, ratings)
 
 
+teste <- fromJSON('visualizacao/data/dadosfull-funcionam.json')
 
 library(RJSONIO)
 ratings_json_j <- toJSON(arquivo)
