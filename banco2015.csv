@@ -1,372 +1,381 @@
-"rodada","data","time_casa","time_fora","gols_casa","gols_fora","estadio","cidade"
-1,"09/05","Palmeiras","Atlético-MG","2","2","Allianz Parque","Sao Paulo"
-1,"09/05","Chapecoense","Coritiba","2","1","Arena Condá","Chapecó"
-1,"09/05","Fluminense","Joinville","1","0","Maracanã","Rio de Janeiro"
-1,"10/05","Grêmio","Ponte Preta","3","3","Arena do Grêmio","Porto Alegre"
-1,"10/05","São Paulo","Flamengo","2","1","Morumbi","São Paulo"
-1,"10/05","Sport","Figueirense","4","1","Ilha do Retiro","Recife"
-1,"10/05","Atlético-PR","Internacional","3","0","Arena da Baixada","Curitiba"
-1,"10/05","Cruzeiro","Corinthians","0","1","Arena Pantanal","Cuiabá"
-1,"10/05","Avaí","Santos","1","1","Ressacada","Florianópolis"
-1,"10/05","Vasco","Goiás","0","0","São Januário","Rio de Janeiro"
-2,"16/05","Goiás","Atlético-PR","2","0","Serra Dourada","Goiânia"
-2,"16/05","Coritiba","Grêmio","2","0","Couto Pereira","Curitiba"
-2,"16/05","Corinthians","Chapecoense","1","0","Fonte Luminosa","Araraquara"
-2,"17/05","Figueirense","Vasco","0","0","Orlando Scarpelli","Florianópolis"
-2,"17/05","Atlético-MG","Fluminense","4","1","Mané Garrincha","Brasília"
-2,"17/05","Flamengo","Sport","2","2","Maracanã","Rio de Janeiro"
-2,"17/05","Santos","Cruzeiro","1","0","Vila Belmiro","Santos"
-2,"17/05","Internacional","Avaí","1","0","Beira Rio","Porto Alegre"
-2,"17/05","Ponte Preta","São Paulo","1","0","Moisés Lucarelli","Campinas"
-2,"17/05","Joinville","Palmeiras","0","0","Arena Joinville","Joinville"
-3,"23/05","Vasco","Internacional","1","1","São Januário","Rio de Janeiro"
-3,"23/05","São Paulo","Joinville","3","0","Morumbi","São Paulo"
-3,"23/05","Grêmio","Figueirense","1","0","Arena do Grêmio","Porto Alegre"
-3,"24/05","Palmeiras","Goiás","0","1","Allianz Parque","Sao Paulo"
-3,"24/05","Chapecoense","Santos","1","0","Arena Condá","Chapecó"
-3,"24/05","Atlético-PR","Atlético-MG","1","0","Arena da Baixada","Curitiba"
-3,"24/05","Avaí","Flamengo","2","1","Ressacada","Florianópolis"
-3,"24/05","Fluminense","Corinthians","0","0","Maracanã","Rio de Janeiro"
-3,"24/05","Cruzeiro","Ponte Preta","1","1","Mineirão","Belo Horizonte"
-3,"24/05","Sport","Coritiba","1","0","Ilha do Retiro","Recife"
-4,"30/05","Ponte Preta","Chapecoense","3","1","Moisés Lucarelli","Campinas"
-4,"30/05","Coritiba","Avaí","1","2","Couto Pereira","Curitiba"
-4,"30/05","Joinville","Atlético-PR","1","2","Arena Joinville","Joinville"
-4,"31/05","Santos","Sport","2","2","Vila Belmiro","Santos"
-4,"31/05","Corinthians","Palmeiras","0","2","Arena Corinthians","São Paulo"
-4,"31/05","Internacional","São Paulo","0","0","Beira Rio","Porto Alegre"
-4,"31/05","Atlético-MG","Vasco","3","0","Independência","Belo Horizonte"
-4,"31/05","Goiás","Grêmio","1","1","Serra Dourada","Goiânia"
-4,"31/05","Figueirense","Cruzeiro","2","1","Orlando Scarpelli","Florianópolis"
-4,"31/05","Flamengo","Fluminense","2","3","Maracanã","Rio de Janeiro"
-5,"03/06","Chapecoense","Joinville","2","0","Arena Condá","Chapecó"
-5,"03/06","Atlético-PR","Figueirense","1","0","Arena da Baixada","Curitiba"
-5,"03/06","Vasco","Ponte Preta","0","3","São Januário","Rio de Janeiro"
-5,"03/06","São Paulo","Santos","3","2","Morumbi","São Paulo"
-5,"03/06","Avaí","Atlético-MG","1","4","Ressacada","Florianópolis"
-5,"03/06","Cruzeiro","Flamengo","1","0","Mineirão","Belo Horizonte"
-5,"03/06","Grêmio","Corinthians","3","1","Arena do Grêmio","Porto Alegre"
-5,"04/06","Fluminense","Coritiba","2","0","Maracanã","Rio de Janeiro"
-5,"04/06","Sport","Goiás","1","0","Ilha do Retiro","Recife"
-5,"04/06","Palmeiras","Internacional","1","1","Allianz Parque","Sao Paulo"
-6,"06/06","Santos","Ponte Preta","2","2","Vila Belmiro","Santos"
-6,"06/06","Flamengo","Chapecoense","1","0","Maracanã","Rio de Janeiro"
-6,"06/06","Atlético-MG","Cruzeiro","1","3","Independência","Belo Horizonte"
-6,"06/06","Joinville","Corinthians","0","1","Arena Joinville","Joinville"
-6,"06/06","Atlético-PR","Vasco","2","0","Arena da Baixada","Curitiba"
-6,"06/06","São Paulo","Grêmio","2","0","Morumbi","São Paulo"
-6,"07/06","Internacional","Coritiba","2","0","Beira Rio","Porto Alegre"
-6,"07/06","Figueirense","Palmeiras","2","1","Orlando Scarpelli","Florianópolis"
-6,"07/06","Fluminense","Sport","0","0","Maracanã","Rio de Janeiro"
-6,"07/06","Goiás","Avaí","0","1","Serra Dourada","Goiânia"
-7,"10/06","Atlético-MG","Santos","2","2","Independência","Belo Horizonte"
-7,"13/06","Chapecoense","São Paulo","0","1","Arena Condá","Chapecó"
-7,"13/06","Coritiba","Flamengo","0","1","Couto Pereira","Curitiba"
-7,"13/06","Corinthians","Internacional","2","1","Arena Corinthians","São Paulo"
-7,"13/06","Vasco","Cruzeiro","1","3","São Januário","Rio de Janeiro"
-7,"13/06","Sport","Joinville","2","1","Ilha do Retiro","Recife"
-7,"14/06","Ponte Preta","Goiás","0","0","Moisés Lucarelli","Campinas"
-7,"14/06","Grêmio","Atlético-PR","2","1","Arena do Grêmio","Porto Alegre"
-7,"14/06","Avaí","Figueirense","1","1","Ressacada","Florianópolis"
-7,"14/06","Palmeiras","Fluminense","2","1","Allianz Parque","Sao Paulo"
-8,"18/06","Figueirense","Internacional","0","0","Orlando Scarpelli","Florianópolis"
-8,"20/06","Sport","Vasco","2","1","Arena Pernambuco","S. Lourenço da Mata"
-8,"20/06","Santos","Corinthians","1","0","Vila Belmiro","Santos"
-8,"20/06","Flamengo","Atlético-MG","0","2","Maracanã","Rio de Janeiro"
-8,"20/06","Grêmio","Palmeiras","1","0","Arena do Grêmio","Porto Alegre"
-8,"21/06","Cruzeiro","Chapecoense","0","1","Mineirão","Belo Horizonte"
-8,"21/06","Atlético-PR","Coritiba","2","2","Arena da Baixada","Curitiba"
-8,"21/06","São Paulo","Avaí","1","1","Morumbi","São Paulo"
-8,"21/06","Joinville","Goiás","2","1","Arena Joinville","Joinville"
-8,"24/06","Fluminense","Ponte Preta","2","0","Maracanã","Rio de Janeiro"
-9,"27/06","Chapecoense","Sport","1","1","Arena Condá","Chapecó"
-9,"27/06","Avaí","Grêmio","1","2","Ressacada","Florianópolis"
-9,"27/06","Corinthians","Figueirense","2","1","Arena Corinthians","São Paulo"
-9,"28/06","Atlético-MG","Joinville","1","0","Mineirão","Belo Horizonte"
-9,"28/06","Ponte Preta","Atlético-PR","2","1","Moisés Lucarelli","Campinas"
-9,"28/06","Goiás","Fluminense","1","2","Serra Dourada","Goiânia"
-9,"28/06","Coritiba","Cruzeiro","1","0","Couto Pereira","Curitiba"
-9,"28/06","Palmeiras","São Paulo","4","0","Allianz Parque","Sao Paulo"
-9,"28/06","Internacional","Santos","1","0","Beira Rio","Porto Alegre"
-9,"28/06","Vasco","Flamengo","1","0","Arena Pantanal","Cuiabá"
-10,"01/07","Sport","Internacional","3","0","Ilha do Retiro","Recife"
-10,"01/07","Vasco","Avaí","1","0","São Januário","Rio de Janeiro"
-10,"01/07","Palmeiras","Chapecoense","2","0","Allianz Parque","Sao Paulo"
-10,"01/07","Atlético-MG","Coritiba","2","0","Independência","Belo Horizonte"
-10,"01/07","Joinville","Flamengo","0","1","Arena Joinville","Joinville"
-10,"01/07","Grêmio","Cruzeiro","1","0","Arena do Grêmio","Porto Alegre"
-10,"01/07","Atlético-PR","São Paulo","2","1","Arena da Baixada","Curitiba"
-10,"02/07","Corinthians","Ponte Preta","2","0","Arena Corinthians","São Paulo"
-10,"02/07","Figueirense","Goiás","3","1","Orlando Scarpelli","Florianópolis"
-10,"02/07","Fluminense","Santos","2","1","Maracanã","Rio de Janeiro"
-11,"04/07","Coritiba","Joinville","0","0","Couto Pereira","Curitiba"
-11,"04/07","Chapecoense","Vasco","1","0","Arena Condá","Chapecó"
-11,"04/07","Cruzeiro","Atlético-PR","2","0","Mineirão","Belo Horizonte"
-11,"05/07","Avaí","Sport","2","2","Ressacada","Florianópolis"
-11,"05/07","São Paulo","Fluminense","0","0","Morumbi","São Paulo"
-11,"05/07","Santos","Grêmio","1","3","Vila Belmiro","Santos"
-11,"05/07","Goiás","Corinthians","0","0","Serra Dourada","Goiânia"
-11,"05/07","Internacional","Atlético-MG","1","3","Beira Rio","Porto Alegre"
-11,"05/07","Flamengo","Figueirense","1","2","Maracanã","Rio de Janeiro"
-11,"05/07","Ponte Preta","Palmeiras","0","2","Arena Pantanal","Cuiabá"
-12,"08/07","Chapecoense","Grêmio","1","0","Arena Condá","Chapecó"
-12,"08/07","Coritiba","Ponte Preta","0","0","Couto Pereira","Curitiba"
-12,"08/07","Goiás","Santos","4","1","Serra Dourada","Goiânia"
-12,"08/07","Palmeiras","Avaí","3","0","Allianz Parque","Sao Paulo"
-12,"08/07","Figueirense","Joinville","0","2","Orlando Scarpelli","Florianópolis"
-12,"08/07","Atlético-MG","Sport","2","1","Mineirão","Belo Horizonte"
-12,"08/07","Internacional","Flamengo","1","2","Beira Rio","Porto Alegre"
-12,"08/07","Vasco","São Paulo","0","4","Mané Garrincha","Brasília"
-12,"09/07","Corinthians","Atlético-PR","2","0","Arena Corinthians","São Paulo"
-12,"09/07","Fluminense","Cruzeiro","1","0","Maracanã","Rio de Janeiro"
-13,"11/07","Grêmio","Vasco","2","0","Arena do Grêmio","Porto Alegre"
-13,"11/07","Santos","Figueirense","3","0","Vila Belmiro","Santos"
-13,"11/07","Ponte Preta","Atlético-MG","0","2","Moisés Lucarelli","Campinas"
-13,"12/07","São Paulo","Coritiba","3","1","Morumbi","São Paulo"
-13,"12/07","Flamengo","Corinthians","0","3","Maracanã","Rio de Janeiro"
-13,"12/07","Cruzeiro","Goiás","1","0","Mineirão","Belo Horizonte"
-13,"12/07","Joinville","Internacional","0","2","Arena Joinville","Joinville"
-13,"12/07","Atlético-PR","Fluminense","1","2","Arena da Baixada","Curitiba"
-13,"12/07","Sport","Palmeiras","2","2","Arena Pernambuco","S. Lourenço da Mata"
-13,"12/07","Avaí","Chapecoense","2","1","Ressacada","Florianópolis"
-14,"18/07","Internacional","Goiás","2","1","Beira Rio","Porto Alegre"
-14,"18/07","Flamengo","Grêmio","1","0","Maracanã","Rio de Janeiro"
-14,"18/07","Corinthians","Atlético-MG","1","0","Arena Corinthians","São Paulo"
-14,"19/07","Atlético-PR","Chapecoense","1","0","Arena da Baixada","Curitiba"
-14,"19/07","Fluminense","Vasco","1","2","Maracanã","Rio de Janeiro"
-14,"19/07","Palmeiras","Santos","1","0","Allianz Parque","Sao Paulo"
-14,"19/07","Figueirense","Coritiba","0","0","Orlando Scarpelli","Florianópolis"
-14,"19/07","Sport","São Paulo","2","0","Arena Pernambuco","S. Lourenço da Mata"
-14,"19/07","Joinville","Ponte Preta","1","1","Arena Joinville","Joinville"
-14,"19/07","Cruzeiro","Avaí","1","1","Mineirão","Belo Horizonte"
-15,"25/07","Avaí","Atlético-PR","1","2","Ressacada","Florianópolis"
-15,"25/07","Grêmio","Sport","1","1","Arena do Grêmio","Porto Alegre"
-15,"25/07","Atlético-MG","Figueirense","1","0","Independência","Belo Horizonte"
-15,"26/07","Santos","Joinville","2","0","Vila Belmiro","Santos"
-15,"26/07","Chapecoense","Fluminense","2","1","Arena Condá","Chapecó"
-15,"26/07","Ponte Preta","Internacional","0","0","Moisés Lucarelli","Campinas"
-15,"26/07","São Paulo","Cruzeiro","1","0","Morumbi","São Paulo"
-15,"26/07","Coritiba","Corinthians","1","1","Couto Pereira","Curitiba"
-15,"26/07","Goiás","Flamengo","0","1","Serra Dourada","Goiânia"
-15,"26/07","Vasco","Palmeiras","1","4","São Januário","Rio de Janeiro"
-16,"29/07","Atlético-MG","São Paulo","3","1","Mineirão","Belo Horizonte"
-16,"29/07","Corinthians","Vasco","3","0","Arena Corinthians","São Paulo"
-16,"01/08","Fluminense","Grêmio","1","0","Maracanã","Rio de Janeiro"
-16,"02/08","Palmeiras","Atlético-PR","0","1","Allianz Parque","Sao Paulo"
-16,"02/08","Coritiba","Goiás","1","1","Couto Pereira","Curitiba"
-16,"02/08","Flamengo","Santos","2","2","Maracanã","Rio de Janeiro"
-16,"02/08","Internacional","Chapecoense","0","0","Beira Rio","Porto Alegre"
-16,"02/08","Figueirense","Ponte Preta","3","1","Orlando Scarpelli","Florianópolis"
-16,"02/08","Joinville","Avaí","2","0","Arena Joinville","Joinville"
-16,"02/08","Sport","Cruzeiro","0","0","Arena Pernambuco","S. Lourenço da Mata"
-17,"08/08","Avaí","Fluminense","1","0","Ressacada","Florianópolis"
-17,"08/08","Santos","Coritiba","3","0","Vila Belmiro","Santos"
-17,"09/08","Atlético-PR","Sport","1","1","Arena da Baixada","Curitiba"
-17,"09/08","Vasco","Joinville","0","0","Maracanã","Rio de Janeiro"
-17,"09/08","Cruzeiro","Palmeiras","2","1","Mineirão","Belo Horizonte"
-17,"09/08","Ponte Preta","Flamengo","1","0","Moisés Lucarelli","Campinas"
-17,"09/08","São Paulo","Corinthians","1","1","Morumbi","São Paulo"
-17,"09/08","Goiás","Atlético-MG","0","0","Serra Dourada","Goiânia"
-17,"09/08","Chapecoense","Figueirense","2","2","Arena Condá","Chapecó"
-17,"09/08","Grêmio","Internacional","5","0","Arena do Grêmio","Porto Alegre"
-18,"12/08","Coritiba","Palmeiras","2","1","Couto Pereira","Curitiba"
-18,"12/08","Flamengo","Atlético-PR","3","2","Maracanã","Rio de Janeiro"
-18,"12/08","Santos","Vasco","1","0","Vila Belmiro","Santos"
-18,"12/08","Goiás","Chapecoense","0","0","Serra Dourada","Goiânia"
-18,"12/08","Internacional","Fluminense","1","0","Beira Rio","Porto Alegre"
-18,"12/08","Figueirense","São Paulo","0","2","Orlando Scarpelli","Florianópolis"
-18,"12/08","Corinthians","Sport","4","3","Arena Corinthians","São Paulo"
-18,"13/08","Ponte Preta","Avaí","2","0","Moisés Lucarelli","Campinas"
-18,"13/08","Joinville","Cruzeiro","3","0","Arena Joinville","Joinville"
-18,"13/08","Atlético-MG","Grêmio","0","2","Mineirão","Belo Horizonte"
-19,"15/08","Vasco","Coritiba","0","1","Maracanã","Rio de Janeiro"
-19,"15/08","Atlético-PR","Santos","0","0","Arena da Baixada","Curitiba"
-19,"15/08","São Paulo","Goiás","0","3","Morumbi","São Paulo"
-19,"16/08","Palmeiras","Flamengo","4","2","Allianz Parque","Sao Paulo"
-19,"16/08","Sport","Ponte Preta","1","1","Ilha do Retiro","Recife"
-19,"16/08","Avaí","Corinthians","1","2","Ressacada","Florianópolis"
-19,"16/08","Cruzeiro","Internacional","0","0","Mineirão","Belo Horizonte"
-19,"16/08","Fluminense","Figueirense","2","1","Maracanã","Rio de Janeiro"
-19,"16/08","Grêmio","Joinville","2","1","Arena do Grêmio","Porto Alegre"
-19,"16/08","Chapecoense","Atlético-MG","2","1","Arena Condá","Chapecó"
-20,"22/08","Goiás","Vasco","3","0","Serra Dourada","Goiânia"
-20,"22/08","Santos","Avaí","5","2","Vila Belmiro","Santos"
-20,"22/08","Figueirense","Sport","2","1","Orlando Scarpelli","Florianópolis"
-20,"23/08","Ponte Preta","Grêmio","0","0","Moisés Lucarelli","Campinas"
-20,"23/08","Coritiba","Chapecoense","1","0","Couto Pereira","Curitiba"
-20,"23/08","Joinville","Fluminense","2","1","Arena Joinville","Joinville"
-20,"23/08","Internacional","Atlético-PR","2","0","Beira Rio","Porto Alegre"
-20,"23/08","Flamengo","São Paulo","2","1","Maracanã","Rio de Janeiro"
-20,"23/08","Corinthians","Cruzeiro","3","0","Arena Corinthians","São Paulo"
-20,"23/08","Atlético-MG","Palmeiras","2","1","Independência","Belo Horizonte"
-21,"29/08","Vasco","Figueirense","0","1","Maracanã","Rio de Janeiro"
-21,"29/08","São Paulo","Ponte Preta","3","0","Morumbi","São Paulo"
-21,"30/08","Grêmio","Coritiba","0","0","Arena do Grêmio","Porto Alegre"
-21,"30/08","Avaí","Internacional","3","0","Ressacada","Florianópolis"
-21,"30/08","Chapecoense","Corinthians","1","3","Arena Condá","Chapecó"
-21,"30/08","Sport","Flamengo","0","1","Arena Pernambuco","S. Lourenço da Mata"
-21,"30/08","Palmeiras","Joinville","3","2","Allianz Parque","Sao Paulo"
-21,"30/08","Fluminense","Atlético-MG","1","2","Maracanã","Rio de Janeiro"
-21,"30/08","Atlético-PR","Goiás","3","0","Arena da Baixada","Curitiba"
-21,"30/08","Cruzeiro","Santos","0","1","Mineirão","Belo Horizonte"
-22,"02/09","Internacional","Vasco","6","0","Beira Rio","Porto Alegre"
-22,"02/09","Ponte Preta","Cruzeiro","1","2","Moisés Lucarelli","Campinas"
-22,"02/09","Joinville","São Paulo","0","0","Arena Joinville","Joinville"
-22,"02/09","Flamengo","Avaí","3","0","Arena das Dunas","Natal"
-22,"02/09","Atlético-MG","Atlético-PR","0","1","Independência","Belo Horizonte"
-22,"02/09","Goiás","Palmeiras","1","0","Serra Dourada","Goiânia"
-22,"02/09","Coritiba","Sport","0","0","Couto Pereira","Curitiba"
-22,"02/09","Corinthians","Fluminense","2","0","Arena Corinthians","São Paulo"
-22,"03/09","Santos","Chapecoense","3","1","Vila Belmiro","Santos"
-22,"03/09","Figueirense","Grêmio","0","2","Orlando Scarpelli","Florianópolis"
-23,"05/09","São Paulo","Internacional","2","0","Morumbi","São Paulo"
-23,"05/09","Vasco","Atlético-MG","1","2","Maracanã","Rio de Janeiro"
-23,"05/09","Atlético-PR","Joinville","0","0","Arena da Baixada","Curitiba"
-23,"06/09","Chapecoense","Ponte Preta","0","0","Arena Condá","Chapecó"
-23,"06/09","Cruzeiro","Figueirense","5","1","Mineirão","Belo Horizonte"
-23,"06/09","Grêmio","Goiás","2","1","Arena do Grêmio","Porto Alegre"
-23,"06/09","Avaí","Coritiba","0","2","Ressacada","Florianópolis"
-23,"06/09","Fluminense","Flamengo","1","3","Maracanã","Rio de Janeiro"
-23,"06/09","Palmeiras","Corinthians","3","3","Allianz Parque","Sao Paulo"
-23,"06/09","Sport","Santos","1","1","Ilha do Retiro","Recife"
-24,"09/09","Internacional","Palmeiras","1","0","Beira Rio","Porto Alegre"
-24,"09/09","Ponte Preta","Vasco","0","1","Moisés Lucarelli","Campinas"
-24,"09/09","Atlético-MG","Avaí","2","0","Independência","Belo Horizonte"
-24,"09/09","Figueirense","Atlético-PR","1","1","Orlando Scarpelli","Florianópolis"
-24,"09/09","Santos","São Paulo","3","0","Vila Belmiro","Santos"
-24,"09/09","Corinthians","Grêmio","1","1","Arena Corinthians","São Paulo"
-24,"09/09","Coritiba","Fluminense","1","1","Couto Pereira","Curitiba"
-24,"10/09","Goiás","Sport","1","0","Serra Dourada","Goiânia"
-24,"10/09","Joinville","Chapecoense","0","0","Arena Joinville","Joinville"
-24,"10/09","Flamengo","Cruzeiro","2","0","Maracanã","Rio de Janeiro"
-25,"12/09","Coritiba","Internacional","0","1","Couto Pereira","Curitiba"
-25,"12/09","Palmeiras","Figueirense","2","0","Allianz Parque","Sao Paulo"
-25,"13/09","Ponte Preta","Santos","3","1","Moisés Lucarelli","Campinas"
-25,"13/09","Corinthians","Joinville","3","0","Arena Corinthians","São Paulo"
-25,"13/09","Vasco","Atlético-PR","2","0","Maracanã","Rio de Janeiro"
-25,"13/09","Grêmio","São Paulo","1","2","Arena do Grêmio","Porto Alegre"
-25,"13/09","Cruzeiro","Atlético-MG","1","1","Mineirão","Belo Horizonte"
-25,"13/09","Chapecoense","Flamengo","1","3","Arena Condá","Chapecó"
-25,"13/09","Sport","Fluminense","1","0","Arena Pernambuco","S. Lourenço da Mata"
-25,"13/09","Avaí","Goiás","2","1","Ressacada","Florianópolis"
-26,"16/09","Joinville","Sport","1","1","Arena Joinville","Joinville"
-26,"16/09","Goiás","Ponte Preta","1","2","Serra Dourada","Goiânia"
-26,"16/09","Fluminense","Palmeiras","1","4","Maracanã","Rio de Janeiro"
-26,"16/09","Atlético-PR","Grêmio","1","2","Couto Pereira","Curitiba"
-26,"16/09","Figueirense","Avaí","0","1","Orlando Scarpelli","Florianópolis"
-26,"16/09","Cruzeiro","Vasco","2","2","Mineirão","Belo Horizonte"
-26,"16/09","Internacional","Corinthians","2","1","Beira Rio","Porto Alegre"
-26,"16/09","Santos","Atlético-MG","4","0","Vila Belmiro","Santos"
-26,"17/09","São Paulo","Chapecoense","0","0","Morumbi","São Paulo"
-26,"17/09","Flamengo","Coritiba","0","2","Mané Garrincha","Brasília"
-27,"19/09","Internacional","Figueirense","1","1","Beira Rio","Porto Alegre"
-27,"19/09","Palmeiras","Grêmio","3","2","Pacaembu","São Paulo"
-27,"19/09","Ponte Preta","Fluminense","3","1","Moisés Lucarelli","Campinas"
-27,"20/09","Corinthians","Santos","2","0","Arena Corinthians","São Paulo"
-27,"20/09","Goiás","Joinville","3","0","Serra Dourada","Goiânia"
-27,"20/09","Vasco","Sport","2","1","Maracanã","Rio de Janeiro"
-27,"20/09","Atlético-MG","Flamengo","4","1","Independência","Belo Horizonte"
-27,"20/09","Avaí","São Paulo","2","1","Ressacada","Florianópolis"
-27,"20/09","Chapecoense","Cruzeiro","0","2","Arena Condá","Chapecó"
-27,"20/09","Coritiba","Atlético-PR","2","0","Couto Pereira","Curitiba"
-28,"26/09","Fluminense","Goiás","2","0","Maracanã","Rio de Janeiro"
-28,"26/09","Grêmio","Avaí","3","1","Arena do Grêmio","Porto Alegre"
-28,"27/09","Santos","Internacional","3","1","Vila Belmiro","Santos"
-28,"27/09","Atlético-PR","Ponte Preta","1","2","Arena da Baixada","Curitiba"
-28,"27/09","Joinville","Atlético-MG","2","2","Arena Joinville","Joinville"
-28,"27/09","Figueirense","Corinthians","1","3","Orlando Scarpelli","Florianópolis"
-28,"27/09","São Paulo","Palmeiras","1","1","Morumbi","São Paulo"
-28,"27/09","Flamengo","Vasco","1","2","Maracanã","Rio de Janeiro"
-28,"27/09","Cruzeiro","Coritiba","2","0","Mineirão","Belo Horizonte"
-28,"27/09","Sport","Chapecoense","3","0","Ilha do Retiro","Recife"
-29,"03/10","Internacional","Sport","2","1","Beira Rio","Porto Alegre"
-29,"03/10","Coritiba","Atlético-MG","0","3","Couto Pereira","Curitiba"
-29,"03/10","São Paulo","Atlético-PR","1","0","Morumbi","São Paulo"
-29,"04/10","Flamengo","Joinville","2","0","Maracanã","Rio de Janeiro"
-29,"04/10","Avaí","Vasco","1","1","Ressacada","Florianópolis"
-29,"04/10","Goiás","Figueirense","2","3","Serra Dourada","Goiânia"
-29,"04/10","Cruzeiro","Grêmio","0","0","Mineirão","Belo Horizonte"
-29,"04/10","Ponte Preta","Corinthians","2","2","Moisés Lucarelli","Campinas"
-29,"04/10","Santos","Fluminense","3","1","Vila Belmiro","Santos"
-29,"04/10","Chapecoense","Palmeiras","5","1","Arena Condá","Chapecó"
-30,"14/10","Sport","Avaí","3","0","Ilha do Retiro","Recife"
-30,"14/10","Atlético-MG","Internacional","2","1","Independência","Belo Horizonte"
-30,"14/10","Joinville","Coritiba","3","1","Arena Joinville","Joinville"
-30,"14/10","Figueirense","Flamengo","3","0","Orlando Scarpelli","Florianópolis"
-30,"14/10","Palmeiras","Ponte Preta","0","1","Allianz Parque","Sao Paulo"
-30,"14/10","Atlético-PR","Cruzeiro","2","2","Arena da Baixada","Curitiba"
-30,"14/10","Fluminense","São Paulo","2","0","Maracanã","Rio de Janeiro"
-30,"15/10","Corinthians","Goiás","3","0","Arena Corinthians","São Paulo"
-30,"15/10","Vasco","Chapecoense","1","1","Maracanã","Rio de Janeiro"
-30,"15/10","Grêmio","Santos","1","0","Arena do Grêmio","Porto Alegre"
-31,"17/10","Avaí","Palmeiras","1","3","Ressacada","Florianópolis"
-31,"17/10","Joinville","Figueirense","1","0","Arena Joinville","Joinville"
-31,"18/10","Ponte Preta","Coritiba","3","0","Moisés Lucarelli","Campinas"
-31,"18/10","Cruzeiro","Fluminense","2","0","Mineirão","Belo Horizonte"
-31,"18/10","Atlético-PR","Corinthians","1","4","Arena da Baixada","Curitiba"
-31,"18/10","Flamengo","Internacional","0","1","Maracanã","Rio de Janeiro"
-31,"18/10","São Paulo","Vasco","2","2","Morumbi","São Paulo"
-31,"18/10","Grêmio","Chapecoense","2","3","Arena do Grêmio","Porto Alegre"
-31,"18/10","Santos","Goiás","3","1","Vila Belmiro","Santos"
-31,"18/10","Sport","Atlético-MG","4","1","Ilha do Retiro","Recife"
-32,"24/10","Fluminense","Atlético-PR","0","1","Maracanã","Rio de Janeiro"
-32,"24/10","Internacional","Joinville","1","0","Beira Rio","Porto Alegre"
-32,"24/10","Figueirense","Santos","0","0","Orlando Scarpelli","Florianópolis"
-32,"24/10","Palmeiras","Sport","0","2","Pacaembu","São Paulo"
-32,"25/10","Vasco","Grêmio","0","0","Maracanã","Rio de Janeiro"
-32,"25/10","Corinthians","Flamengo","1","0","Arena Corinthians","São Paulo"
-32,"25/10","Coritiba","São Paulo","1","2","Couto Pereira","Curitiba"
-32,"25/10","Chapecoense","Avaí","0","0","Arena Condá","Chapecó"
-32,"25/10","Goiás","Cruzeiro","0","1","Serra Dourada","Goiânia"
-32,"25/10","Atlético-MG","Ponte Preta","2","1","Independência","Belo Horizonte"
-33,"31/10","São Paulo","Sport","3","0","Morumbi","São Paulo"
-33,"31/10","Ponte Preta","Joinville","1","0","Moisés Lucarelli","Campinas"
-33,"31/10","Avaí","Cruzeiro","1","1","Ressacada","Florianópolis"
-33,"31/10","Coritiba","Figueirense","1","1","Couto Pereira","Curitiba"
-33,"01/11","Santos","Palmeiras","2","1","Vila Belmiro","Santos"
-33,"01/11","Chapecoense","Atlético-PR","0","0","Arena Condá","Chapecó"
-33,"01/11","Grêmio","Flamengo","2","0","Arena do Grêmio","Porto Alegre"
-33,"01/11","Atlético-MG","Corinthians","0","3","Independência","Belo Horizonte"
-33,"01/11","Vasco","Fluminense","0","1","Nilton Santos","Rio de Janeiro"
-33,"01/11","Goiás","Internacional","2","1","Serra Dourada","Goiânia"
-34,"07/11","Internacional","Ponte Preta","1","0","Beira Rio","Porto Alegre"
-34,"07/11","Corinthians","Coritiba","2","1","Arena Corinthians","São Paulo"
-34,"07/11","Atlético-PR","Avaí","2","1","Arena da Baixada","Curitiba"
-34,"07/11","Fluminense","Chapecoense","2","3","Maracanã","Rio de Janeiro"
-34,"08/11","Figueirense","Atlético-MG","0","1","Orlando Scarpelli","Florianópolis"
-34,"08/11","Cruzeiro","São Paulo","2","1","Mineirão","Belo Horizonte"
-34,"08/11","Flamengo","Goiás","4","1","Maracanã","Rio de Janeiro"
-34,"08/11","Palmeiras","Vasco","0","2","Allianz Parque","Sao Paulo"
-34,"08/11","Joinville","Santos","0","0","Arena Joinville","Joinville"
-34,"08/11","Sport","Grêmio","1","0","Ilha do Retiro","Recife"
-35,"15/11","Cruzeiro","Sport","3","0","Mineirão","Belo Horizonte"
-35,"18/11","Goiás","Coritiba","1","3","Serra Dourada","Goiânia"
-35,"18/11","Atlético-PR","Palmeiras","3","3","Arena da Baixada","Curitiba"
-35,"18/11","Ponte Preta","Figueirense","0","1","Moisés Lucarelli","Campinas"
-35,"18/11","Avaí","Joinville","2","1","Ressacada","Florianópolis"
-35,"19/11","Grêmio","Fluminense","1","0","Arena do Grêmio","Porto Alegre"
-35,"19/11","Chapecoense","Internacional","1","0","Arena Condá","Chapecó"
-35,"19/11","Vasco","Corinthians","1","1","São Januário","Rio de Janeiro"
-35,"19/11","São Paulo","Atlético-MG","4","2","Morumbi","São Paulo"
-35,"19/11","Santos","Flamengo","0","0","Vila Belmiro","Santos"
-36,"21/11","Palmeiras","Cruzeiro","1","1","Allianz Parque","Sao Paulo"
-36,"22/11","Figueirense","Chapecoense","0","0","Orlando Scarpelli","Florianópolis"
-36,"22/11","Atlético-MG","Goiás","2","2","Independência","Belo Horizonte"
-36,"22/11","Internacional","Grêmio","1","0","Beira Rio","Porto Alegre"
-36,"22/11","Joinville","Vasco","1","2","Arena Joinville","Joinville"
-36,"22/11","Corinthians","São Paulo","6","1","Arena Corinthians","São Paulo"
-36,"22/11","Flamengo","Ponte Preta","1","1","Mané Garrincha","Brasília"
-36,"22/11","Sport","Atlético-PR","0","0","Ilha do Retiro","Recife"
-36,"22/11","Coritiba","Santos","1","0","Couto Pereira","Curitiba"
-36,"22/11","Fluminense","Avaí","3","1","Kleber Andrade","Cariacica"
-37,"28/11","São Paulo","Figueirense","3","2","Morumbi","São Paulo"
-37,"28/11","Fluminense","Internacional","1","1","Maracanã","Rio de Janeiro"
-37,"28/11","Avaí","Ponte Preta","1","0","Ressacada","Florianópolis"
-37,"29/11","Cruzeiro","Joinville","3","0","Mineirão","Belo Horizonte"
-37,"29/11","Grêmio","Atlético-MG","2","1","Arena do Grêmio","Porto Alegre"
-37,"29/11","Vasco","Santos","1","0","São Januário","Rio de Janeiro"
-37,"29/11","Sport","Corinthians","2","0","Arena Pernambuco","S. Lourenço da Mata"
-37,"29/11","Chapecoense","Goiás","1","3","Arena Condá","Chapecó"
-37,"29/11","Palmeiras","Coritiba","0","2","Allianz Parque","Sao Paulo"
-37,"29/11","Atlético-PR","Flamengo","3","0","Arena da Baixada","Curitiba"
-38,"30/11","Corinthians","Avaí",3,0,"dunah","moacir"
+rodada,data,time_casa,time_fora,gols_casa,gols_fora,estadio,cidade
+1,09/05,Palmeiras,Atlético-MG,2,2,Allianz Parque,Sao Paulo
+1,09/05,Chapecoense,Coritiba,2,1,Arena Condá,Chapecó
+1,09/05,Fluminense,Joinville,1,0,Maracanã,Rio de Janeiro
+1,10/05,Grêmio,Ponte Preta,3,3,Arena do Grêmio,Porto Alegre
+1,10/05,São Paulo,Flamengo,2,1,Morumbi,São Paulo
+1,10/05,Sport,Figueirense,4,1,Ilha do Retiro,Recife
+1,10/05,Atlético-PR,Internacional,3,0,Arena da Baixada,Curitiba
+1,10/05,Cruzeiro,Corinthians,0,1,Arena Pantanal,Cuiabá
+1,10/05,Avaí,Santos,1,1,Ressacada,Florianópolis
+1,10/05,Vasco,Goiás,0,0,São Januário,Rio de Janeiro
+2,16/05,Goiás,Atlético-PR,2,0,Serra Dourada,Goiânia
+2,16/05,Coritiba,Grêmio,2,0,Couto Pereira,Curitiba
+2,16/05,Corinthians,Chapecoense,1,0,Fonte Luminosa,Araraquara
+2,17/05,Figueirense,Vasco,0,0,Orlando Scarpelli,Florianópolis
+2,17/05,Atlético-MG,Fluminense,4,1,Mané Garrincha,Brasília
+2,17/05,Flamengo,Sport,2,2,Maracanã,Rio de Janeiro
+2,17/05,Santos,Cruzeiro,1,0,Vila Belmiro,Santos
+2,17/05,Internacional,Avaí,1,0,Beira Rio,Porto Alegre
+2,17/05,Ponte Preta,São Paulo,1,0,Moisés Lucarelli,Campinas
+2,17/05,Joinville,Palmeiras,0,0,Arena Joinville,Joinville
+3,23/05,Vasco,Internacional,1,1,São Januário,Rio de Janeiro
+3,23/05,São Paulo,Joinville,3,0,Morumbi,São Paulo
+3,23/05,Grêmio,Figueirense,1,0,Arena do Grêmio,Porto Alegre
+3,24/05,Palmeiras,Goiás,0,1,Allianz Parque,Sao Paulo
+3,24/05,Chapecoense,Santos,1,0,Arena Condá,Chapecó
+3,24/05,Atlético-PR,Atlético-MG,1,0,Arena da Baixada,Curitiba
+3,24/05,Avaí,Flamengo,2,1,Ressacada,Florianópolis
+3,24/05,Fluminense,Corinthians,0,0,Maracanã,Rio de Janeiro
+3,24/05,Cruzeiro,Ponte Preta,1,1,Mineirão,Belo Horizonte
+3,24/05,Sport,Coritiba,1,0,Ilha do Retiro,Recife
+4,30/05,Ponte Preta,Chapecoense,3,1,Moisés Lucarelli,Campinas
+4,30/05,Coritiba,Avaí,1,2,Couto Pereira,Curitiba
+4,30/05,Joinville,Atlético-PR,1,2,Arena Joinville,Joinville
+4,31/05,Santos,Sport,2,2,Vila Belmiro,Santos
+4,31/05,Corinthians,Palmeiras,0,2,Arena Corinthians,São Paulo
+4,31/05,Internacional,São Paulo,0,0,Beira Rio,Porto Alegre
+4,31/05,Atlético-MG,Vasco,3,0,Independência,Belo Horizonte
+4,31/05,Goiás,Grêmio,1,1,Serra Dourada,Goiânia
+4,31/05,Figueirense,Cruzeiro,2,1,Orlando Scarpelli,Florianópolis
+4,31/05,Flamengo,Fluminense,2,3,Maracanã,Rio de Janeiro
+5,03/06,Chapecoense,Joinville,2,0,Arena Condá,Chapecó
+5,03/06,Atlético-PR,Figueirense,1,0,Arena da Baixada,Curitiba
+5,03/06,Vasco,Ponte Preta,0,3,São Januário,Rio de Janeiro
+5,03/06,São Paulo,Santos,3,2,Morumbi,São Paulo
+5,03/06,Avaí,Atlético-MG,1,4,Ressacada,Florianópolis
+5,03/06,Cruzeiro,Flamengo,1,0,Mineirão,Belo Horizonte
+5,03/06,Grêmio,Corinthians,3,1,Arena do Grêmio,Porto Alegre
+5,04/06,Fluminense,Coritiba,2,0,Maracanã,Rio de Janeiro
+5,04/06,Sport,Goiás,1,0,Ilha do Retiro,Recife
+5,04/06,Palmeiras,Internacional,1,1,Allianz Parque,Sao Paulo
+6,06/06,Santos,Ponte Preta,2,2,Vila Belmiro,Santos
+6,06/06,Flamengo,Chapecoense,1,0,Maracanã,Rio de Janeiro
+6,06/06,Atlético-MG,Cruzeiro,1,3,Independência,Belo Horizonte
+6,06/06,Joinville,Corinthians,0,1,Arena Joinville,Joinville
+6,06/06,Atlético-PR,Vasco,2,0,Arena da Baixada,Curitiba
+6,06/06,São Paulo,Grêmio,2,0,Morumbi,São Paulo
+6,07/06,Internacional,Coritiba,2,0,Beira Rio,Porto Alegre
+6,07/06,Figueirense,Palmeiras,2,1,Orlando Scarpelli,Florianópolis
+6,07/06,Fluminense,Sport,0,0,Maracanã,Rio de Janeiro
+6,07/06,Goiás,Avaí,0,1,Serra Dourada,Goiânia
+7,10/06,Atlético-MG,Santos,2,2,Independência,Belo Horizonte
+7,13/06,Chapecoense,São Paulo,0,1,Arena Condá,Chapecó
+7,13/06,Coritiba,Flamengo,0,1,Couto Pereira,Curitiba
+7,13/06,Corinthians,Internacional,2,1,Arena Corinthians,São Paulo
+7,13/06,Vasco,Cruzeiro,1,3,São Januário,Rio de Janeiro
+7,13/06,Sport,Joinville,2,1,Ilha do Retiro,Recife
+7,14/06,Ponte Preta,Goiás,0,0,Moisés Lucarelli,Campinas
+7,14/06,Grêmio,Atlético-PR,2,1,Arena do Grêmio,Porto Alegre
+7,14/06,Avaí,Figueirense,1,1,Ressacada,Florianópolis
+7,14/06,Palmeiras,Fluminense,2,1,Allianz Parque,Sao Paulo
+8,18/06,Figueirense,Internacional,0,0,Orlando Scarpelli,Florianópolis
+8,20/06,Sport,Vasco,2,1,Arena Pernambuco,S. Lourenço da Mata
+8,20/06,Santos,Corinthians,1,0,Vila Belmiro,Santos
+8,20/06,Flamengo,Atlético-MG,0,2,Maracanã,Rio de Janeiro
+8,20/06,Grêmio,Palmeiras,1,0,Arena do Grêmio,Porto Alegre
+8,21/06,Cruzeiro,Chapecoense,0,1,Mineirão,Belo Horizonte
+8,21/06,Atlético-PR,Coritiba,2,2,Arena da Baixada,Curitiba
+8,21/06,São Paulo,Avaí,1,1,Morumbi,São Paulo
+8,21/06,Joinville,Goiás,2,1,Arena Joinville,Joinville
+8,24/06,Fluminense,Ponte Preta,2,0,Maracanã,Rio de Janeiro
+9,27/06,Chapecoense,Sport,1,1,Arena Condá,Chapecó
+9,27/06,Avaí,Grêmio,1,2,Ressacada,Florianópolis
+9,27/06,Corinthians,Figueirense,2,1,Arena Corinthians,São Paulo
+9,28/06,Atlético-MG,Joinville,1,0,Mineirão,Belo Horizonte
+9,28/06,Ponte Preta,Atlético-PR,2,1,Moisés Lucarelli,Campinas
+9,28/06,Goiás,Fluminense,1,2,Serra Dourada,Goiânia
+9,28/06,Coritiba,Cruzeiro,1,0,Couto Pereira,Curitiba
+9,28/06,Palmeiras,São Paulo,4,0,Allianz Parque,Sao Paulo
+9,28/06,Internacional,Santos,1,0,Beira Rio,Porto Alegre
+9,28/06,Vasco,Flamengo,1,0,Arena Pantanal,Cuiabá
+10,01/07,Sport,Internacional,3,0,Ilha do Retiro,Recife
+10,01/07,Vasco,Avaí,1,0,São Januário,Rio de Janeiro
+10,01/07,Palmeiras,Chapecoense,2,0,Allianz Parque,Sao Paulo
+10,01/07,Atlético-MG,Coritiba,2,0,Independência,Belo Horizonte
+10,01/07,Joinville,Flamengo,0,1,Arena Joinville,Joinville
+10,01/07,Grêmio,Cruzeiro,1,0,Arena do Grêmio,Porto Alegre
+10,01/07,Atlético-PR,São Paulo,2,1,Arena da Baixada,Curitiba
+10,02/07,Corinthians,Ponte Preta,2,0,Arena Corinthians,São Paulo
+10,02/07,Figueirense,Goiás,3,1,Orlando Scarpelli,Florianópolis
+10,02/07,Fluminense,Santos,2,1,Maracanã,Rio de Janeiro
+11,04/07,Coritiba,Joinville,0,0,Couto Pereira,Curitiba
+11,04/07,Chapecoense,Vasco,1,0,Arena Condá,Chapecó
+11,04/07,Cruzeiro,Atlético-PR,2,0,Mineirão,Belo Horizonte
+11,05/07,Avaí,Sport,2,2,Ressacada,Florianópolis
+11,05/07,São Paulo,Fluminense,0,0,Morumbi,São Paulo
+11,05/07,Santos,Grêmio,1,3,Vila Belmiro,Santos
+11,05/07,Goiás,Corinthians,0,0,Serra Dourada,Goiânia
+11,05/07,Internacional,Atlético-MG,1,3,Beira Rio,Porto Alegre
+11,05/07,Flamengo,Figueirense,1,2,Maracanã,Rio de Janeiro
+11,05/07,Ponte Preta,Palmeiras,0,2,Arena Pantanal,Cuiabá
+12,08/07,Chapecoense,Grêmio,1,0,Arena Condá,Chapecó
+12,08/07,Coritiba,Ponte Preta,0,0,Couto Pereira,Curitiba
+12,08/07,Goiás,Santos,4,1,Serra Dourada,Goiânia
+12,08/07,Palmeiras,Avaí,3,0,Allianz Parque,Sao Paulo
+12,08/07,Figueirense,Joinville,0,2,Orlando Scarpelli,Florianópolis
+12,08/07,Atlético-MG,Sport,2,1,Mineirão,Belo Horizonte
+12,08/07,Internacional,Flamengo,1,2,Beira Rio,Porto Alegre
+12,08/07,Vasco,São Paulo,0,4,Mané Garrincha,Brasília
+12,09/07,Corinthians,Atlético-PR,2,0,Arena Corinthians,São Paulo
+12,09/07,Fluminense,Cruzeiro,1,0,Maracanã,Rio de Janeiro
+13,11/07,Grêmio,Vasco,2,0,Arena do Grêmio,Porto Alegre
+13,11/07,Santos,Figueirense,3,0,Vila Belmiro,Santos
+13,11/07,Ponte Preta,Atlético-MG,0,2,Moisés Lucarelli,Campinas
+13,12/07,São Paulo,Coritiba,3,1,Morumbi,São Paulo
+13,12/07,Flamengo,Corinthians,0,3,Maracanã,Rio de Janeiro
+13,12/07,Cruzeiro,Goiás,1,0,Mineirão,Belo Horizonte
+13,12/07,Joinville,Internacional,0,2,Arena Joinville,Joinville
+13,12/07,Atlético-PR,Fluminense,1,2,Arena da Baixada,Curitiba
+13,12/07,Sport,Palmeiras,2,2,Arena Pernambuco,S. Lourenço da Mata
+13,12/07,Avaí,Chapecoense,2,1,Ressacada,Florianópolis
+14,18/07,Internacional,Goiás,2,1,Beira Rio,Porto Alegre
+14,18/07,Flamengo,Grêmio,1,0,Maracanã,Rio de Janeiro
+14,18/07,Corinthians,Atlético-MG,1,0,Arena Corinthians,São Paulo
+14,19/07,Atlético-PR,Chapecoense,1,0,Arena da Baixada,Curitiba
+14,19/07,Fluminense,Vasco,1,2,Maracanã,Rio de Janeiro
+14,19/07,Palmeiras,Santos,1,0,Allianz Parque,Sao Paulo
+14,19/07,Figueirense,Coritiba,0,0,Orlando Scarpelli,Florianópolis
+14,19/07,Sport,São Paulo,2,0,Arena Pernambuco,S. Lourenço da Mata
+14,19/07,Joinville,Ponte Preta,1,1,Arena Joinville,Joinville
+14,19/07,Cruzeiro,Avaí,1,1,Mineirão,Belo Horizonte
+15,25/07,Avaí,Atlético-PR,1,2,Ressacada,Florianópolis
+15,25/07,Grêmio,Sport,1,1,Arena do Grêmio,Porto Alegre
+15,25/07,Atlético-MG,Figueirense,1,0,Independência,Belo Horizonte
+15,26/07,Santos,Joinville,2,0,Vila Belmiro,Santos
+15,26/07,Chapecoense,Fluminense,2,1,Arena Condá,Chapecó
+15,26/07,Ponte Preta,Internacional,0,0,Moisés Lucarelli,Campinas
+15,26/07,São Paulo,Cruzeiro,1,0,Morumbi,São Paulo
+15,26/07,Coritiba,Corinthians,1,1,Couto Pereira,Curitiba
+15,26/07,Goiás,Flamengo,0,1,Serra Dourada,Goiânia
+15,26/07,Vasco,Palmeiras,1,4,São Januário,Rio de Janeiro
+16,29/07,Atlético-MG,São Paulo,3,1,Mineirão,Belo Horizonte
+16,29/07,Corinthians,Vasco,3,0,Arena Corinthians,São Paulo
+16,01/08,Fluminense,Grêmio,1,0,Maracanã,Rio de Janeiro
+16,02/08,Palmeiras,Atlético-PR,0,1,Allianz Parque,Sao Paulo
+16,02/08,Coritiba,Goiás,1,1,Couto Pereira,Curitiba
+16,02/08,Flamengo,Santos,2,2,Maracanã,Rio de Janeiro
+16,02/08,Internacional,Chapecoense,0,0,Beira Rio,Porto Alegre
+16,02/08,Figueirense,Ponte Preta,3,1,Orlando Scarpelli,Florianópolis
+16,02/08,Joinville,Avaí,2,0,Arena Joinville,Joinville
+16,02/08,Sport,Cruzeiro,0,0,Arena Pernambuco,S. Lourenço da Mata
+17,08/08,Avaí,Fluminense,1,0,Ressacada,Florianópolis
+17,08/08,Santos,Coritiba,3,0,Vila Belmiro,Santos
+17,09/08,Atlético-PR,Sport,1,1,Arena da Baixada,Curitiba
+17,09/08,Vasco,Joinville,0,0,Maracanã,Rio de Janeiro
+17,09/08,Cruzeiro,Palmeiras,2,1,Mineirão,Belo Horizonte
+17,09/08,Ponte Preta,Flamengo,1,0,Moisés Lucarelli,Campinas
+17,09/08,São Paulo,Corinthians,1,1,Morumbi,São Paulo
+17,09/08,Goiás,Atlético-MG,0,0,Serra Dourada,Goiânia
+17,09/08,Chapecoense,Figueirense,2,2,Arena Condá,Chapecó
+17,09/08,Grêmio,Internacional,5,0,Arena do Grêmio,Porto Alegre
+18,12/08,Coritiba,Palmeiras,2,1,Couto Pereira,Curitiba
+18,12/08,Flamengo,Atlético-PR,3,2,Maracanã,Rio de Janeiro
+18,12/08,Santos,Vasco,1,0,Vila Belmiro,Santos
+18,12/08,Goiás,Chapecoense,0,0,Serra Dourada,Goiânia
+18,12/08,Internacional,Fluminense,1,0,Beira Rio,Porto Alegre
+18,12/08,Figueirense,São Paulo,0,2,Orlando Scarpelli,Florianópolis
+18,12/08,Corinthians,Sport,4,3,Arena Corinthians,São Paulo
+18,13/08,Ponte Preta,Avaí,2,0,Moisés Lucarelli,Campinas
+18,13/08,Joinville,Cruzeiro,3,0,Arena Joinville,Joinville
+18,13/08,Atlético-MG,Grêmio,0,2,Mineirão,Belo Horizonte
+19,15/08,Vasco,Coritiba,0,1,Maracanã,Rio de Janeiro
+19,15/08,Atlético-PR,Santos,0,0,Arena da Baixada,Curitiba
+19,15/08,São Paulo,Goiás,0,3,Morumbi,São Paulo
+19,16/08,Palmeiras,Flamengo,4,2,Allianz Parque,Sao Paulo
+19,16/08,Sport,Ponte Preta,1,1,Ilha do Retiro,Recife
+19,16/08,Avaí,Corinthians,1,2,Ressacada,Florianópolis
+19,16/08,Cruzeiro,Internacional,0,0,Mineirão,Belo Horizonte
+19,16/08,Fluminense,Figueirense,2,1,Maracanã,Rio de Janeiro
+19,16/08,Grêmio,Joinville,2,1,Arena do Grêmio,Porto Alegre
+19,16/08,Chapecoense,Atlético-MG,2,1,Arena Condá,Chapecó
+20,22/08,Goiás,Vasco,3,0,Serra Dourada,Goiânia
+20,22/08,Santos,Avaí,5,2,Vila Belmiro,Santos
+20,22/08,Figueirense,Sport,2,1,Orlando Scarpelli,Florianópolis
+20,23/08,Ponte Preta,Grêmio,0,0,Moisés Lucarelli,Campinas
+20,23/08,Coritiba,Chapecoense,1,0,Couto Pereira,Curitiba
+20,23/08,Joinville,Fluminense,2,1,Arena Joinville,Joinville
+20,23/08,Internacional,Atlético-PR,2,0,Beira Rio,Porto Alegre
+20,23/08,Flamengo,São Paulo,2,1,Maracanã,Rio de Janeiro
+20,23/08,Corinthians,Cruzeiro,3,0,Arena Corinthians,São Paulo
+20,23/08,Atlético-MG,Palmeiras,2,1,Independência,Belo Horizonte
+21,29/08,Vasco,Figueirense,0,1,Maracanã,Rio de Janeiro
+21,29/08,São Paulo,Ponte Preta,3,0,Morumbi,São Paulo
+21,30/08,Grêmio,Coritiba,0,0,Arena do Grêmio,Porto Alegre
+21,30/08,Avaí,Internacional,3,0,Ressacada,Florianópolis
+21,30/08,Chapecoense,Corinthians,1,3,Arena Condá,Chapecó
+21,30/08,Sport,Flamengo,0,1,Arena Pernambuco,S. Lourenço da Mata
+21,30/08,Palmeiras,Joinville,3,2,Allianz Parque,Sao Paulo
+21,30/08,Fluminense,Atlético-MG,1,2,Maracanã,Rio de Janeiro
+21,30/08,Atlético-PR,Goiás,3,0,Arena da Baixada,Curitiba
+21,30/08,Cruzeiro,Santos,0,1,Mineirão,Belo Horizonte
+22,02/09,Internacional,Vasco,6,0,Beira Rio,Porto Alegre
+22,02/09,Ponte Preta,Cruzeiro,1,2,Moisés Lucarelli,Campinas
+22,02/09,Joinville,São Paulo,0,0,Arena Joinville,Joinville
+22,02/09,Flamengo,Avaí,3,0,Arena das Dunas,Natal
+22,02/09,Atlético-MG,Atlético-PR,0,1,Independência,Belo Horizonte
+22,02/09,Goiás,Palmeiras,1,0,Serra Dourada,Goiânia
+22,02/09,Coritiba,Sport,0,0,Couto Pereira,Curitiba
+22,02/09,Corinthians,Fluminense,2,0,Arena Corinthians,São Paulo
+22,03/09,Santos,Chapecoense,3,1,Vila Belmiro,Santos
+22,03/09,Figueirense,Grêmio,0,2,Orlando Scarpelli,Florianópolis
+23,05/09,São Paulo,Internacional,2,0,Morumbi,São Paulo
+23,05/09,Vasco,Atlético-MG,1,2,Maracanã,Rio de Janeiro
+23,05/09,Atlético-PR,Joinville,0,0,Arena da Baixada,Curitiba
+23,06/09,Chapecoense,Ponte Preta,0,0,Arena Condá,Chapecó
+23,06/09,Cruzeiro,Figueirense,5,1,Mineirão,Belo Horizonte
+23,06/09,Grêmio,Goiás,2,1,Arena do Grêmio,Porto Alegre
+23,06/09,Avaí,Coritiba,0,2,Ressacada,Florianópolis
+23,06/09,Fluminense,Flamengo,1,3,Maracanã,Rio de Janeiro
+23,06/09,Palmeiras,Corinthians,3,3,Allianz Parque,Sao Paulo
+23,06/09,Sport,Santos,1,1,Ilha do Retiro,Recife
+24,09/09,Internacional,Palmeiras,1,0,Beira Rio,Porto Alegre
+24,09/09,Ponte Preta,Vasco,0,1,Moisés Lucarelli,Campinas
+24,09/09,Atlético-MG,Avaí,2,0,Independência,Belo Horizonte
+24,09/09,Figueirense,Atlético-PR,1,1,Orlando Scarpelli,Florianópolis
+24,09/09,Santos,São Paulo,3,0,Vila Belmiro,Santos
+24,09/09,Corinthians,Grêmio,1,1,Arena Corinthians,São Paulo
+24,09/09,Coritiba,Fluminense,1,1,Couto Pereira,Curitiba
+24,10/09,Goiás,Sport,1,0,Serra Dourada,Goiânia
+24,10/09,Joinville,Chapecoense,0,0,Arena Joinville,Joinville
+24,10/09,Flamengo,Cruzeiro,2,0,Maracanã,Rio de Janeiro
+25,12/09,Coritiba,Internacional,0,1,Couto Pereira,Curitiba
+25,12/09,Palmeiras,Figueirense,2,0,Allianz Parque,Sao Paulo
+25,13/09,Ponte Preta,Santos,3,1,Moisés Lucarelli,Campinas
+25,13/09,Corinthians,Joinville,3,0,Arena Corinthians,São Paulo
+25,13/09,Vasco,Atlético-PR,2,0,Maracanã,Rio de Janeiro
+25,13/09,Grêmio,São Paulo,1,2,Arena do Grêmio,Porto Alegre
+25,13/09,Cruzeiro,Atlético-MG,1,1,Mineirão,Belo Horizonte
+25,13/09,Chapecoense,Flamengo,1,3,Arena Condá,Chapecó
+25,13/09,Sport,Fluminense,1,0,Arena Pernambuco,S. Lourenço da Mata
+25,13/09,Avaí,Goiás,2,1,Ressacada,Florianópolis
+26,16/09,Joinville,Sport,1,1,Arena Joinville,Joinville
+26,16/09,Goiás,Ponte Preta,1,2,Serra Dourada,Goiânia
+26,16/09,Fluminense,Palmeiras,1,4,Maracanã,Rio de Janeiro
+26,16/09,Atlético-PR,Grêmio,1,2,Couto Pereira,Curitiba
+26,16/09,Figueirense,Avaí,0,1,Orlando Scarpelli,Florianópolis
+26,16/09,Cruzeiro,Vasco,2,2,Mineirão,Belo Horizonte
+26,16/09,Internacional,Corinthians,2,1,Beira Rio,Porto Alegre
+26,16/09,Santos,Atlético-MG,4,0,Vila Belmiro,Santos
+26,17/09,São Paulo,Chapecoense,0,0,Morumbi,São Paulo
+26,17/09,Flamengo,Coritiba,0,2,Mané Garrincha,Brasília
+27,19/09,Internacional,Figueirense,1,1,Beira Rio,Porto Alegre
+27,19/09,Palmeiras,Grêmio,3,2,Pacaembu,São Paulo
+27,19/09,Ponte Preta,Fluminense,3,1,Moisés Lucarelli,Campinas
+27,20/09,Corinthians,Santos,2,0,Arena Corinthians,São Paulo
+27,20/09,Goiás,Joinville,3,0,Serra Dourada,Goiânia
+27,20/09,Vasco,Sport,2,1,Maracanã,Rio de Janeiro
+27,20/09,Atlético-MG,Flamengo,4,1,Independência,Belo Horizonte
+27,20/09,Avaí,São Paulo,2,1,Ressacada,Florianópolis
+27,20/09,Chapecoense,Cruzeiro,0,2,Arena Condá,Chapecó
+27,20/09,Coritiba,Atlético-PR,2,0,Couto Pereira,Curitiba
+28,26/09,Fluminense,Goiás,2,0,Maracanã,Rio de Janeiro
+28,26/09,Grêmio,Avaí,3,1,Arena do Grêmio,Porto Alegre
+28,27/09,Santos,Internacional,3,1,Vila Belmiro,Santos
+28,27/09,Atlético-PR,Ponte Preta,1,2,Arena da Baixada,Curitiba
+28,27/09,Joinville,Atlético-MG,2,2,Arena Joinville,Joinville
+28,27/09,Figueirense,Corinthians,1,3,Orlando Scarpelli,Florianópolis
+28,27/09,São Paulo,Palmeiras,1,1,Morumbi,São Paulo
+28,27/09,Flamengo,Vasco,1,2,Maracanã,Rio de Janeiro
+28,27/09,Cruzeiro,Coritiba,2,0,Mineirão,Belo Horizonte
+28,27/09,Sport,Chapecoense,3,0,Ilha do Retiro,Recife
+29,03/10,Internacional,Sport,2,1,Beira Rio,Porto Alegre
+29,03/10,Coritiba,Atlético-MG,0,3,Couto Pereira,Curitiba
+29,03/10,São Paulo,Atlético-PR,1,0,Morumbi,São Paulo
+29,04/10,Flamengo,Joinville,2,0,Maracanã,Rio de Janeiro
+29,04/10,Avaí,Vasco,1,1,Ressacada,Florianópolis
+29,04/10,Goiás,Figueirense,2,3,Serra Dourada,Goiânia
+29,04/10,Cruzeiro,Grêmio,0,0,Mineirão,Belo Horizonte
+29,04/10,Ponte Preta,Corinthians,2,2,Moisés Lucarelli,Campinas
+29,04/10,Santos,Fluminense,3,1,Vila Belmiro,Santos
+29,04/10,Chapecoense,Palmeiras,5,1,Arena Condá,Chapecó
+30,14/10,Sport,Avaí,3,0,Ilha do Retiro,Recife
+30,14/10,Atlético-MG,Internacional,2,1,Independência,Belo Horizonte
+30,14/10,Joinville,Coritiba,3,1,Arena Joinville,Joinville
+30,14/10,Figueirense,Flamengo,3,0,Orlando Scarpelli,Florianópolis
+30,14/10,Palmeiras,Ponte Preta,0,1,Allianz Parque,Sao Paulo
+30,14/10,Atlético-PR,Cruzeiro,2,2,Arena da Baixada,Curitiba
+30,14/10,Fluminense,São Paulo,2,0,Maracanã,Rio de Janeiro
+30,15/10,Corinthians,Goiás,3,0,Arena Corinthians,São Paulo
+30,15/10,Vasco,Chapecoense,1,1,Maracanã,Rio de Janeiro
+30,15/10,Grêmio,Santos,1,0,Arena do Grêmio,Porto Alegre
+31,17/10,Avaí,Palmeiras,1,3,Ressacada,Florianópolis
+31,17/10,Joinville,Figueirense,1,0,Arena Joinville,Joinville
+31,18/10,Ponte Preta,Coritiba,3,0,Moisés Lucarelli,Campinas
+31,18/10,Cruzeiro,Fluminense,2,0,Mineirão,Belo Horizonte
+31,18/10,Atlético-PR,Corinthians,1,4,Arena da Baixada,Curitiba
+31,18/10,Flamengo,Internacional,0,1,Maracanã,Rio de Janeiro
+31,18/10,São Paulo,Vasco,2,2,Morumbi,São Paulo
+31,18/10,Grêmio,Chapecoense,2,3,Arena do Grêmio,Porto Alegre
+31,18/10,Santos,Goiás,3,1,Vila Belmiro,Santos
+31,18/10,Sport,Atlético-MG,4,1,Ilha do Retiro,Recife
+32,24/10,Fluminense,Atlético-PR,0,1,Maracanã,Rio de Janeiro
+32,24/10,Internacional,Joinville,1,0,Beira Rio,Porto Alegre
+32,24/10,Figueirense,Santos,0,0,Orlando Scarpelli,Florianópolis
+32,24/10,Palmeiras,Sport,0,2,Pacaembu,São Paulo
+32,25/10,Vasco,Grêmio,0,0,Maracanã,Rio de Janeiro
+32,25/10,Corinthians,Flamengo,1,0,Arena Corinthians,São Paulo
+32,25/10,Coritiba,São Paulo,1,2,Couto Pereira,Curitiba
+32,25/10,Chapecoense,Avaí,0,0,Arena Condá,Chapecó
+32,25/10,Goiás,Cruzeiro,0,1,Serra Dourada,Goiânia
+32,25/10,Atlético-MG,Ponte Preta,2,1,Independência,Belo Horizonte
+33,31/10,São Paulo,Sport,3,0,Morumbi,São Paulo
+33,31/10,Ponte Preta,Joinville,1,0,Moisés Lucarelli,Campinas
+33,31/10,Avaí,Cruzeiro,1,1,Ressacada,Florianópolis
+33,31/10,Coritiba,Figueirense,1,1,Couto Pereira,Curitiba
+33,01/11,Santos,Palmeiras,2,1,Vila Belmiro,Santos
+33,01/11,Chapecoense,Atlético-PR,0,0,Arena Condá,Chapecó
+33,01/11,Grêmio,Flamengo,2,0,Arena do Grêmio,Porto Alegre
+33,01/11,Atlético-MG,Corinthians,0,3,Independência,Belo Horizonte
+33,01/11,Vasco,Fluminense,0,1,Nilton Santos,Rio de Janeiro
+33,01/11,Goiás,Internacional,2,1,Serra Dourada,Goiânia
+34,07/11,Internacional,Ponte Preta,1,0,Beira Rio,Porto Alegre
+34,07/11,Corinthians,Coritiba,2,1,Arena Corinthians,São Paulo
+34,07/11,Atlético-PR,Avaí,2,1,Arena da Baixada,Curitiba
+34,07/11,Fluminense,Chapecoense,2,3,Maracanã,Rio de Janeiro
+34,08/11,Figueirense,Atlético-MG,0,1,Orlando Scarpelli,Florianópolis
+34,08/11,Cruzeiro,São Paulo,2,1,Mineirão,Belo Horizonte
+34,08/11,Flamengo,Goiás,4,1,Maracanã,Rio de Janeiro
+34,08/11,Palmeiras,Vasco,0,2,Allianz Parque,Sao Paulo
+34,08/11,Joinville,Santos,0,0,Arena Joinville,Joinville
+34,08/11,Sport,Grêmio,1,0,Ilha do Retiro,Recife
+35,15/11,Cruzeiro,Sport,3,0,Mineirão,Belo Horizonte
+35,18/11,Goiás,Coritiba,1,3,Serra Dourada,Goiânia
+35,18/11,Atlético-PR,Palmeiras,3,3,Arena da Baixada,Curitiba
+35,18/11,Ponte Preta,Figueirense,0,1,Moisés Lucarelli,Campinas
+35,18/11,Avaí,Joinville,2,1,Ressacada,Florianópolis
+35,19/11,Grêmio,Fluminense,1,0,Arena do Grêmio,Porto Alegre
+35,19/11,Chapecoense,Internacional,1,0,Arena Condá,Chapecó
+35,19/11,Vasco,Corinthians,1,1,São Januário,Rio de Janeiro
+35,19/11,São Paulo,Atlético-MG,4,2,Morumbi,São Paulo
+35,19/11,Santos,Flamengo,0,0,Vila Belmiro,Santos
+36,21/11,Palmeiras,Cruzeiro,1,1,Allianz Parque,Sao Paulo
+36,22/11,Figueirense,Chapecoense,0,0,Orlando Scarpelli,Florianópolis
+36,22/11,Atlético-MG,Goiás,2,2,Independência,Belo Horizonte
+36,22/11,Internacional,Grêmio,1,0,Beira Rio,Porto Alegre
+36,22/11,Joinville,Vasco,1,2,Arena Joinville,Joinville
+36,22/11,Corinthians,São Paulo,6,1,Arena Corinthians,São Paulo
+36,22/11,Flamengo,Ponte Preta,1,1,Mané Garrincha,Brasília
+36,22/11,Sport,Atlético-PR,0,0,Ilha do Retiro,Recife
+36,22/11,Coritiba,Santos,1,0,Couto Pereira,Curitiba
+36,22/11,Fluminense,Avaí,3,1,Kleber Andrade,Cariacica
+37,28/11,São Paulo,Figueirense,3,2,Morumbi,São Paulo
+37,28/11,Fluminense,Internacional,1,1,Maracanã,Rio de Janeiro
+37,28/11,Avaí,Ponte Preta,1,0,Ressacada,Florianópolis
+37,29/11,Cruzeiro,Joinville,3,0,Mineirão,Belo Horizonte
+37,29/11,Grêmio,Atlético-MG,2,1,Arena do Grêmio,Porto Alegre
+37,29/11,Vasco,Santos,1,0,São Januário,Rio de Janeiro
+37,29/11,Sport,Corinthians,2,0,Arena Pernambuco,S. Lourenço da Mata
+37,29/11,Chapecoense,Goiás,1,3,Arena Condá,Chapecó
+37,29/11,Palmeiras,Coritiba,0,2,Allianz Parque,Sao Paulo
+37,29/11,Atlético-PR,Flamengo,3,0,Arena da Baixada,Curitiba
+38,6/12,Goiás,São Paulo,0,1,Serra Dourada,Goiânia
+38,6/12,Coritiba,Vasco,0,0,Couto Pereira,Curitiba
+38,6/12,Figueirense,Fluminense,1,0,Orlando Scarpelli,Florianópolis
+38,6/12,Atlético-MG,Chapecoense,3,0,Mineirão,Belo Horizonte
+38,6/12,Internacional,Cruzeiro,2,0,Beira Rio,Porto Alegre
+38,6/12,Flamengo,Palmeiras,1,2,Maracanã,Rio de Janeiro
+38,6/12,Ponte Preta,Sport,0,1,Moisés Lucarelli,Campinas
+38,6/12,Santos,Atlético-PR,5,1,Vila Belmiro,Santos
+38,6/12,Corinthians,Avaí,1,1,Arena Corinthians,São Paulo
+38,6/12,Joinville,Grêmio,0,2,Arena Joinville,Joinville
