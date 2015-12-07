@@ -346,6 +346,16 @@ function comeca_tudo(data) {
         .attr("class", "y axis")
         .call(yAxis);
 
+    focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .style("font-weight","bold")
+        .text("PONTUAÇÃO ELO");
+
+
     context.append("path")
         .datum(times[timeEscolhido].valores)
         .attr("class", "line_aux")
@@ -383,6 +393,15 @@ function comeca_tudo(data) {
         .attr("x2",x.range()[1])
         .attr("y1",y(946))
         .attr("y2",y(946));
+
+    focus.append("text")
+        .attr("class", "linha_media label")
+        .attr("text-anchor", "start")
+        .attr("fill","black")
+        .attr("y", y(946)+12)
+        .attr("dx", ".4em")
+        .style("font-weight","bold")
+        .text("MÉDIA GERAL HISTÓRICA");
 
     //mouseover
     focus.append('rect')
