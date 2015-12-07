@@ -474,7 +474,21 @@ function adiciona_escudos() {
             menu2.append(html_base(d))
         }
     })
+
+    //CASO ALGUM ESCUDO SEJA ESCOLHIDO
+    $(".menuEscudos li").click(function(e) {
+        //e.preventDefault();
+        var nomeEscudoSelecionado = traducao[$(this).attr("id")];
+
+        selecionaLinha(nomeEscudoSelecionado);
+        mostraLinha(timeEscolhido, linhaSelecionada, true);
+        redesenha_linha();
+        coloca_tacinhas();
+
+    });
 }
+
+
 
 function formata_numero(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -511,17 +525,6 @@ $(document).ready(function(){
         coloca_tacinhas();
     });
 
-    //CASO ALGUM ESCUDO SEJA ESCOLHIDO
-    $(".menuEscudos li").click(function(e) {
-    //e.preventDefault();
-    var nomeEscudoSelecionado = traducao[$(this).attr("id")];
-
-    selecionaLinha(nomeEscudoSelecionado);
-    mostraLinha(timeEscolhido, linhaSelecionada, true);
-    redesenha_linha();
-    coloca_tacinhas();
-
-  });
 
 });
 
