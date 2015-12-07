@@ -35,7 +35,7 @@
 
         <div class="menu-wrap">
             <div class="imagem">
-            <a href="http://blog.estadaodados.com.br/" id="logo-menu" target="_blank">
+            <a href="http://blog.estadaodados.com/" id="logo-menu" target="_blank">
                 <img width="120px" style="margin-left:5px, margin-top:5px" src="img/logo-estadao-dados.png">
             </a>
             </div>
@@ -66,7 +66,6 @@
                     <option class="select-dash" disabled="disabled">----</option>
                 </select>
                 ou clique nos escudos para ver o desempenho da equipe no torneio ao longo dos anos</p>
-
             </div>
 
             <!-- CAIXA COM AS DUAS LINHAS DE ESCUDOS -->
@@ -82,7 +81,7 @@
             <div style="text-align: center">
                 <!-- LEGENDA DO TIME SELECIONADO -->
                 <div id="legenda" style="display: inline-block">
-                    <p id="nomeTimeSelecionado">ATLETICOMG</p>
+                    <p id="nomeTimeSelecionado"></p>
                     <div class="arrowTooltip"></div>
 
                 </div>
@@ -93,7 +92,7 @@
         </div>
 
         <div id="explicacao">
-            <p>A pontuação no gráfico corresponde ao 'Elo', uma métrica criada pelo Estadão Dados para comparar as equipes ao longo do tempo com base nos resultados dos jogos do Campeonato Brasileiro desde 1971. Arraste nas alças do gráfico menor para ver um período específico com mais detalhes. Para entender o cálculo, clique <span id="clique_calculo">aqui</span>.</p>
+            <p>A pontuação no gráfico corresponde ao 'Elo', uma métrica calculada pelo Estadão Dados para comparar as equipes ao longo do tempo com base nos resultados dos jogos do Campeonato Brasileiro desde 1971. Arraste as alças do gráfico menor para ver um período específico com mais detalhes. Para entender o cálculo, clique <span id="clique_calculo">aqui</span>.</p>
         </div>
     <div id="calculo">
         <h1>Metodologia</h1>
@@ -105,11 +104,14 @@
         <p>O algoritmo leva em conta o resultado do jogo e a pontuação anterior de cada time. Se o time A tem pontuação de 1.100, e o time B, de 900, as chances de A vencer B são relativamente altas. Se o resultado é diferente do esperado, aumenta a quantidade de pontos distribuídos. Além disso, o algoritmo usa um fator de ponderação, o chamado “K”. Quanto maior o valor de “K”, maiores as pontuações recebidas ou perdidas. O “K” varia a cada campeonato, dependendo do número médio de jogos disputados por time. Campeonatos curtos têm “K” mais alto para equipará-los aos campeonatos mais longos.</p>
         <p>Ao final de cada campeonato, as pontuações de todos os times são ajustadas para se aproximarem de um valor médio histórico: 946. Se o time terminou o campeonato muito acima da média, ele perde pontos para começar a próxima edição mais perto dos rivais. Se terminou bem abaixo da média, ganha pontos para não começar em muita desvantagem. A pontuação de cada time no começo da série, em 1971, foi calculada com base no desempenho dos times na Taça Roberto Gomes Pedrosa, que antecedeu o Brasileirão.</p>
     </div>
-
+    <br/>
+    <br/>
 
         <footer>
+
             <hr>
-            <p><b>Guilherme Duarte, Rodrigo Burgarelli, José Roberto de Toledo e Yuri Alexsander</b></p>
+            <br/>
+            <p>Guilherme Duarte, Rodrigo Burgarelli, José Roberto de Toledo e Yuri Alexsander</p>
             <p><b>Estadão Dados</b> • Copyright © 2015 • <a href="https://creativecommons.org/licenses/by-sa/3.0/br/">Alguns direitos reservados (CC-By-SA)</a></p>
         </footer>
 

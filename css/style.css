@@ -98,6 +98,7 @@ h1 span {
 }
 
 #calculo {
+    font-family: Verdana, Geneva, sans-serif;
     display: none;
     font-size:13px;
     line-height: 18px;
@@ -118,7 +119,6 @@ h1 span {
 
 #calculo p {
     margin-top:10px;
-    font-weight: bold;
 }
 
 #calculo h1 {
@@ -516,6 +516,8 @@ h1 .metodologia {
 /* TOOLTIP LEGENDA */
 
 footer {
+    font-family: Verdana, Geneva, sans-serif;
+    line-height: 20px;
     color:black;
     font-size: 14px;
     text-align: center;
