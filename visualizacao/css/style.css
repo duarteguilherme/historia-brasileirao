@@ -33,7 +33,7 @@ body {
 #titulo {
     text-align: left;
 
-    padding-left:15px;
+    padding-left:80px;
     margin-bottom:10px;
     margin-top: 0px;
   text-transform: uppercase;
@@ -65,11 +65,75 @@ h1 span {
   font-size: 16px;
     margin-top:15px;
   font-family: "flamabook";
-  text-align: right;
   text-align: center;
   vertical-align: middle;
 }
 
+#explicacao {
+    color: black;
+    font-size: 16px;
+    padding-left:25px;
+    font-family: "flamabook";
+    text-align: left;
+    vertical-align: middle;
+
+}
+
+#clique_calculo {
+    cursor:pointer;
+    color:steelblue;
+}
+
+#overlay {
+    background:rgba(0,0,0,0.3);
+    display:none;
+    width:100%;
+    height:1000%;
+    position:absolute;
+    opacity:0.9;
+    top:0;
+    left:0;
+    z-index:99998;
+    pointer-events:none
+}
+
+#calculo {
+    display: none;
+    font-size:13px;
+    line-height: 18px;
+    background-color: #FFCC33;
+    border: 1px solid #20262C;
+    position:absolute;
+    width:700px;
+    margin: 5% auto;
+    top: 100px;
+    left: 0;
+    right: 0;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:30px;
+    padding-right:30px;
+    border-radius: 25px;
+}
+
+#calculo p {
+    margin-top:10px;
+    font-weight: bold;
+}
+
+#calculo h1 {
+    font-size:20px;
+    font-weight: bold;
+}
+
+#calculo img {
+    cursor:pointer;
+    width:30px;
+    display:block;
+    position:absolute;
+    top:10px;
+    right:10px;
+}
 /* GRIDS */
 
 .grid .tick {
@@ -345,8 +409,8 @@ h1 .metodologia {
   height: 30px;
   transition: all .4s ease;
   filter: gray; /* IE6-9 */
-  filter: grayscale(0); /* Firefox 35+ */
-  -webkit-filter: grayscale(0); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(0.3); /* Firefox 35+ */
+  -webkit-filter: grayscale(0.3); /* Google Chrome, Safari 6+ & Opera 15+ */
 }
 
 .menuEscudos img:hover {

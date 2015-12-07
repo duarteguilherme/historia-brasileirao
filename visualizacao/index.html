@@ -13,6 +13,7 @@
     </head>
 
     <body>
+    <div id="overlay"></div>
         <div id="loading">
           <img id="loading-image" src="img/preloader.gif" alt="Loading..." />
         </div>
@@ -38,13 +39,7 @@
             <div class="titulo">
 
             </div>
-
-
         </div>
-
-
-
-
     <div class="svgWrap">
             
 
@@ -81,6 +76,20 @@
             <!-- GRÁFICO -->
             <svg id="grafico" style="display: inline-block;"></svg>
         </div>
+
+        <div id="explicacao">
+            <p>O gráfico mostra qual foi a pontuação 'Elo' registrada por cada um dos times que disputou o Campeonato Brasileiro de 1971 até hoje após cada jogo disputado. Para entender como o Estadão Dados fez esse cálculo, clique <span id="clique_calculo">aqui</span>.</p>
+        </div>
+    <div id="calculo">
+        <h1>Metodologia</h1>
+        <img id="fecha_calculo" src="img/close_button_1-512.png">
+        <p>A metodologia usada pelo Estadão Dados para criar a História do Brasileirão em Números (HBN) se baseia no sistema Elo - método desenvolvido pelo professor de Física Arpad Elo para classificar enxadristas e que virou o rating oficial da Federação Internacional de Xadrez. Além de medir a força dos times no Campeonato Brasileiro de Futebol, variações do cálculo têm sido usadas por estatísticos, como o norte-americano Nate Silver, para classificar equipes em outras competições, como a NBA, a liga de basquete profissional dos Estados Unidos.</p>
+        <p>No sistema adaptado para o Brasileirão, pontos são distribuídos entre as equipes a cada rodada. Os times ganham pontos com vitórias e perdem em caso de derrota, mas a quantidade de pontos ganhos ou perdidos varia em função de quem é o adversário. Em regra, quanto maior a diferença entre dois times, maior o potencial de ganho ou de perda. Times mais parelhos têm menos a perder ou ganhar com partidas disputadas entre si.</p>
+        <p>As equipes mais bem classificados que eventualmente são derrotados por times que estão na parte de baixo da tabela perdem mais pontos do que times mais mal classificados que perdem para os líderes do ranking. Do mesmo modo, um time mal classificado que, por acaso, vença um dos líderes vai ganhar mais pontos do que um bem classificado que venceu um time mal classificado na tabela. Em caso de empate, a alocação de pontos também depende da posição dos times no ranking.</p>
+        <p>Além disso, o número de gols marcados a cada partida também entra no cálculo. O time que vence por goleada ganha mais pontos do que o time que ganha por um placar apertado.</p>
+        <p>O algoritmo leva em conta o resultado do jogo e a pontuação anterior de cada time. Se o time A tem pontuação de 1.100, e o time B, de 900, as chances de A vencer B são relativamente altas. Se o resultado é diferente do esperado, aumenta a quantidade de pontos distribuídos. Além disso, o algoritmo usa um fator de ponderação, o chamado “K”. Quanto maior o valor de “K”, maiores as pontuações recebidas ou perdidas. O “K” varia a cada campeonato, dependendo do número médio de jogos disputados por time. Campeonatos curtos têm “K” mais alto para equipará-los aos campeonatos mais longos.</p>
+        <p>Ao final de cada campeonato, as pontuações de todos os times são ajustadas para se aproximarem de um valor médio histórico: 946. Se o time terminou o campeonato muito acima da média, ele perde pontos para começar a próxima edição mais perto dos rivais. Se terminou bem abaixo da média, ganha pontos para não começar em muita desvantagem. A pontuação de cada time no começo da série, em 1971, foi calculada com base no desempenho dos times na Taça Roberto Gomes Pedrosa, que antecedeu o Brasileirão.</p>
+    </div>
 
 
         <footer>

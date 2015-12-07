@@ -235,7 +235,7 @@ function conserta_dados(data) {
 
 function comeca_tudo(data) {
     times = conserta_dados(data);
-
+    adiciona_escudos();
 
     //SELECIONA E MOSTRA A LINHA ESCUDO AO CARREGAR A PÁGINA
     selecionaLinha(traducao[$("#menuEscudos01").children()[0].id]);
@@ -482,7 +482,26 @@ function formata_numero(x) {
 
 //FUNCAO CHAMADA QUANDO O DOCUMENTO ESTA PRONTO
 $(document).ready(function(){
-  adiciona_escudos();
+    //abre metodologia no clique em AQUI
+    $("#clique_calculo").click(function () {
+        //mostra o div
+        $("#calculo").css('display','block')
+        //scroll pro div
+        $('html, body').delay(60).animate({
+            scrollTop: $("#calculo").offset().top - 50
+        }, 500, 'easeInOutCubic');
+        //todo o fundo cinza
+        $('#overlay').fadeIn(300);
+        $('#calculo').css('z-index', '99999');
+    });
+
+    $("#fecha_calculo").click(function () {
+        $("#calculo").css('display','none')
+        $('#overlay').fadeOut(300);
+        $('#calculo').css('z-index', '1');
+    })
+
+
   //CASO ALGUM ITEM DO MENU SEJA SELECIONADO
     $('#lista_times').change(function() {
         timeEscolhido =  $(this).children(":selected").attr("id");
@@ -553,7 +572,7 @@ function arruma_destaque_linhas() {
         })
     }
     else {*/
-        $(".line").attr("opacity", function(d) {return 0.4});
+        $(".line").attr("opacity", function(d) {return 0.3});
         $(".line").css("stroke", function(d) { return "rgb(127, 127, 127)"});
         $(".line").css("stroke-width", function(d) { return ".5px"});
     //}
